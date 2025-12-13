@@ -1,11 +1,13 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
+import 'package:booking/presentation/views/My_Booking_view.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
 import 'package:booking/presentation/views/favorite_apartments_view.dart';
 import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
 import 'package:booking/presentation/views/Land_Lord_Add_Apartment.dart';
 import 'package:booking/presentation/views/Land_Lord_Dashboard.dart';
+import 'package:booking/presentation/widgets/my_Booking/body_my_booking.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -37,8 +39,9 @@ class MyApp extends StatelessWidget {
         favoriteApartments: (context) => FavoriteApartments(),
         AddApartment: (context) => LandLordAddApartment(),
         dashboard: (context) => LandLordDashboard(),
+        mybooking: (context) => MyBookingView(),
       },
-      initialRoute: favoriteApartments,
+      initialRoute: mybooking,
     );
   }
 }
