@@ -1,9 +1,11 @@
 import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
 import 'package:booking/presentation/views/favorite_apartments_view.dart';
 import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,7 +36,21 @@ class MyApp extends StatelessWidget {
         rateYourStayView: (context) => RateYourStayView(),
         favoriteApartments: (context) => FavoriteApartments(),
       },
-      initialRoute: favoriteApartments,
+      // initialRoute: favoriteApartments,
+      home: Scaffold(
+        body: FutureBuilder(
+          future: HttpRequest().getMostPopularApartments(),
+          builder: (context, asyncSnapshot) {
+            return Column(
+              children: [
+                Center(
+                  child: Text("data", style: TextStyle(fontSize: rem(10))),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
