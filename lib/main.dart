@@ -4,6 +4,8 @@ import 'package:booking/presentation/views/appartement_details_view.dart';
 import 'package:booking/presentation/views/favorite_apartments_view.dart';
 import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
+import 'package:booking/presentation/views/Land_Lord_Add_Apartment.dart';
+import 'package:booking/presentation/views/Land_Lord_Dashboard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,6 +35,8 @@ class MyApp extends StatelessWidget {
         appartementDetailsView: (context) => AppartementDetailsView(),
         rateYourStayView: (context) => RateYourStayView(),
         favoriteApartments: (context) => FavoriteApartments(),
+        AddApartment: (context) => LandLordAddApartment(),
+        dashboard: (context) => LandLordDashboard(),
       },
       initialRoute: favoriteApartments,
     );
