@@ -46,15 +46,17 @@ class MyApp extends StatelessWidget {
       },
       home: Scaffold(
         body: FutureBuilder(
-          future: HttpRequest().logout(),
-
+          // future: HttpRequest().logout(),
           // future: HttpRequest().login(
-          //   UserLoginType(phone: "10000000", password: "00000000"),
+          //   UserLoginType(phone: "99999999", password: "12345678"),
           // ),
+          future: HttpRequest().getAllTemporaryUsers(),
           builder: (context, asyncSnapshot) {
-            return Column(
-              children: [sectionSelectPhoto(), sectionSelectPhoto()],
-            );
+            if (asyncSnapshot.hasData) {
+              return Center(child: Text(asyncSnapshot.data![0].password));
+            } else {
+              return Center(child: Text(asyncSnapshot.error.toString()));
+            }
           },
         ),
       ),

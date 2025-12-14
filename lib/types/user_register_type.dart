@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 enum UserRole { landlord, tenant }
 
 class UserRegisterType {
+  final int? _id;
   final String _phone;
   final String _password;
   final String _firstName;
@@ -21,6 +22,7 @@ class UserRegisterType {
     required XFile idImage,
     required UserRole role,
     required DateTime birthday,
+    int? id,
   }) : _phone = phone,
        _password = password,
        _firstName = firstName,
@@ -28,7 +30,8 @@ class UserRegisterType {
        _profileImage = profileImage,
        _idImage = idImage,
        _role = role,
-       _birthday = birthday;
+       _birthday = birthday,
+       _id = id;
 
   String get phone => _phone;
   String get password => _password;
@@ -38,9 +41,11 @@ class UserRegisterType {
   XFile get idImage => _idImage;
   UserRole get role => _role;
   DateTime get birthday => _birthday;
+  int? get id => _id;
 
   factory UserRegisterType.empty() {
     return UserRegisterType(
+      id: 0,
       phone: '',
       password: '',
       firstName: '',
@@ -67,6 +72,7 @@ class UserRegisterType {
 
   factory UserRegisterType.fromJson(Map<String, dynamic> json) {
     return UserRegisterType(
+      id: json['id'],
       phone: json['phone'],
       password: json['password'],
       firstName: json['first_name'],
