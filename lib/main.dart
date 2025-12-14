@@ -1,5 +1,5 @@
+import 'package:booking/data/sections/Add_Appartment/section_select_photo.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
 import 'package:booking/presentation/views/My_Booking_view.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
@@ -9,6 +9,7 @@ import 'package:booking/presentation/views/tenant_view.dart';
 import 'package:booking/presentation/views/Land_Lord_Add_Apartment.dart';
 import 'package:booking/presentation/views/Land_Lord_Dashboard.dart';
 import 'package:booking/services/http_request.dart';
+import 'package:booking/types/user_login_type.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // printYallow(DateTime.parse("2005-11-13").toIso8601String().split('T')[0]);
     return MaterialApp(
       /*
       // dark mode and light mode setting
@@ -44,14 +46,14 @@ class MyApp extends StatelessWidget {
       },
       home: Scaffold(
         body: FutureBuilder(
-          future: HttpRequest().getApartmentByID(8),
+          future: HttpRequest().logout(),
+
+          // future: HttpRequest().login(
+          //   UserLoginType(phone: "10000000", password: "00000000"),
+          // ),
           builder: (context, asyncSnapshot) {
             return Column(
-              children: [
-                Center(
-                  child: Text("data", style: TextStyle(fontSize: rem(10))),
-                ),
-              ],
+              children: [sectionSelectPhoto(), sectionSelectPhoto()],
             );
           },
         ),
