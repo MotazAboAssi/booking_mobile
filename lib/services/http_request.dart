@@ -91,7 +91,6 @@ class HttpRequest {
       List<UserRegisterType> temporaryUsers = [];
       for (int i = 0; i < data.length; i++) {
         temporaryUsers.add(UserRegisterType.fromJson(data[i]));
-        printWhite(temporaryUsers[0].password);
       }
       printGreen("DONE");
       return temporaryUsers;
@@ -114,6 +113,29 @@ class HttpRequest {
       );
       printGreen("DONE");
       return true;
+    } on DioException catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    } catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    }
+  }
+
+  Future<List<UserRegisterType>> allusers() async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/allusers",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      final List<dynamic> data = response.data["users"];
+      List<UserRegisterType> users = [];
+      for (int i = 0; i < data.length; i++) {
+        printGreen("DONE");
+        users.add(UserRegisterType.fromJson(data[i]));
+      }
+      return users;
     } on DioException catch (e) {
       printRed("ERROR : $e");
       throw Exception([e]);

@@ -50,10 +50,10 @@ class MyApp extends StatelessWidget {
           // future: HttpRequest().login(
           //   UserLoginType(phone: "99999999", password: "12345678"),
           // ),
-          future: HttpRequest().acceptUserByID(6, false),
+          future: HttpRequest().allusers(),
           builder: (context, asyncSnapshot) {
             if (asyncSnapshot.hasData) {
-              return Center(child: Text(asyncSnapshot.data.toString()));
+              return Center(child: Text(asyncSnapshot.data![0].phone));
             } else {
               return Center(child: Text(asyncSnapshot.error.toString()));
             }

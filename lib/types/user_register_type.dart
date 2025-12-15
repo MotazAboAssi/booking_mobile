@@ -5,7 +5,7 @@ enum UserRole { landlord, tenant }
 class UserRegisterType {
   final int? _id;
   final String _phone;
-  final String _password;
+  final String? _password;
   final String _firstName;
   final String _lastName;
   final XFile _profileImage;
@@ -15,7 +15,7 @@ class UserRegisterType {
 
   UserRegisterType({
     required String phone,
-    required String password,
+    String? password,
     required String firstName,
     required String lastName,
     required XFile profileImage,
@@ -34,7 +34,7 @@ class UserRegisterType {
        _id = id;
 
   String get phone => _phone;
-  String get password => _password;
+  String? get password => _password;
   String get firstName => _firstName;
   String get lastName => _lastName;
   XFile get profileImage => _profileImage;
