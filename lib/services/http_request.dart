@@ -104,6 +104,25 @@ class HttpRequest {
     }
   }
 
+  Future<bool> acceptUserByID(int idUser, bool isAccept) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      await dio.post(
+        "/acceptUser/$idUser",
+        data: {"isAccept": isAccept},
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      printGreen("DONE");
+      return true;
+    } on DioException catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    } catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    }
+  }
+
   Future<ApartmentType> getApartmentByID(int idApartment) async {
     final token = await AuthStorage().readData("token");
     try {
