@@ -48,12 +48,12 @@ class MyApp extends StatelessWidget {
         body: FutureBuilder(
           // future: HttpRequest().logout(),
           // future: HttpRequest().login(
-          //   UserLoginType(phone: "99999999", password: "12345678"),
+          //   UserLoginType(phone: "10000000", password: "00000000"),
           // ),
-          future: HttpRequest().allusers(),
+          future: HttpRequest().bookingsApartmentByID(0),
           builder: (context, asyncSnapshot) {
             if (asyncSnapshot.hasData) {
-              return Center(child: Text(asyncSnapshot.data![0].phone));
+              return Center(child: Text(asyncSnapshot.data?.city ?? "null"));
             } else {
               return Center(child: Text(asyncSnapshot.error.toString()));
             }

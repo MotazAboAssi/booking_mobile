@@ -31,19 +31,18 @@ class ApartmentType {
   });
 
   factory ApartmentType.fromJson(Map<String, dynamic> json) {
-    final apartment = json['apartment'];
     return ApartmentType(
-      idApartment: apartment["id"],
-      idLandlord: apartment["user_id"],
-      city: apartment['city'],
-      town: apartment['town'],
-      space: apartment['space'],
-      rooms: apartment['rooms'],
-      location: apartment['location'],
-      priceForMonth: apartment['price_for_month'],
-      description: apartment['description'],
-      features: convertStringToListOfInteger(apartment['features']),
-      rating: apartment["rating"],
+      idApartment: json["id"],
+      idLandlord: json["user_id"],
+      city: json['city'],
+      town: json['town'],
+      space: json['space'],
+      rooms: json['rooms'],
+      location: json['location'],
+      priceForMonth: json['price_for_month'],
+      description: json['description'],
+      features: convertStringToListOfInteger(json['features']),
+      rating: json["rating"],
       images: [], // Images handling can be implemented as needed
     );
   }

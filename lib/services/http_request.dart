@@ -122,7 +122,7 @@ class HttpRequest {
     }
   }
 
-  Future<List<UserRegisterType>> allusers() async {
+  Future<List<UserRegisterType>> allUsers() async {
     final String? token = await AuthStorage().readData("token");
     try {
       Response response = await dio.get(
@@ -155,9 +155,10 @@ class HttpRequest {
       final List<dynamic> data = response.data;
       List<ApartmentType> apaetments = [];
       for (int i = 0; i < data.length; i++) {
-        printGreen("DONE");
         apaetments.add(ApartmentType.fromJson(data[i]));
+        printGrey(apaetments[i].city);
       }
+      printGreen("DONE");
       return apaetments;
     } on DioException catch (e) {
       printRed("ERROR : $e");
@@ -184,6 +185,23 @@ class HttpRequest {
       throw Exception([e]);
     }
   }
+
+  // Future<ApartmentType> bookingsLandlord() async {
+  //   final String? token = await AuthStorage().readData("token");
+  //   try {
+  //     Response response = await dio.get(
+  //       "/BookingsLandlord",
+  //       options: Options(headers: authrizationHeaders(token ?? "")),
+  //     );
+  //     return ApartmentType.fromJson(response.data);
+  //   } on DioException catch (e) {
+  //     printRed("ERROR : $e");
+  //     throw Exception([e]);
+  //   } catch (e) {
+  //     printRed("ERROR : $e");
+  //     throw Exception([e]);
+  //   }
+  // }
 
   Future<ApartmentType> getApartmentByID(int idApartment) async {
     final token = await AuthStorage().readData("token");
