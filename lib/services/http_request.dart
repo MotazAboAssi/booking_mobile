@@ -168,6 +168,23 @@ class HttpRequest {
     }
   }
 
+  Future<ApartmentType> bookingsApartmentByID(int idApartment) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/BookingsApartment/$idApartment",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      return ApartmentType.fromJson(response.data);
+    } on DioException catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    } catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    }
+  }
+
   Future<ApartmentType> getApartmentByID(int idApartment) async {
     final token = await AuthStorage().readData("token");
     try {
