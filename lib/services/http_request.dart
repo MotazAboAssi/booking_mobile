@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/test/print.dart';
@@ -51,17 +53,26 @@ class HttpRequest {
     }
   }
 
-  Future<void> login(UserLoginType user) async {
+  Future<UserRegisterType> login(Map<String, dynamic> user) async {
     try {
       Response response = await dio.post(
         "/login",
-        data: {'phone': user.phone, 'password': user.password},
+        data: {'phone': user["phone"], 'password': user["password"]},
         options: Options(),
       );
+
       await AuthStorage().writeData("token", response.data["token"]);
       printGreen('token : ${response.data["token"]}');
+      return UserRegisterType.fromJson(response.data["user"]);
+    } on DioException catch (e) {
+      if ((e.response?.statusCode ?? false) == 422) {
+        throw Exception("phone or password wrong !!");
+      }
+      printRed("DioException : $e");
+      throw Exception("Error Connection");
     } catch (e) {
       printRed("ERROR : $e");
+      throw Exception("EEROR: $e");
     }
   }
 

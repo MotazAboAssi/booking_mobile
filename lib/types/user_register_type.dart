@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:image_picker/image_picker.dart';
 
 enum UserRole { landlord, tenant }
@@ -71,6 +73,7 @@ class UserRegisterType {
   }
 
   factory UserRegisterType.fromJson(Map<String, dynamic> json) {
+    log(json.toString());
     return UserRegisterType(
       id: json['id'],
       phone: json['phone'],
