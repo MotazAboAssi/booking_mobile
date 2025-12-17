@@ -1,5 +1,6 @@
 import 'package:booking/data/models/auth/form/input_field_form.dart';
 import 'package:booking/data/models/auth/login/button_sign_in.dart';
+import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,6 +58,26 @@ class LoginForm extends StatelessWidget {
           BlocProvider(
             create: (_) => LoginCubit(),
             child: ButtonSignIn(formKey: formKey),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Don't have ana ccount?",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: rem(1)),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: rem(1),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

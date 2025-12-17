@@ -1,16 +1,17 @@
-import 'package:booking/presentation/cubit/auth/auth_state_cubit.dart';
 import 'package:booking/types/user_register_type.dart';
 
-class UnderRegistrationInRegister extends AuthStateCubit {}
+class RegisterStateCubit {}
 
-class RegisterSuccessfuly extends AuthStateCubit {
+class InitialRegister extends RegisterStateCubit {}
+
+class UnderRegistrationInRegister extends RegisterStateCubit {}
+
+class RegisterSuccessfuly extends RegisterStateCubit {
   final UserRegisterType user;
-
   RegisterSuccessfuly({required this.user});
 }
 
-class RegisterFailed extends AuthStateCubit {
+class RegisterFailed extends RegisterStateCubit {
   final String errorMessage;
-
   RegisterFailed({required this.errorMessage});
 }

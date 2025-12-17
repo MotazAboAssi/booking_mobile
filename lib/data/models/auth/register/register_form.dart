@@ -1,6 +1,8 @@
 import 'package:booking/data/models/auth/form/input_field_form.dart';
 import 'package:booking/data/models/auth/register/button_sign_up.dart';
+import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -9,8 +11,8 @@ class RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> isDisplayPassword = ValueNotifier<bool>(false);
-    final ValueNotifier<bool> isDisplayConfigurePassword = ValueNotifier<bool>(
+    final ValueNotifier<bool> isSecurePassword = ValueNotifier<bool>(false);
+    final ValueNotifier<bool> isSecureConfigurePassword = ValueNotifier<bool>(
       false,
     );
     final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
@@ -20,14 +22,6 @@ class RegisterForm extends StatelessWidget {
       child: Column(
         spacing: 20,
         children: [
-          // Title Inputs
-          Text(
-            "Sign up",
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.08,
-              color: Colors.white,
-            ),
-          ),
           // User Name Input
           InputFieldForm(
             name: "user name",
@@ -44,7 +38,7 @@ class RegisterForm extends StatelessWidget {
           ),
           // Password Input
           ValueListenableBuilder(
-            valueListenable: isDisplayPassword,
+            valueListenable: isSecurePassword,
             builder: (context, value, child) {
               return InputFieldForm(
                 name: "password",
@@ -53,21 +47,21 @@ class RegisterForm extends StatelessWidget {
                 validatorsProps: [FormBuilderValidators.password()],
                 suffixIcon: IconButton(
                   onPressed: () {
-                    isDisplayPassword.value = !isDisplayPassword.value;
+                    isSecurePassword.value = !isSecurePassword.value;
                   },
                   icon: Icon(
-                    isDisplayPassword.value
+                    isSecurePassword.value
                         ? Icons.remove_red_eye
                         : Icons.remove,
                   ),
                 ),
-                obscureText: !isDisplayPassword.value,
+                obscureText: !isSecurePassword.value,
               );
             },
           ),
           // Configure Password Input
           ValueListenableBuilder(
-            valueListenable: isDisplayConfigurePassword,
+            valueListenable: isSecureConfigurePassword,
             builder: (context, value, child) {
               return InputFieldForm(
                 name: "configure password",
@@ -84,21 +78,24 @@ class RegisterForm extends StatelessWidget {
                 ],
                 suffixIcon: IconButton(
                   onPressed: () {
-                    isDisplayConfigurePassword.value =
-                        !isDisplayConfigurePassword.value;
+                    isSecureConfigurePassword.value =
+                        !isSecureConfigurePassword.value;
                   },
                   icon: Icon(
-                    isDisplayConfigurePassword.value
+                    isSecureConfigurePassword.value
                         ? Icons.remove_red_eye
                         : Icons.remove,
                   ),
                 ),
-                obscureText: !isDisplayConfigurePassword.value,
+                obscureText: !isSecureConfigurePassword.value,
               );
             },
           ),
           // Button Sign in
-          ButtonSignUp(formKey: formKey),
+          BlocProvider(
+            create: (_) => RegisterCubit(),
+            child: ButtonSignUp(formKey: formKey),
+          ),
         ],
       ),
     );

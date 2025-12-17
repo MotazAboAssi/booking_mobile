@@ -2,9 +2,7 @@ import 'dart:developer';
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
-import 'package:booking/presentation/cubit/auth/auth_cubit.dart';
-import 'package:booking/presentation/cubit/auth/auth_state_cubit.dart';
-import 'package:booking/presentation/cubit/auth/login/login_state_cubit.dart';
+import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
 import 'package:booking/presentation/cubit/auth/register/register_state_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +15,7 @@ class ButtonSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: context.select<AuthCubit, void Function()?>((value) {
+      onPressed: context.select<RegisterCubit, void Function()?>((value) {
         final state = value.state;
         final form = formKey.currentState;
         if (state is RegisterSuccessfuly ||
@@ -36,7 +34,7 @@ class ButtonSignUp extends StatelessWidget {
                   debugPrint(form.value.toString());
                   return;
                 }
-                final cubit = BlocProvider.of<AuthCubit>(context);
+                final cubit = BlocProvider.of<RegisterCubit>(context);
                 try {
                   await cubit.register(input);
                 } catch (e) {
@@ -50,7 +48,7 @@ class ButtonSignUp extends StatelessWidget {
       }),
 
       style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: context.select<AuthCubit, Color?>((value) {
+        disabledBackgroundColor: context.select<RegisterCubit, Color?>((value) {
           final state = value.state;
           if (state is RegisterSuccessfuly) {
             return Colors.green;
@@ -63,8 +61,8 @@ class ButtonSignUp extends StatelessWidget {
         padding: EdgeInsetsGeometry.zero,
         alignment: Alignment.center,
         fixedSize: Size(
-          MediaQuery.of(context).size.width * 0.25,
-          MediaQuery.of(context).size.height * 0.01,
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height * 0.07,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(5),
@@ -73,12 +71,9 @@ class ButtonSignUp extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
       ),
 
-      child: BlocConsumer<AuthCubit, AuthStateCubit>(
+      child: BlocConsumer<RegisterCubit, RegisterStateCubit>(
         builder: (context, state) {
-          if (state is RegisterFailed ||
-              state is InitialAuth ||
-              state is LoginSuccessfuly) {
-            // printWhite("register : ${(state is InitialRegister).toString()}");
+          if (state is RegisterFailed || state is InitialRegister) {
             return Text("Sign up", style: TextStyle(color: thirdly));
           } else if ((state is RegisterSuccessfuly)) {
             return Center(

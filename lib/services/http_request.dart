@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
-import 'package:booking/types/user_login_type.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:dio/dio.dart';
 

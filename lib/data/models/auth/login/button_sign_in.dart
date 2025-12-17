@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:booking/presentation/cubit/auth/login/login_state_cubit.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +61,8 @@ class ButtonSignIn extends StatelessWidget {
         padding: EdgeInsetsGeometry.zero,
         alignment: Alignment.center,
         fixedSize: Size(
-          MediaQuery.of(context).size.width * 0.25,
-          MediaQuery.of(context).size.height * 0.01,
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height * 0.07,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(5),
@@ -73,8 +74,10 @@ class ButtonSignIn extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginStateCubit>(
         builder: (context, state) {
           if (state is LoginFailed || state is InitialLogIn) {
-            // printWhite("register : ${(state is InitialLogin).toString()}");
-            return Text("Sign in", style: TextStyle(color: thirdly));
+            return Text(
+              "Sign in",
+              style: TextStyle(color: thirdly, fontSize: rem(1.5)),
+            );
           } else if ((state is LoginSuccessfuly)) {
             return Center(
               child: Icon(Icons.check_rounded, color: Colors.white, size: 25),
