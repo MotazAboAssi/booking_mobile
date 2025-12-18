@@ -11,6 +11,7 @@ class InputFieldForm extends StatelessWidget {
   final Widget? suffixIcon;
   final bool? obscureText;
   final List<String? Function(String?)>? validatorsProps;
+  final TextInputType? textInputType;
   const InputFieldForm({
     super.key,
     required this.name,
@@ -20,12 +21,12 @@ class InputFieldForm extends StatelessWidget {
     this.obscureText,
     this.validatorsProps,
     this.initialValue,
+    this.textInputType,
   });
 
   @override
   Widget build(BuildContext context) {
-    final List<String? Function(String?)> validators =
-        validatorsProps ?? const [];
+    List<String? Function(String?)> validators = validatorsProps ?? [];
     validators.add(FormBuilderValidators.required());
 
     return FormBuilderTextField(
@@ -35,7 +36,7 @@ class InputFieldForm extends StatelessWidget {
       obscuringCharacter: "*",
       style: TextStyle(color: primary), // text color
       cursorColor: primary, // cursor color
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: textInputType ?? TextInputType.emailAddress,
       decoration: decorationInputFieldLogin(
         hintText: hintText,
         labelTeaxt: labelTeaxt,

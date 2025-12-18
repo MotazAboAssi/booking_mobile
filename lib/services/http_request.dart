@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'dart:io';
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/test/print.dart';
@@ -9,9 +11,11 @@ import 'package:dio/dio.dart';
 class HttpRequest {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: API,
+      baseUrl: 'http://$ip4:8000/api',
+      connectTimeout: const Duration(seconds: 25),
+      receiveTimeout: const Duration(seconds: 25),
       headers: {
-        'Content-Type': 'application/json',
+        //   'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     ),
@@ -22,7 +26,15 @@ class HttpRequest {
   // under maintainus
   Future<Map<String, dynamic>> register(UserRegisterType user) async {
     try {
-      FormData formData = FormData.fromMap({
+      printGreen(user.phone);
+      printGreen(user.firstName);
+      printGreen(user.lastName);
+      printGreen(user.password ?? "false");
+      printGreen(user.role.name);
+      printGreen(user.birthday.toIso8601String().split("T")[0]);
+      printGreen(user.profileImage.path);
+      printGreen(user.idImage.path);
+      final formData = FormData.fromMap({
         'phone': user.phone,
         'password': user.password,
         'first_name': user.firstName,
@@ -31,22 +43,31 @@ class HttpRequest {
         'birthday': user.birthday.toIso8601String().split("T")[0],
         'profile_image': await MultipartFile.fromFile(
           user.profileImage.path,
-          filename: user.profileImage.name,
+          // filename: user.profileImage.path.split('/').last,
         ),
         'id_image': await MultipartFile.fromFile(
           user.idImage.path,
-          filename: user.idImage.name,
+          // filename: user.idImage.path.split('/').last,
         ),
       });
-      Response response = await dio.post(
-        '/register',
-        data: formData,
-        options: Options(headers: {"Accept": 'application/json'}),
-      );
-      return {"success": true, "data": response.data.toString()};
+
+      printRed("formData.fields.last");
+      Response response = await dio.post('/register', data: formData);
+      printGrey("Done Form HttpRequist");
+      return {"success": true, "data": response.data};
+    } on PathNotFoundException catch (e) {
+      printRed(e.message);
+      throw Exception("field image required exist image not found");
+    } on DioException catch (e) {
+      if (e.type.name == "connectionError") {
+        throw Exception("Error Connection");
+      } else if (e.response?.data["message"] != null) {
+        throw Exception(e.response?.data["message"]);
+      }
+      printRed('response ${e.type.name}');
+      throw Exception("e");
     } catch (e) {
-      printBlueWithBold("text");
-      return {"success": false, "data": e.toString()};
+      throw Exception(e);
     }
   }
 
@@ -54,7 +75,10 @@ class HttpRequest {
     try {
       Response response = await dio.post(
         "/login",
-        data: {'phone': user["phone"], 'password': user["password"]},
+        data: {
+          'phone': user["phone"].toString().substring(5),
+          'password': user["password"],
+        },
         options: Options(),
       );
 

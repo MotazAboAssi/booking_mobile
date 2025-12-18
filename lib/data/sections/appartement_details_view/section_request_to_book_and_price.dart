@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,9 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
               ),
               backgroundColor: fourthly,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, mybooking);
+            },
             child: Text("Request to Book", style: TextStyle(color: thirdly)),
           ),
         ],

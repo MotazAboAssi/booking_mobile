@@ -1,16 +1,28 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
+import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
 import 'package:booking/presentation/cubit/auth/register/register_state_cubit.dart';
+import 'package:booking/types/user_register_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class ButtonSignUp extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
-  const ButtonSignUp({super.key, required this.formKey});
+  final File? imageProfile;
+  final File? imageIDCard;
+
+  const ButtonSignUp({
+    super.key,
+    required this.formKey,
+    this.imageProfile,
+    this.imageIDCard,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +39,21 @@ class ButtonSignUp extends StatelessWidget {
               form.save();
               if (form.validate()) {
                 final Map<String, dynamic> input = form.value;
-                if ((input["email"] ?? "").isEmpty ||
-                    (input["user name"] ?? "").isEmpty ||
-                    (input["configure password"] ?? "").isEmpty ||
-                    (input["password"] ?? "").isEmpty) {
-                  debugPrint(form.value.toString());
-                  return;
-                }
                 final cubit = BlocProvider.of<RegisterCubit>(context);
                 try {
-                  await cubit.register(input);
+                  final UserRegisterType user = UserRegisterType(
+                    phone: input[phoneKey].toString().substring(5),
+                    password: input[passwordKey],
+                    firstName: input[firstNameKey],
+                    lastName: input[lastNameKey],
+                    profileImage: File(imageProfile!.path),
+                    idImage: File(imageIDCard!.path),
+                    role: UserRole.tenant,
+                    birthday: input[dateOfBirthKey],
+                  );
+                  await cubit.register(user);
                 } catch (e) {
-                  log(e.toString());
+                  printRed(e.toString());
                 }
               }
               // form.patchValue({"email": "mo@dd.c", "password": "123cvbASD/*-"});

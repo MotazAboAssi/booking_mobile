@@ -1,19 +1,38 @@
 import 'package:booking/data/models/auth/form/input_field_form.dart';
 import 'package:booking/data/models/auth/login/button_sign_in.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/main.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  late GlobalKey<FormBuilderState> formKey;
+
+  @override
+  void initState() {
+    super.initState();
+    formKey = GlobalKey<FormBuilderState>();
+  }
+
+  @override
+  void dispose() {
+    formKey.currentState!.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
-    final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
     return FormBuilder(
       key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -25,9 +44,10 @@ class LoginForm extends StatelessWidget {
             name: "phone",
             hintText: "+963*********",
             labelTeaxt: "Phone No",
+            textInputType: TextInputType.phone,
             validatorsProps: [
               FormBuilderValidators.phoneNumber(
-                // regex: RegExp(r"^\+963[0-9]{9}$"),
+                regex: RegExp(r"^\+963[0-9]{9}$"),
               ),
             ],
           ),
@@ -39,15 +59,14 @@ class LoginForm extends StatelessWidget {
                 name: "password",
                 hintText: "********",
                 labelTeaxt: "Password",
-                validatorsProps: [
-                  // FormBuilderValidators.password()
-                ],
                 suffixIcon: IconButton(
                   onPressed: () {
                     isSecure.value = !isSecure.value;
                   },
                   icon: Icon(
-                    isSecure.value ? Icons.remove_red_eye : Icons.remove,
+                    isSecure.value
+                        ? Icons.visibility_off
+                        : Icons.remove_red_eye,
                   ),
                 ),
                 obscureText: !isSecure.value,
@@ -68,7 +87,14 @@ class LoginForm extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: rem(1)),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push<void>(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const RegisterView(),
+                    ),
+                  );
+                },
                 child: Text(
                   "Sign Up",
                   style: TextStyle(

@@ -3,6 +3,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BodyLandLordDashboard extends StatelessWidget {
+  const BodyLandLordDashboard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

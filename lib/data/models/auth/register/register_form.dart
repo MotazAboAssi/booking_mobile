@@ -52,7 +52,7 @@ class RegisterForm extends StatelessWidget {
                   icon: Icon(
                     isSecurePassword.value
                         ? Icons.remove_red_eye
-                        : Icons.remove,
+                        : Icons.visibility_off,
                   ),
                 ),
                 obscureText: !isSecurePassword.value,

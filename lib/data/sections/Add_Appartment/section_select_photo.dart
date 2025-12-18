@@ -4,9 +4,7 @@ import 'package:booking/helper/constant/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:dotted_border/src/dotted_border_options.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:typed_data';
 import 'dart:io';
 
 class sectionSelectPhoto extends StatefulWidget {
