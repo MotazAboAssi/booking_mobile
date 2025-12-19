@@ -1,21 +1,21 @@
 import 'dart:io';
 import 'package:booking/helper/methods/convert_string_to_list_of_integer.dart';
 
-class ApartmentType {
+class ApartmentTypeForTenant {
   final int idApartment;
   final int idLandlord;
-  final double rating;
+  final int rating;
   final String city;
   final String town;
-  final double space;
+  final int space;
   final int rooms;
   final String? location;
-  final double priceForMonth;
+  final int priceForMonth;
   final String description;
   final List<int> features;
   final List<File> images;
 
-  ApartmentType({
+  ApartmentTypeForTenant({
     required this.city,
     required this.town,
     required this.space,
@@ -30,8 +30,8 @@ class ApartmentType {
     required this.rating,
   });
 
-  factory ApartmentType.fromJson(Map<String, dynamic> json) {
-    return ApartmentType(
+  factory ApartmentTypeForTenant.fromJson(Map<String, dynamic> json) {
+    return ApartmentTypeForTenant(
       idApartment: json["id"],
       idLandlord: json["user_id"],
       city: json['city'],
@@ -46,13 +46,13 @@ class ApartmentType {
       images: [], // Images handling can be implemented as needed
     );
   }
-  factory ApartmentType.empty() {
-    return ApartmentType(
+  factory ApartmentTypeForTenant.empty() {
+    return ApartmentTypeForTenant(
       city: "",
       town: "",
-      space: 0.0,
+      space: 0,
       rooms: 0,
-      priceForMonth: 0.0,
+      priceForMonth: 0,
       description: "",
       features: [],
       images: [],

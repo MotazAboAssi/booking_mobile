@@ -71,8 +71,8 @@ class UserRegisterType {
     );
   }
 
-  factory UserRegisterType.fromJson(Map<String, dynamic> data) {
-    final json = data["data"]["0"];
+  factory UserRegisterType.fromJson(Map<String, dynamic> json) {
+    // final json = data["data"]["0"];
     log(json.toString());
     return UserRegisterType(
       id: json['id'],

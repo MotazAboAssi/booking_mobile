@@ -13,6 +13,7 @@ import 'package:booking/presentation/views/land_lord_add_apartment.dart';
 import 'package:booking/presentation/views/land_lord_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:booking/services/http_request.dart';
 
 typedef VoidCallBackFile = void Function(File?);
 typedef FileCallBackvoid = File? Function();
@@ -53,8 +54,15 @@ class MyApp extends StatelessWidget {
         registerView: (context) => RegisterView(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-      initialRoute: loginView,
-      // home: RoleSelection(),
+      initialRoute: tenantView,
+      // home: Scaffold(
+      //   body: FutureBuilder(
+      //     future: HttpRequest().getAllApartementForTenant(),
+      //     builder: (context, snapshot) {
+      //       return Center(child: Text("data"));
+      //     },
+      //   ),
+      // ),
     );
   }
 }

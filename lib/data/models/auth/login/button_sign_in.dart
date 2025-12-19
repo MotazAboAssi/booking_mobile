@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
@@ -30,7 +31,7 @@ class ButtonSignIn extends StatelessWidget {
                 final cubit = BlocProvider.of<LoginCubit>(context);
                 try {
                   await cubit.login(input);
-                  // Navigator.pushNamed(context, tenantView);
+                  Navigator.pushNamed(context, tenantView);
                 } catch (e) {
                   log(e.toString());
                 }
