@@ -10,7 +10,7 @@ import 'package:dio/dio.dart';
 class HttpRequest {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'http://$ip4:8000/api',
+      baseUrl: 'http://$ip4:8080/api',
       connectTimeout: const Duration(seconds: 25),
       receiveTimeout: const Duration(seconds: 25),
       headers: {
