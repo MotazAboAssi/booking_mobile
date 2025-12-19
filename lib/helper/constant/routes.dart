@@ -8,3 +8,4 @@ const String roleSelectionView = "RoleSelectionView";
 const String addApartment = "LandLordAddApartment";
 const String landlordDashBoard = "LandLordDashboard";
 const String mybooking = "MyBookingView";
+const String bookingconfirme = "BookingConfirme";

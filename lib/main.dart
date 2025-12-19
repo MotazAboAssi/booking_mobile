@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
+import 'package:booking/presentation/views/booking_confirme.dart';
 import 'package:booking/presentation/views/auth/role_selection_view.dart';
 import 'package:booking/presentation/views/my_booking_view.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         mybooking: (context) => MyBookingView(),
         loginView: (context) => LoginView(),
         registerView: (context) => RegisterView(),
+        bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
       initialRoute: tenantView,
@@ -63,6 +65,9 @@ class MyApp extends StatelessWidget {
       //     },
       //   ),
       // ),
+
+      // initialRoute: loginView,
+      // home: RoleSelection(),
     );
   }
 }
