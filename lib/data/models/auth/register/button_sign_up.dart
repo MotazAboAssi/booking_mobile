@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/form_keys/registers_keys.dart';
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
+import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
 import 'package:booking/presentation/cubit/auth/register/register_state_cubit.dart';
 import 'package:booking/types/user_register_type.dart';
+import 'package:booking/types/user_role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -39,16 +42,21 @@ class ButtonSignUp extends StatelessWidget {
               if (form.validate()) {
                 final Map<String, dynamic> input = form.value;
                 final cubit = BlocProvider.of<RegisterCubit>(context);
-                  final UserRegisterType user = UserRegisterType(
-                    phone: input[phoneKey].toString().substring(5),
-                    password: input[passwordKey],
-                    firstName: input[firstNameKey],
-                    lastName: input[lastNameKey],
-                    profileImage: File(imageProfile?.path ?? ""),
-                    idImage: File(imageIDCard?.path ?? ""),
-                    role: UserRole.tenant,
-                    birthday: input[dateOfBirthKey],
-                  );
+                final UserRegisterType user = UserRegisterType(
+                  phone: input[phoneKey].toString().substring(5),
+                  password: input[passwordKey],
+                  firstName: input[firstNameKey],
+                  lastName: input[lastNameKey],
+                  profileImage: File(imageProfile?.path ?? ""),
+                  idImage: File(imageIDCard?.path ?? ""),
+                  role:
+                      (ModalRoute.of(context)?.settings.arguments
+                              as Map)["role"] ==
+                          "tenant"
+                      ? UserRole.tenant
+                      : UserRole.landlord,
+                  birthday: input[dateOfBirthKey],
+                );
                 try {
                   await cubit.register(user);
                 } catch (e) {
@@ -100,19 +108,19 @@ class ButtonSignUp extends StatelessWidget {
             child: CircularProgressIndicator(color: Colors.white),
           );
         },
-        listener: (context, state) async {
+        listener: (c, state) async {
           if ((state is RegisterSuccessfuly)) {
             customSnakBar(
-              context: context,
+              context: c,
               state: state,
               color: Colors.green,
               message: "✅ DONE ,Requist to Join",
             );
             await Future.delayed(Duration(seconds: 3));
-            backTo(context);
+            navigateTo(context, loginView);
           } else if (state is RegisterFailed) {
             customSnakBar(
-              context: context,
+              context: c,
               state: state,
               color: Colors.red,
               message: state.errorMessage,

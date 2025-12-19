@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
+<<<<<<< HEAD
 import 'package:booking/presentation/views/booking_confirme.dart';
+=======
+import 'package:booking/presentation/views/auth/role_selection_view.dart';
+>>>>>>> 77c7272a5781d9e85af5ce19168b1883c4cdf236
 import 'package:booking/presentation/views/my_booking_view.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
 import 'package:booking/presentation/views/auth/login_view.dart';
@@ -16,6 +20,7 @@ import 'package:image_picker/image_picker.dart';
 
 typedef VoidCallBackFile = void Function(File?);
 typedef FileCallBackvoid = File? Function();
+typedef BoolFunString = bool Function(String);
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // printGreen(AuthStorage().readData("token") as String);
     return MaterialApp(
       /*
       // dark mode and light mode setting
@@ -50,8 +56,11 @@ class MyApp extends StatelessWidget {
         loginView: (context) => LoginView(),
         registerView: (context) => RegisterView(),
         bookingconfirme: (context) => BookingConfirme(),
+          roleSelectionView: (context) => RoleSelectionView(),
       },
-      initialRoute: bookingconfirme,
+      
+      initialRoute: loginView,
+      // home: RoleSelection(),
     );
   }
 }

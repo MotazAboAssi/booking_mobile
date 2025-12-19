@@ -4,6 +4,7 @@ const String rateYourStayView = "RateYourStayView";
 const String favoriteApartments = "FavoriteApartments";
 const String loginView = "LoginView";
 const String registerView = "RegisterView";
+const String roleSelectionView = "RoleSelectionView";
 const String addApartment = "LandLordAddApartment";
 const String landlordDashBoard = "LandLordDashboard";
 const String mybooking = "MyBookingView";
