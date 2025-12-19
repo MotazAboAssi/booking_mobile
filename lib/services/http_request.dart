@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
@@ -55,17 +54,36 @@ class HttpRequest {
       Response response = await dio.post('/register', data: formData);
       printGrey("Done Form HttpRequist");
       return {"success": true, "data": response.data};
-    } on PathNotFoundException catch (e) {
-      printRed(e.message);
-      throw Exception("field image required exist image not found");
+    } on PathNotFoundException catch (_) {
+      // if (user.profileImage.path == "") {
+      //   throw Exception("pls, enter profile image because is required .");
+      // } else if (user.profileImage.path != "") {
+      //   throw Exception("pls, try again enter profile image .");
+      // }
+        if (user.idImage.path == "") {
+        throw Exception("pls, enter id image because is required .");
+      } else if (user.idImage.path != "") {
+        throw Exception("pls, try again enter id image .");
+      } else {
+        throw Exception("try again enter either same or another image .");
+      }
     } on DioException catch (e) {
+      printYallow("**********");
+      printRed(e.response.toString());
+      printYallow("**********");
+      printRed(e.type.name);
+      printYallow("**********");
+      printRed("DioException : $e");
+      printYallow("**********");
       if (e.type.name == "connectionError") {
         throw Exception("Error Connection");
+      } else if (e.type.name == "Cannot retrieve length of file") {
+        throw Exception("image upload must be under 4 MG");
       } else if (e.response?.data["message"] != null) {
         throw Exception(e.response?.data["message"]);
+      } else {
+        throw Exception("e");
       }
-      printRed('response ${e.type.name}');
-      throw Exception("e");
     } catch (e) {
       throw Exception(e);
     }
@@ -86,10 +104,15 @@ class HttpRequest {
       printGreen('token : ${response.data["token"]}');
       return UserRegisterType.fromJson(response.data["user"]);
     } on DioException catch (e) {
-      if ((e.response?.statusCode ?? false) == 422) {
+      printRed(e.response.toString());
+      printYallow("**********");
+      printRed(e.type.name);
+      printYallow("**********");
+      printRed("DioException : $e");
+
+      if ((e.response?.statusCode ?? false) == 401) {
         throw Exception("phone or password wrong !!");
       }
-      printRed("DioException : $e");
       throw Exception("Error Connection");
     } catch (e) {
       printRed("ERROR : $e");

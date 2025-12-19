@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:booking/helper/methods/comapre_two_date.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:intl/intl.dart';
 import 'package:booking/data/models/auth/form/decoration_input_field.dart';
 import 'package:booking/data/models/auth/form/input_field_form.dart';
@@ -80,23 +82,18 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late GlobalKey<FormBuilderState> formKey;
 
-  File? imageProfile = File("");
-  File? imageIDCard = File("");
+  File? imageProfile, imageIDCard;
 
   void setImageProfile(File? image) {
-    imageProfile = image;
+    setState(() {
+      imageProfile = image;
+    });
   }
 
   void setImageIDCard(File? image) {
-    imageIDCard = image;
-  }
-
-  File? getImageProfile() {
-    return imageProfile;
-  }
-
-  File? getImageIDCard() {
-    return imageIDCard;
+    setState(() {
+      imageIDCard = image;
+    });
   }
 
   @override
@@ -141,8 +138,8 @@ class _RegisterViewState extends State<RegisterView> {
                         create: (_) => RegisterCubit(),
                         child: ButtonSignUp(
                           formKey: formKey,
-                          imageProfile: getImageProfile(),
-                          imageIDCard: getImageIDCard(),
+                          imageProfile: imageProfile,
+                          imageIDCard: imageIDCard,
                         ),
                       ),
                       Row(
@@ -194,7 +191,7 @@ class SectionPickImagePictureID extends StatefulWidget {
 
 class _SectionPickImagePictureIDState extends State<SectionPickImagePictureID> {
   final ImagePicker imagePicker = ImagePicker();
-  ValueNotifier<File?> image = ValueNotifier(null);
+  File? image;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -202,7 +199,7 @@ class _SectionPickImagePictureIDState extends State<SectionPickImagePictureID> {
       children: [
         Padding(
           padding: EdgeInsets.only(bottom: rem(1)),
-          child: image.value == null
+          child: image == null
               ? null
               : Text(
                   "Image ID : ",
@@ -222,27 +219,25 @@ class _SectionPickImagePictureIDState extends State<SectionPickImagePictureID> {
                 imageFromSource = await pickImageFromCamera(imagePicker);
               }
             });
-
+            printGreen("start");
             if (imageFromSource != null) {
-              image.value = File(imageFromSource!.path);
-              widget.fun(image.value);
+              setState(() {
+                image = File(imageFromSource!.path);
+              });
+              printGrey(image?.path ?? "false");
+              widget.fun(image);
             }
           },
           child: AspectRatio(
             aspectRatio: 1.5,
-            child: ValueListenableBuilder(
-              valueListenable: image,
-              builder: (context, path, child) {
-                return DottedBorder(
-                  options: RoundedRectDottedBorderOptions(
-                    radius: Radius.circular(rem(1.4)),
-                    dashPattern: [10, 5],
-                  ),
-                  child: path == null
-                      ? CaseNotUploadImage()
-                      : CaseUploadImage(path: path),
-                );
-              },
+            child: DottedBorder(
+              options: RoundedRectDottedBorderOptions(
+                radius: Radius.circular(rem(1.4)),
+                dashPattern: [10, 5],
+              ),
+              child: image == null
+                  ? CaseNotUploadImage()
+                  : CaseUploadImage(path: image!),
             ),
           ),
         ),
@@ -354,6 +349,12 @@ class SectionGroupOfInputField extends StatelessWidget {
 
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
+            (value) {
+              if (value != null && compareTwoDate(value, DateTime.now()) >= 0) {
+                return "The birthday field must be a date before today.";
+              }
+              return null;
+            },
           ]),
           name: dateOfBirthKey,
           firstDate: DateTime(1990, 1, 1),
@@ -381,7 +382,7 @@ class SectionImagePickerProfile extends StatefulWidget {
 
 class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
   final ImagePicker imagePicker = ImagePicker();
-  ValueNotifier<File?> image = ValueNotifier(null);
+  File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -389,66 +390,61 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
     const double radiusIcon = 1.3;
     return Column(
       children: [
-        ValueListenableBuilder<File?>(
-          valueListenable: image,
-          builder: (context, path, child) {
-            return Stack(
-              children: [
-                Align(
-                  child: CircleAvatar(
-                    radius: rem(radiusProfile),
-                    backgroundColor: Colors.red,
-                    child: CircleAvatar(
-                      radius: rem(radiusProfile - 0.1),
-                      backgroundImage: path == null
-                          ? AssetImage(anonymousManAvatar)
-                          : FileImage(path),
-                    ),
-                  ),
+        Stack(
+          children: [
+            Align(
+              child: CircleAvatar(
+                radius: rem(radiusProfile),
+                backgroundColor: Colors.red,
+                child: CircleAvatar(
+                  radius: rem(radiusProfile - 0.1),
+                  backgroundImage: image == null
+                      ? AssetImage(anonymousManAvatar)
+                      : FileImage(image!),
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: widget.constraints.maxWidth * 0.3,
-                  child: CircleAvatar(
-                    backgroundColor: thirdly,
-                    radius: rem(radiusIcon + 0.1),
-                    child: CircleAvatar(
-                      backgroundColor: fourthly,
-                      radius: rem(radiusIcon - 0.1),
-                      child: GestureDetector(
-                        onTap: () async {
-                          XFile? imageFromSource;
-                          await showAlertDialog(context, imagePicker, (
-                            num,
-                          ) async {
-                            if (num == 0) {
-                              imageFromSource = await pickImageFromGallery(
-                                imagePicker,
-                              );
-                            } else {
-                              imageFromSource = await pickImageFromCamera(
-                                imagePicker,
-                              );
-                            }
-                          });
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: widget.constraints.maxWidth * 0.3,
+              child: CircleAvatar(
+                backgroundColor: thirdly,
+                radius: rem(radiusIcon + 0.1),
+                child: CircleAvatar(
+                  backgroundColor: fourthly,
+                  radius: rem(radiusIcon - 0.1),
+                  child: GestureDetector(
+                    onTap: () async {
+                      XFile? imageFromSource;
+                      await showAlertDialog(context, imagePicker, (num) async {
+                        if (num == 0) {
+                          imageFromSource = await pickImageFromGallery(
+                            imagePicker,
+                          );
+                        } else {
+                          imageFromSource = await pickImageFromCamera(
+                            imagePicker,
+                          );
+                        }
+                      });
 
-                          if (imageFromSource != null) {
-                            image.value = File(imageFromSource!.path);
-                            widget.fun(image.value);
-                          }
-                        },
-                        child: Icon(
-                          Icons.add_a_photo,
-                          color: thirdly,
-                          size: rem(radiusIcon * 1.1),
-                        ),
-                      ),
+                      if (imageFromSource != null) {
+                        setState(() {
+                          image = File(imageFromSource!.path);
+                        });
+                        widget.fun(image);
+                      }
+                    },
+                    child: Icon(
+                      Icons.add_a_photo,
+                      color: thirdly,
+                      size: rem(radiusIcon * 1.1),
                     ),
                   ),
                 ),
-              ],
-            );
-          },
+              ),
+            ),
+          ],
         ),
         Center(
           child: Text(

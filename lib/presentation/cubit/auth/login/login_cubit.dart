@@ -10,7 +10,8 @@ class LoginCubit extends Cubit<LoginStateCubit> {
     try {
       emit(LoginSuccessfuly(user: await HttpRequest().login(loginData)));
     } catch (error) {
-      emit(LoginFailed(errorMessage: error.toString()));
+      emit(LoginFailed(errorMessage: error.toString().split(":")[1]));
+      throw Exception(error.toString().split(":")[1]);
     }
   }
 }

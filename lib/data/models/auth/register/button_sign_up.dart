@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/form_keys/registers_keys.dart';
@@ -40,17 +39,17 @@ class ButtonSignUp extends StatelessWidget {
               if (form.validate()) {
                 final Map<String, dynamic> input = form.value;
                 final cubit = BlocProvider.of<RegisterCubit>(context);
-                try {
                   final UserRegisterType user = UserRegisterType(
                     phone: input[phoneKey].toString().substring(5),
                     password: input[passwordKey],
                     firstName: input[firstNameKey],
                     lastName: input[lastNameKey],
-                    profileImage: File(imageProfile!.path),
-                    idImage: File(imageIDCard!.path),
+                    profileImage: File(imageProfile?.path ?? ""),
+                    idImage: File(imageIDCard?.path ?? ""),
                     role: UserRole.tenant,
                     birthday: input[dateOfBirthKey],
                   );
+                try {
                   await cubit.register(user);
                 } catch (e) {
                   printRed(e.toString());
@@ -107,7 +106,7 @@ class ButtonSignUp extends StatelessWidget {
               context: context,
               state: state,
               color: Colors.green,
-              message: '✅ Register Successfuly',
+              message: "✅ DONE ,Requist to Join",
             );
             await Future.delayed(Duration(seconds: 3));
             backTo(context);

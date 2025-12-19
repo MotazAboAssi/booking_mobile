@@ -26,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void dispose() {
-    formKey.currentState!.dispose();
+    formKey.currentState?.dispose();
     super.dispose();
   }
 
