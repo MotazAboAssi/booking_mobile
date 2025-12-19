@@ -40,14 +40,8 @@ class HttpRequest {
         'last_name': user.lastName,
         'role': user.role.name,
         'birthday': user.birthday.toIso8601String().split("T")[0],
-        'profile_image': await MultipartFile.fromFile(
-          user.profileImage.path,
-          // filename: user.profileImage.path.split('/').last,
-        ),
-        'id_image': await MultipartFile.fromFile(
-          user.idImage.path,
-          // filename: user.idImage.path.split('/').last,
-        ),
+        'profile_image': await MultipartFile.fromFile(user.profileImage.path),
+        'id_image': await MultipartFile.fromFile(user.idImage.path),
       });
 
       printRed("formData.fields.last");
@@ -55,12 +49,11 @@ class HttpRequest {
       printGrey("Done Form HttpRequist");
       return {"success": true, "data": response.data};
     } on PathNotFoundException catch (_) {
-      // if (user.profileImage.path == "") {
-      //   throw Exception("pls, enter profile image because is required .");
-      // } else if (user.profileImage.path != "") {
-      //   throw Exception("pls, try again enter profile image .");
-      // }
-        if (user.idImage.path == "") {
+      if (user.profileImage.path == "") {
+        throw Exception("pls, enter profile image because is required .");
+      } else if (user.profileImage.path != "") {
+        throw Exception("pls, try again enter profile image .");
+      } else if (user.idImage.path == "") {
         throw Exception("pls, enter id image because is required .");
       } else if (user.idImage.path != "") {
         throw Exception("pls, try again enter id image .");

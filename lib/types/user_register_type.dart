@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-enum UserRole { landlord, tenant }
+import 'package:booking/types/user_role.dart';
 
 class UserRegisterType {
   final int? _id;
