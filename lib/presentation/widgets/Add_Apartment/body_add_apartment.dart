@@ -18,7 +18,7 @@ class AddApartmentBody extends StatelessWidget {
               style: TextStyle(fontSize: rem(1.4), fontWeight: FontWeight.bold),
             ),
           ),
-          sectionSelectPhoto(),
+          SectionSelectPhoto(),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(

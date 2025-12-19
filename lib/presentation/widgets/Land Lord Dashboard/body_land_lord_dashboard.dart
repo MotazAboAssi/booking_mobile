@@ -1,4 +1,4 @@
-import 'package:booking/data/sections/LandLordDashboard/Appartment_State_dashboard.dart';
+import 'package:booking/data/sections/LandLordDashboard/appartment_state_dashboard.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 

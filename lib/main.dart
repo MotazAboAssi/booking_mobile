@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
-import 'package:booking/presentation/views/My_Booking_view.dart';
+import 'package:booking/presentation/views/my_booking_view.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
 import 'package:booking/presentation/views/auth/login_view.dart';
 import 'package:booking/presentation/views/auth/register_view.dart';
 import 'package:booking/presentation/views/favorite_apartments_view.dart';
 import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
-import 'package:booking/presentation/views/Land_Lord_Add_Apartment.dart';
-import 'package:booking/presentation/views/Land_Lord_Dashboard.dart';
+import 'package:booking/presentation/views/land_lord_add_apartment.dart';
+import 'package:booking/presentation/views/land_lord_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

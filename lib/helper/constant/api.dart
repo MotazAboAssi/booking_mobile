@@ -4,4 +4,4 @@ const tokenTenant = "5|9EckhnFC82k9Kqu8FWCTP7eheoEwt2mldQqkQ8LU59793d50";
 
 final String ip4 = "10.42.0.1";
 
-final String API = baseURL;
+final String api = baseURL;

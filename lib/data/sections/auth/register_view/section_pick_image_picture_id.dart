@@ -45,8 +45,8 @@ class _SectionPickImagePictureIDState extends State<SectionPickImagePictureID> {
         GestureDetector(
           onTap: () async {
             XFile? imageFromSource;
-            await showAlertDialog(context, imagePicker, (num) async {
-              if (num == 0) {
+            await showAlertDialog(context, imagePicker, (ch) async {
+              if (ch == 0) {
                 imageFromSource = await pickImageFromGallery(imagePicker);
               } else {
                 imageFromSource = await pickImageFromCamera(imagePicker);

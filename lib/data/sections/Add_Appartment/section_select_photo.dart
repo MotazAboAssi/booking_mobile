@@ -1,4 +1,4 @@
-import 'dart:ui' as BorderType;
+import 'dart:ui' as border_type;
 
 import 'package:booking/helper/constant/theme.dart';
 import 'package:flutter/foundation.dart';
@@ -7,14 +7,14 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class sectionSelectPhoto extends StatefulWidget {
-  const sectionSelectPhoto({super.key});
+class SectionSelectPhoto extends StatefulWidget {
+  const SectionSelectPhoto({super.key});
 
   @override
-  State<sectionSelectPhoto> createState() => _SectionSelectPhotoState();
+  State<SectionSelectPhoto> createState() => _SectionSelectPhotoState();
 }
 
-class _SectionSelectPhotoState extends State<sectionSelectPhoto> {
+class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
   // للـ Mobile
   final List<File> selectedImages = [];
 
@@ -73,7 +73,7 @@ class _SectionSelectPhotoState extends State<sectionSelectPhoto> {
                     children: const [
                       Icon(
                         Icons.add_photo_alternate,
-                        color: BorderType.Color.fromARGB(255, 59, 56, 245),
+                        color: border_type.Color.fromARGB(255, 59, 56, 245),
                         size: 40,
                       ),
                       SizedBox(height: 6),

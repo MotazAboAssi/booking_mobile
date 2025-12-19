@@ -1,4 +1,3 @@
-// import 'package:booking/helper/constant/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/helper/methods/rem.dart';
 

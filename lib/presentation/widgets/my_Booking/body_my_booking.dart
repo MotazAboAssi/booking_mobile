@@ -1,4 +1,4 @@
-import 'package:booking/data/models/MyBooking/AppartmentBooking.dart';
+import 'package:booking/data/models/MyBooking/appartment_booking.dart';
 import 'package:flutter/material.dart';
 
 class BodyMyBooking extends StatelessWidget {
