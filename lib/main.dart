@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
+import 'package:booking/presentation/views/booking_confirme.dart';
 import 'package:booking/presentation/views/my_booking_view.dart';
 import 'package:booking/presentation/views/appartement_details_view.dart';
 import 'package:booking/presentation/views/auth/login_view.dart';
@@ -12,7 +13,6 @@ import 'package:booking/presentation/views/land_lord_add_apartment.dart';
 import 'package:booking/presentation/views/land_lord_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 typedef VoidCallBackFile = void Function(File?);
 typedef FileCallBackvoid = File? Function();
@@ -49,12 +49,12 @@ class MyApp extends StatelessWidget {
         mybooking: (context) => MyBookingView(),
         loginView: (context) => LoginView(),
         registerView: (context) => RegisterView(),
+        bookingconfirme: (context) => BookingConfirme(),
       },
-      initialRoute: loginView,
+      initialRoute: bookingconfirme,
     );
   }
 }
-
 
 class ImagePickerExample extends StatefulWidget {
   const ImagePickerExample({super.key});
