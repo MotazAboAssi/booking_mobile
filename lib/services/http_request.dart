@@ -10,13 +10,10 @@ import 'package:dio/dio.dart';
 class HttpRequest {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.1.109:8080/api',
-      connectTimeout: const Duration(seconds: 25),
-      receiveTimeout: const Duration(seconds: 25),
-      headers: {
-        //   //   'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+      baseUrl: api,
+      // connectTimeout: const Duration(seconds: 10),
+      // receiveTimeout: const Duration(seconds: 10),
+      headers: {'Accept': 'application/json'},
     ),
   );
 
@@ -104,6 +101,11 @@ class HttpRequest {
 
       if ((e.response?.statusCode ?? false) == 401) {
         throw Exception("phone or password wrong !!");
+      }
+      if ((e.response?.statusCode ?? false) == 404) {
+        final message = (e.response?.data as Map<String, dynamic>)["message"]
+            .toString();
+        throw Exception(message);
       }
       throw Exception("Error Connection");
     } catch (e) {
@@ -275,16 +277,18 @@ class HttpRequest {
         "/apartments/Tenant",
         options: Options(headers: authrizationHeaders(token)),
       );
-      printGreen(response.data.toString());
-      final List<dynamic> data = response.data;
+      final List<dynamic> data = response.data["apartments"];
+      printGreen(data.toString());
       final List<ApartmentTypeForTenant> apartemnts = [];
       for (int i = 0; i < data.length; i++) {
         apartemnts.add(ApartmentTypeForTenant.fromJson(data[i]));
       }
       return apartemnts;
     } on DioException catch (e) {
-      printRed(e.type.toString());
-      throw Exception(e.toString());
+      if (e.response != null && e.response?.statusCode == 403) {
+        throw Exception("wrong login again login");
+      }
+      throw Exception("Error Connection");
     } catch (e) {
       throw Exception(e.toString());
     }

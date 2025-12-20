@@ -1,7 +1,7 @@
 import 'package:booking/data/models/appartement_details_view/amention_model.dart';
 import 'package:flutter/material.dart';
 
-final List<AmentionModel> amention = [
+final List<AmentionModel> amentions = [
   AmentionModel(icon: Icons.tv, title: "TV"),
   AmentionModel(icon: Icons.wifi, title: "Wifi"),
   AmentionModel(icon: Icons.ac_unit, title: "Air Con"),

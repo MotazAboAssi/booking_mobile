@@ -1,8 +1,8 @@
 import 'package:booking/data/models/appartement_details_view/amention_card.dart';
-import 'package:booking/data/models/appartement_details_view/amention_model.dart';
+import 'package:booking/helper/constant/amentions.dart';
 import 'package:flutter/material.dart';
 
-Dialog amentionDisplayDialog(List<AmentionModel> amention) {
+Dialog amentionDisplayDialog(List<int> amention) {
   return Dialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadiusGeometry.circular(10),
@@ -10,7 +10,7 @@ Dialog amentionDisplayDialog(List<AmentionModel> amention) {
     child: AspectRatio(
       aspectRatio: 1,
       child: Padding(
-        padding: const EdgeInsets.all( 10),
+        padding: const EdgeInsets.all(10),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -20,9 +20,10 @@ Dialog amentionDisplayDialog(List<AmentionModel> amention) {
           ),
           itemCount: amention.length,
           itemBuilder: (BuildContext context, int index) => AmentionCard(
-            icon: amention[index].icon,
-            title: amention[index].title,
-            fontSize: 0.7, iconsSize: 2,
+            icon: amentions[amention[index]].icon,
+            title: amentions[amention[index]].title,
+            fontSize: 0.7,
+            iconsSize: 2,
           ),
         ),
       ),

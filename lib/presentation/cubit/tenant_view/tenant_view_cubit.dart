@@ -12,7 +12,7 @@ class TenantViewCubit extends Cubit<TenantViewStateCubit> {
           .getAllApartementForTenant();
       emit(TenantViewSucceeful(apartment: apartments));
     } catch (e) {
-      emit(TenantViewFaild(error: e.toString()));
+      emit(TenantViewFaild(error: e.toString().split(":")[1]));
     }
   }
 }

@@ -1,10 +1,13 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class SectionRequestToBookAndPrice extends StatelessWidget {
-  const SectionRequestToBookAndPrice({super.key});
+  final ApartmentTypeForTenant apartment;
+
+  const SectionRequestToBookAndPrice({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
           Row(
             children: [
               Text(
-                r"2400$",
+                "${apartment.priceForMonth}\$",
                 style: TextStyle(
                   fontSize: rem(1.5),
                   fontWeight: FontWeight.bold,

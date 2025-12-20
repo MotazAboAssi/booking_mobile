@@ -3,7 +3,6 @@ import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
-import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
