@@ -1,5 +1,6 @@
 import 'package:booking/data/models/tenant_view/appartement_card.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,7 @@ class SectionMostPopular extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: BlocProvider(
-        create: (BuildContext context) => ,
+        create: (BuildContext context) => LoginCubit(),
         child: Column(
           spacing: 5,
           crossAxisAlignment: CrossAxisAlignment.start,
