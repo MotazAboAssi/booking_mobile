@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BasicDatails extends StatefulWidget {
-  const  BasicDatails({super.key});
+  const BasicDatails({super.key});
 
   @override
   State<BasicDatails> createState() => _BasicDatailsState();
@@ -27,10 +27,6 @@ class _BasicDatailsState extends State<BasicDatails> {
   TextEditingController fromDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
 
-  /// نخزن التواريخ فعليًا بدل النص
-  DateTime? fromDate;
-  DateTime? toDate;
-
   /// قائمة الميزات
   // List<String> amenities = [
   //   "Wifi",
@@ -43,33 +39,6 @@ class _BasicDatailsState extends State<BasicDatails> {
 
   /// الميزات المختارة
   List<int> selectedAmenities = [];
-
-  /// دالة اختيار التاريخ
-  Future<void> pickDate(TextEditingController controller, bool isFrom) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      // صيغة صحيحة yyyy-MM-dd
-      final y = picked.year.toString();
-      final m = picked.month.toString().padLeft(2, '0');
-      final d = picked.day.toString().padLeft(2, '0');
-
-      controller.text = "$y-$m-$d";
-
-      setState(() {
-        if (isFrom) {
-          fromDate = DateTime(picked.year, picked.month, picked.day);
-        } else {
-          toDate = DateTime(picked.year, picked.month, picked.day);
-        }
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -232,116 +201,128 @@ class _BasicDatailsState extends State<BasicDatails> {
                   ),
                   SizedBox(height: 10),
 
-                  /// AMENITIES
+                  // Row(
+                  //   children: [
+                  //     Text("Amenities", style: TextStyle(color: secondary)),
+                  //   ],
+                  // ),
+
+                  // AspectRatio(
+                  //   aspectRatio: 1,
+                  //   child: ListView(
+                  //     children: amentions.map((item) {
+                  //       return CheckboxListTile(
+                  //         value: selectedAmenities.contains(item.id),
+                  //         title: AmentionCard(
+                  //           icon: item.icon,
+                  //           title: item.title,
+                  //           fontSize: 1,
+                  //           iconsSize: 2,
+                  //         ),
+                  //         onChanged: (bool? selected) {
+                  //           setState(() {
+                  //             if (selected == true) {
+                  //               selectedAmenities.add(item.id);
+                  //             } else {
+                  //               selectedAmenities.remove(item.id);
+                  //             }
+                  //           });
+                  //         },
+                  //       );
+                  //     }).toList(),
+                  //   ),
+                  // ),
                   Row(
                     children: [
-                      Text("Amenities", style: TextStyle(color: secondary)),
+                      Text(
+                        "Amenities",
+                        style: TextStyle(
+                          color: secondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
+                  const SizedBox(height: 10),
 
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: ListView(
-                      children: amentions.map((item) {
-                        return CheckboxListTile(
-                          value: selectedAmenities.contains(item.id),
-                          title: AmentionCard(
-                            icon: item.icon,
-                            title: item.title,
-                            fontSize: 1,
-                            iconsSize: 2,
-                          ),
-                          onChanged: (bool? selected) {
-                            setState(() {
-                              if (selected == true) {
-                                selectedAmenities.add(item.id);
-                              } else {
-                                selectedAmenities.remove(item.id);
-                              }
-                            });
-                          },
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    height: rem(20),
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+
+                      itemCount: amentions.length,
+                      itemBuilder: (context, index) {
+                        final item = amentions[index];
+                        final bool isSelected = selectedAmenities.contains(
+                          item.id,
                         );
-                      }).toList(),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      /// DATE FROM
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Available From",
-                                  style: TextStyle(color: secondary),
-                                ),
-                              ],
-                            ),
-                            TextFormField(
-                              controller: fromDateController,
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                hintText: "Select start date",
-                                hintStyle: TextStyle(fontSize: 12),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(rem(1)),
-                                ),
-                              ),
-                              validator: (v) =>
-                                  v!.isEmpty ? "Start date is required" : null,
-                              onTap: () => pickDate(fromDateController, true),
-                            ),
-                          ],
-                        ),
-                      ),
 
-                      SizedBox(height: 10),
-
-                      /// DATE TO
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Available To",
-                                  style: TextStyle(color: secondary),
-                                ),
-                              ],
-                            ),
-                            TextFormField(
-                              controller: toDateController,
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                hintText: "Select end date",
-                                hintStyle: TextStyle(fontSize: 12),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(rem(1)),
-                                ),
-                              ),
-                              validator: (v) {
-                                if (v!.isEmpty) return "End date is required";
-                                if (fromDate == null)
-                                  return "Select start date first";
-                                if (toDate == null) return "Invalid end date";
-
-                                if (toDate!.isBefore(fromDate!)) {
-                                  return "End date cannot be before start date";
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isSelected) {
+                                  selectedAmenities.remove(item.id);
+                                } else {
+                                  selectedAmenities.add(item.id);
                                 }
-                                return null;
-                              },
-                              onTap: () => pickDate(toDateController, false),
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 16,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? fourthly.withAlpha(50)
+                                    : Colors.grey.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? Colors.blue
+                                      : Colors.grey.withOpacity(0.2),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    item.icon,
+                                    color: isSelected
+                                        ? Colors.blue
+                                        : Colors.grey,
+                                    size: 24,
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Expanded(
+                                    child: Text(
+                                      item.title,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                        color: isSelected
+                                            ? Colors.blue
+                                            : Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  if (isSelected)
+                                    Icon(
+                                      Icons.check_circle,
+                                      color: Colors.blue,
+                                      size: 20,
+                                    ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

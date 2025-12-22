@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-      initialRoute: tenantView,
+      initialRoute: addApartment,
       // home: Scaffold(
       //   body: FutureBuilder(
       //     future: HttpRequest().getAllApartementForTenant(),

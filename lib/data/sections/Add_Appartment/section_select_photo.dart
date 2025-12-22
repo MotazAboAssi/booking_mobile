@@ -21,55 +21,34 @@ class SectionSelectPhoto extends StatefulWidget {
   State<SectionSelectPhoto> createState() => _SectionSelectPhotoState();
 }
 
-class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
-  // للـ Mobile
+class _SectionSelectPhotoState extends State<SectionSelectPhoto>
+    with AutomaticKeepAliveClientMixin {
   final List<File> selectedImages = [];
-
-  // للـ Web
-  final List<Uint8List> webImages = [];
-
   Future pickImages() async {
     final picker = ImagePicker();
+    final picked = await picker.pickMultiImage(imageQuality: 80);
+    if (picked.isEmpty) return;
 
-    if (kIsWeb) {
-      final picked = await picker.pickMultiImage(imageQuality: 80);
-      if (picked.isEmpty) return;
-
-      List<Uint8List> temp = [];
-      for (var file in picked) {
-        final bytes = await file.readAsBytes();
-        temp.add(bytes);
-      }
-
-      setState(() {
-        webImages.addAll(temp);
-      });
-    } else {
-      final picked = await picker.pickMultiImage(imageQuality: 80);
-      if (picked.isEmpty) return;
-
-      setState(() {
-        selectedImages.addAll(picked.map((e) => File(e.path)));
-      });
-    }
+    setState(() {
+      selectedImages.addAll(picked.map((e) => File(e.path)));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    printYallow(selectedImages.toString());
     final double radiusCircul = 2;
     return Column(
       children: [
         Padding(
-          padding:  EdgeInsets.all(rem(1)),
+          padding: EdgeInsets.all(rem(1)),
           child: GestureDetector(
             onTap: () async {
               try {
                 await pickImages();
+
                 ApartmentType apartment = BlocProvider.of<AddApartmentCubit>(
                   context,
                 ).state.apartment;
-
                 for (int i = 0; i < selectedImages.length; i++) {
                   apartment.images.add(
                     ImageFromApartment(
@@ -79,6 +58,8 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
                     ),
                   );
                 }
+                print("object");
+                print(apartment.images);
               } catch (e) {
                 printRed(e.toString());
               }
@@ -152,11 +133,10 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
         ),
         const SizedBox(height: 20),
         SizedBox(
-          height: selectedImages.isEmpty && webImages.isEmpty ? 0 : 120,
+          height: selectedImages.isEmpty ? 0 : 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              // صور Mobile
               ...selectedImages.asMap().entries.map((entry) {
                 int index = entry.key;
                 File file = entry.value;
@@ -205,53 +185,14 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
                   ),
                 );
               }),
-              // صور Web
-              ...webImages.asMap().entries.map((entry) {
-                int index = entry.key;
-                Uint8List bytes = entry.value;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.memory(
-                          bytes,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              webImages.removeAt(index);
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black54,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
             ],
           ),
         ),
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
