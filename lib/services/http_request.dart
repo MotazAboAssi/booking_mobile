@@ -90,6 +90,8 @@ class HttpRequest {
       );
 
       await AuthStorage().writeData("token", response.data["token"]);
+      await AuthStorage().writeData("role", response.data["user"]["role"]);
+
       printGreen('token : ${response.data["token"]}');
       return UserRegisterType.fromJson(response.data["user"]);
     } on DioException catch (e) {

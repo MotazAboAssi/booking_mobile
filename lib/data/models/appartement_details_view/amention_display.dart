@@ -11,8 +11,8 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
     amention.sublist(0, 3).forEach((i) {
       arr.add(
         AmentionCard(
-          icon: amentions[i].icon,
-          title: amentions[i].title,
+          icon: amentions[i - 1].icon,
+          title: amentions[i - 1].title,
           fontSize: 1,
           iconsSize: 2,
         ),
@@ -36,8 +36,8 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
     for (var i in amention) {
       arr.add(
         AmentionCard(
-          icon: amentions[i].icon,
-          title: amentions[i].title,
+          icon: amentions[i - 1].icon,
+          title: amentions[i - 1].title,
           fontSize: 1,
           iconsSize: 2,
         ),
