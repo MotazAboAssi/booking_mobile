@@ -36,7 +36,6 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
 
   @override
   Widget build(BuildContext context) {
-    printYallow(selectedImages.toString());
     final double radiusCircul = 2;
     return Column(
       children: [
@@ -59,6 +58,8 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                     ),
                   );
                 }
+                print("object");
+                print(apartment.images);
               } catch (e) {
                 printRed(e.toString());
               }
