@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
         child: LoginView(),
       ),
 
+      // initialRoute: addApartment,
       // home: Scaffold(
       //   body: FutureBuilder(
       //     future: HttpRequest().getAllApartementForTenant(),
