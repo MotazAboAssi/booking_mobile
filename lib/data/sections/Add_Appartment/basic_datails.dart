@@ -206,32 +206,44 @@ class _BasicDatailsState extends State<BasicDatails> {
                   //     Text("Amenities", style: TextStyle(color: secondary)),
                   //   ],
                   // ),
+                  // <<<<<<< HEAD
 
-                  // AspectRatio(
-                  //   aspectRatio: 1,
-                  //   child: ListView(
-                  //     children: amentions.map((item) {
-                  //       return CheckboxListTile(
-                  //         value: selectedAmenities.contains(item.id),
-                  //         title: AmentionCard(
-                  //           icon: item.icon,
-                  //           title: item.title,
-                  //           fontSize: 1,
-                  //           iconsSize: 2,
-                  //         ),
-                  //         onChanged: (bool? selected) {
-                  //           setState(() {
-                  //             if (selected == true) {
-                  //               selectedAmenities.add(item.id);
-                  //             } else {
-                  //               selectedAmenities.remove(item.id);
-                  //             }
-                  //           });
-                  //         },
-                  //       );
-                  //     }).toList(),
-                  //   ),
-                  // ),
+                  //                   // AspectRatio(
+                  //                   //   aspectRatio: 1,
+                  //                   //   child: ListView(
+                  //                   //     children: amentions.map((item) {
+                  //                   //       return CheckboxListTile(
+                  //                   //         value: selectedAmenities.contains(item.id),
+                  //                   //         title: AmentionCard(
+                  //                   //           icon: item.icon,
+                  //                   //           title: item.title,
+                  //                   //           fontSize: 1,
+                  //                   //           iconsSize: 2,
+                  //                   //         ),
+                  //                   //         onChanged: (bool? selected) {
+                  //                   //           setState(() {
+                  //                   //             if (selected == true) {
+                  //                   //               selectedAmenities.add(item.id);
+                  //                   //             } else {
+                  //                   //               selectedAmenities.remove(item.id);
+                  //                   //             }
+                  //                   //           });
+                  //                   //         },
+                  //                   //       );
+                  //                   //     }).toList(),
+                  //                   //   ),
+                  //                   // ),
+                  //                   Row(
+                  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //                     children: [
+                  //                       Text(
+                  //                         "Amenities",
+                  //                         style: TextStyle(
+                  //                           color: secondary,
+                  //                           fontWeight: FontWeight.bold,
+                  //                         ),
+                  //                       ),
+                  //                     ],
                   Row(
                     children: [
                       Text(
