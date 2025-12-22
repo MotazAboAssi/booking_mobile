@@ -1,19 +1,28 @@
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
-import 'package:booking/helper/test/image_network.dart';
+import 'package:booking/helper/methods/fetch_image_from_db.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeaderAndAppartementImages extends StatelessWidget {
-  const SectionHeaderAndAppartementImages({super.key});
+  final ApartmentType? apartment;
+
+  const SectionHeaderAndAppartementImages({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {
+    printGreen(apartment!.images[0].image.toString());
     return Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(image: networkImage),
-          ),
+          decoration: apartment != null
+              ? BoxDecoration(
+                  image: DecorationImage(
+                    image: fetchImageFromDB(apartment!.images[0].image),
+                  ),
+                )
+              : null,
         ),
         Positioned(
           right: 0,

@@ -7,6 +7,7 @@ import 'package:booking/data/sections/appartement_details_view/section_location.
 import 'package:booking/data/sections/appartement_details_view/section_request_to_book_and_price.dart';
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class AppartementDetailsView extends StatelessWidget {
@@ -14,6 +15,8 @@ class AppartementDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ApartmentType apartment =
+        (ModalRoute.of(context)?.settings.arguments as Map)["apartment"];
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -23,7 +26,9 @@ class AppartementDetailsView extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: AspectRatio(
                     aspectRatio: 3 / 2,
-                    child: SectionHeaderAndAppartementImages(),
+                    child: SectionHeaderAndAppartementImages(
+                      apartment: apartment,
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -37,12 +42,12 @@ class AppartementDetailsView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SectionTitleAndPosition(),
-                        SectionAppartementFeature(),
-                        SectionLandLordProfile(),
-                        SectionDescription(),
-                        SectionAmentions(),
-                        SectionLocation(),
+                        SectionTitleAndPosition(apartment: apartment),
+                        SectionAppartementFeature(apartment: apartment),
+                        SectionLandLordProfile(apartment: apartment),
+                        SectionDescription(apartment: apartment),
+                        SectionAmentions(apartment: apartment),
+                        SectionLocation(apartment: apartment),
                       ],
                     ),
                   ),
@@ -51,7 +56,7 @@ class AppartementDetailsView extends StatelessWidget {
             ),
             Align(
               alignment: AlignmentGeometry.bottomCenter,
-              child: SectionRequestToBookAndPrice(),
+              child: SectionRequestToBookAndPrice(apartment: apartment),
             ),
           ],
         ),

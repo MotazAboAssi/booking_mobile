@@ -1,9 +1,12 @@
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class SectionLocation extends StatelessWidget {
-  const SectionLocation({super.key});
+  final ApartmentType apartment;
+
+  const SectionLocation({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {

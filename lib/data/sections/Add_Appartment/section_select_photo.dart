@@ -1,9 +1,16 @@
 import 'dart:ui' as border_type;
 
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_states.dart';
+import 'package:booking/types/apartment_type.dart';
+import 'package:booking/types/image_from_apartment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -14,79 +21,109 @@ class SectionSelectPhoto extends StatefulWidget {
   State<SectionSelectPhoto> createState() => _SectionSelectPhotoState();
 }
 
-class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
-  // للـ Mobile
+class _SectionSelectPhotoState extends State<SectionSelectPhoto>
+    with AutomaticKeepAliveClientMixin {
   final List<File> selectedImages = [];
-
-  // للـ Web
-  final List<Uint8List> webImages = [];
-
   Future pickImages() async {
     final picker = ImagePicker();
+    final picked = await picker.pickMultiImage(imageQuality: 80);
+    if (picked.isEmpty) return;
 
-    if (kIsWeb) {
-      final picked = await picker.pickMultiImage(imageQuality: 80);
-      if (picked.isEmpty) return;
-
-      List<Uint8List> temp = [];
-      for (var file in picked) {
-        final bytes = await file.readAsBytes();
-        temp.add(bytes);
-      }
-
-      setState(() {
-        webImages.addAll(temp);
-      });
-    } else {
-      final picked = await picker.pickMultiImage(imageQuality: 80);
-      if (picked.isEmpty) return;
-
-      setState(() {
-        selectedImages.addAll(picked.map((e) => File(e.path)));
-      });
-    }
+    setState(() {
+      selectedImages.addAll(picked.map((e) => File(e.path)));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    printYallow(selectedImages.toString());
+    final double radiusCircul = 2;
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(rem(1)),
           child: GestureDetector(
-            onTap: pickImages,
+            onTap: () async {
+              try {
+                await pickImages();
+
+                ApartmentType apartment = BlocProvider.of<AddApartmentCubit>(
+                  context,
+                ).state.apartment;
+                for (int i = 0; i < selectedImages.length; i++) {
+                  apartment.images.add(
+                    ImageFromApartment(
+                      id: -1,
+                      idApartment: -1,
+                      image: selectedImages[i].path,
+                    ),
+                  );
+                }
+              } catch (e) {
+                printRed(e.toString());
+              }
+            },
             child: DottedBorder(
               options: RoundedRectDottedBorderOptions(
-                radius: Radius.circular(12),
-                color: primary,
+                radius: Radius.circular(rem(1.4)),
+                color: fourthly,
                 strokeWidth: 2,
                 dashPattern: [6, 4],
                 padding: EdgeInsets.all(3),
               ),
-              child: Container(
-                color: const Color.fromARGB(255, 172, 217, 238),
-                height: 150,
-                width: double.infinity,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.add_photo_alternate,
-                        color: border_type.Color.fromARGB(255, 59, 56, 245),
-                        size: 40,
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        "Add Photos",
-                        style: TextStyle(color: primary, fontSize: 16),
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        "Ubload at least 5 photos of your apartment",
-                        style: TextStyle(color: primary, fontSize: 10),
-                      ),
-                    ],
+              child: AspectRatio(
+                aspectRatio: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: fourthly.withAlpha(128),
+                    borderRadius: BorderRadius.circular(rem(1.4)),
+                  ),
+                  child: Center(
+                    child: Column(
+                      spacing: 6,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: rem(radiusCircul - 0.5),
+                          backgroundColor: fourthly.shade700,
+                          child: Icon(
+                            Icons.add_photo_alternate,
+                            color: thirdly,
+                            size: rem(radiusCircul),
+                          ),
+                        ),
+                        Text(
+                          "Add Photos",
+                          style: TextStyle(
+                            fontSize: rem(1),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Upload at least 5 photos of your apartment",
+                          style: TextStyle(
+                            fontSize: rem(0.9),
+                            color: const border_type.Color.fromARGB(
+                              255,
+                              92,
+                              92,
+                              92,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(rem(0.5)),
+                          decoration: BoxDecoration(
+                            color: fourthly.shade700,
+                            borderRadius: BorderRadius.circular(rem(0.4)),
+                          ),
+                          child: Text(
+                            "Uplaod",
+                            style: TextStyle(color: thirdly),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -95,11 +132,10 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
         ),
         const SizedBox(height: 20),
         SizedBox(
-          height: selectedImages.isEmpty && webImages.isEmpty ? 0 : 120,
+          height: selectedImages.isEmpty ? 0 : 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              // صور Mobile
               ...selectedImages.asMap().entries.map((entry) {
                 int index = entry.key;
                 File file = entry.value;
@@ -123,49 +159,12 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
                           onTap: () {
                             setState(() {
                               selectedImages.removeAt(index);
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black54,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              // صور Web
-              ...webImages.asMap().entries.map((entry) {
-                int index = entry.key;
-                Uint8List bytes = entry.value;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.memory(
-                          bytes,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              webImages.removeAt(index);
+
+                              ApartmentType apartment =
+                                  BlocProvider.of<AddApartmentCubit>(
+                                    context,
+                                  ).state.apartment;
+                              apartment.images.removeAt(index);
                             });
                           },
                           child: Container(
@@ -191,4 +190,8 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

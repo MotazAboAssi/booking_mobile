@@ -14,7 +14,7 @@ class _BookingConfirmationPageState extends State<BookingConfirme> {
 
   void _confirmPayment() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      final data = _formKey.currentState!.value;
+      // final data = _formKey.currentState!.value;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Payment Confirmed ✅')));

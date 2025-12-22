@@ -1,8 +1,11 @@
-import 'package:booking/helper/constant/theme.dart' ;
+import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class SectionAppartementFeature extends StatelessWidget {
-  const SectionAppartementFeature({super.key});
+  final ApartmentType apartment;
+
+  const SectionAppartementFeature({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {
@@ -15,22 +18,15 @@ class SectionAppartementFeature extends StatelessWidget {
             Row(
               spacing: 5,
               children: [
-                Icon(Icons.bed, color: fourthly),
-                Text("3 Beds"),
-              ],
-            ),
-            Row(
-              spacing: 5,
-              children: [
-                Icon(Icons.bathtub_sharp, color: fourthly),
-                Text("2 baths"),
+                Icon(Icons.square, color: fourthly),
+                Text("${apartment.rooms} rooms"),
               ],
             ),
             Row(
               spacing: 5,
               children: [
                 Icon(Icons.square_foot_sharp, color: fourthly),
-                Text("150 m\u00B2"),
+                Text("${apartment.space} m\u00B2"),
               ],
             ),
           ],

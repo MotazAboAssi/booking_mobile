@@ -1,10 +1,12 @@
 import 'package:booking/data/models/appartement_details_view/amention_display.dart';
-import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class SectionAmentions extends StatelessWidget {
-  const SectionAmentions({super.key});
+  final ApartmentType apartment;
+
+  const SectionAmentions({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class SectionAmentions extends StatelessWidget {
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
             ),
-            children: amentionDisplay(context, amention),
+            children: amentionDisplay(context, apartment.features),
           ),
         ),
       ],
