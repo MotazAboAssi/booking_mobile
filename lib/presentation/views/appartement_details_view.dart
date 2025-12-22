@@ -15,7 +15,7 @@ class AppartementDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ApartmentTypeForTenant apartment =
+    final ApartmentType apartment =
         (ModalRoute.of(context)?.settings.arguments as Map)["apartment"];
     return Scaffold(
       body: SafeArea(
@@ -26,7 +26,9 @@ class AppartementDetailsView extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: AspectRatio(
                     aspectRatio: 3 / 2,
-                    child: SectionHeaderAndAppartementImages(apartment: apartment,),
+                    child: SectionHeaderAndAppartementImages(
+                      apartment: apartment,
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(

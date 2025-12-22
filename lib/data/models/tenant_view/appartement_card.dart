@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class AppartementCard extends StatelessWidget {
   final bool isFavorite;
-  final ApartmentTypeForTenant? apartment;
+  final ApartmentType? apartment;
   const AppartementCard({super.key, required this.isFavorite, this.apartment});
 
   @override

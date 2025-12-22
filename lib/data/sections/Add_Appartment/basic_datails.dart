@@ -1,9 +1,16 @@
+import 'package:booking/data/models/appartement_details_view/amention_card.dart';
+import 'package:booking/helper/constant/amentions.dart';
+import 'package:booking/helper/constant/cities.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_cubit.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BasicDatails extends StatefulWidget {
-  const BasicDatails({super.key});
+  const  BasicDatails({super.key});
 
   @override
   State<BasicDatails> createState() => _BasicDatailsState();
@@ -11,13 +18,12 @@ class BasicDatails extends StatefulWidget {
 
 class _BasicDatailsState extends State<BasicDatails> {
   final _formKey = GlobalKey<FormState>();
-
   TextEditingController countryController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController roomsController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController spaceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-
   TextEditingController fromDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
 
@@ -26,17 +32,17 @@ class _BasicDatailsState extends State<BasicDatails> {
   DateTime? toDate;
 
   /// قائمة الميزات
-  List<String> amenities = [
-    "Wifi",
-    "Parking",
-    "Air Conditioner",
-    "Heater",
-    "Balcony",
-    "Elevator",
-  ];
+  // List<String> amenities = [
+  //   "Wifi",
+  //   "Parking",
+  //   "Air Conditioner",
+  //   "Heater",
+  //   "Balcony",
+  //   "Elevator",
+  // ];
 
   /// الميزات المختارة
-  List<String> selectedAmenities = [];
+  List<int> selectedAmenities = [];
 
   /// دالة اختيار التاريخ
   Future<void> pickDate(TextEditingController controller, bool isFrom) async {
@@ -73,6 +79,7 @@ class _BasicDatailsState extends State<BasicDatails> {
         children: [
           Form(
             key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Padding(
               padding: EdgeInsets.all(8),
               child: Column(
@@ -83,13 +90,25 @@ class _BasicDatailsState extends State<BasicDatails> {
                       Text("Country", style: TextStyle(color: secondary)),
                     ],
                   ),
-                  TextFormField(
-                    controller: countryController,
+                  DropdownButtonFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Country is required";
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       hintText: "eg. USA",
-                      hintStyle: TextStyle(fontSize: 12),
+                      hintStyle: TextStyle(fontSize: rem(1)),
                     ),
-                    validator: (v) => v!.isEmpty ? "Country is required" : null,
+                    items: cities
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                    onChanged: (String? value) {
+                      if (value != null) {
+                        cityController.text = value;
+                      }
+                    },
                   ),
                   SizedBox(height: 10),
 
@@ -99,13 +118,27 @@ class _BasicDatailsState extends State<BasicDatails> {
                       Text("City", style: TextStyle(color: secondary)),
                     ],
                   ),
-                  TextFormField(
-                    controller: cityController,
+                  DropdownButtonFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "City is required";
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       hintText: "eg. New York",
                       hintStyle: TextStyle(fontSize: 12),
                     ),
-                    validator: (v) => v!.isEmpty ? "City is required" : null,
+                    items: cities
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                    onChanged: (String? value) {
+                      if (value != null) {
+                        setState(() {
+                          cityController.text = value;
+                        });
+                      }
+                    },
                   ),
                   SizedBox(height: 10),
 
@@ -124,6 +157,29 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ),
                     validator: (v) {
                       if (v!.isEmpty) return "Rooms number is required";
+                      if (int.tryParse(v) == null) {
+                        return "Enter a valid number";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 10),
+
+                  /// ROOMS NUMBER
+                  Row(
+                    children: [
+                      Text("Space m\u00B2", style: TextStyle(color: secondary)),
+                    ],
+                  ),
+                  TextFormField(
+                    controller: spaceController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "eg. 120",
+                      hintStyle: TextStyle(fontSize: 12),
+                    ),
+                    validator: (v) {
+                      if (v!.isEmpty) return "Space number is required";
                       if (int.tryParse(v) == null) {
                         return "Enter a valid number";
                       }
@@ -183,72 +239,109 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
 
-                  Column(
-                    children: amenities.map((item) {
-                      return CheckboxListTile(
-                        value: selectedAmenities.contains(item),
-                        title: Text(item),
-                        onChanged: (bool? selected) {
-                          setState(() {
-                            if (selected == true) {
-                              selectedAmenities.add(item);
-                            } else {
-                              selectedAmenities.remove(item);
-                            }
-                          });
-                        },
-                      );
-                    }).toList(),
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: ListView(
+                      children: amentions.map((item) {
+                        return CheckboxListTile(
+                          value: selectedAmenities.contains(item.id),
+                          title: AmentionCard(
+                            icon: item.icon,
+                            title: item.title,
+                            fontSize: 1,
+                            iconsSize: 2,
+                          ),
+                          onChanged: (bool? selected) {
+                            setState(() {
+                              if (selected == true) {
+                                selectedAmenities.add(item.id);
+                              } else {
+                                selectedAmenities.remove(item.id);
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
                   ),
-
                   SizedBox(height: 10),
-
-                  /// DATE FROM
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Available From",
-                        style: TextStyle(color: secondary),
+                      /// DATE FROM
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Available From",
+                                  style: TextStyle(color: secondary),
+                                ),
+                              ],
+                            ),
+                            TextFormField(
+                              controller: fromDateController,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                hintText: "Select start date",
+                                hintStyle: TextStyle(fontSize: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(rem(1)),
+                                ),
+                              ),
+                              validator: (v) =>
+                                  v!.isEmpty ? "Start date is required" : null,
+                              onTap: () => pickDate(fromDateController, true),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      /// DATE TO
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Available To",
+                                  style: TextStyle(color: secondary),
+                                ),
+                              ],
+                            ),
+                            TextFormField(
+                              controller: toDateController,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                hintText: "Select end date",
+                                hintStyle: TextStyle(fontSize: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(rem(1)),
+                                ),
+                              ),
+                              validator: (v) {
+                                if (v!.isEmpty) return "End date is required";
+                                if (fromDate == null)
+                                  return "Select start date first";
+                                if (toDate == null) return "Invalid end date";
+
+                                if (toDate!.isBefore(fromDate!)) {
+                                  return "End date cannot be before start date";
+                                }
+                                return null;
+                              },
+                              onTap: () => pickDate(toDateController, false),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
-                  ),
-                  TextFormField(
-                    controller: fromDateController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      hintText: "Select start date",
-                      hintStyle: TextStyle(fontSize: 12),
-                    ),
-                    validator: (v) =>
-                        v!.isEmpty ? "Start date is required" : null,
-                    onTap: () => pickDate(fromDateController, true),
-                  ),
-                  SizedBox(height: 10),
-
-                  /// DATE TO
-                  Row(
-                    children: [
-                      Text("Available To", style: TextStyle(color: secondary)),
-                    ],
-                  ),
-                  TextFormField(
-                    controller: toDateController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      hintText: "Select end date",
-                      hintStyle: TextStyle(fontSize: 12),
-                    ),
-                    validator: (v) {
-                      if (v!.isEmpty) return "End date is required";
-                      if (fromDate == null) return "Select start date first";
-                      if (toDate == null) return "Invalid end date";
-
-                      if (toDate!.isBefore(fromDate!)) {
-                        return "End date cannot be before start date";
-                      }
-                      return null;
-                    },
-                    onTap: () => pickDate(toDateController, false),
                   ),
                 ],
               ),
@@ -272,8 +365,25 @@ class _BasicDatailsState extends State<BasicDatails> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      print("Published successfully");
-                      print("Selected: $selectedAmenities");
+                      ApartmentType apartment =
+                          BlocProvider.of<AddApartmentCubit>(
+                            context,
+                          ).state.apartment;
+                      try {
+                        apartment.features = selectedAmenities;
+                        apartment.city = countryController.text;
+                        apartment.town = cityController.text;
+                        apartment.description = descriptionController.text;
+                        apartment.priceForMonth = int.parse(
+                          priceController.text,
+                        );
+                        apartment.rooms = int.parse(roomsController.text);
+                        apartment.space = int.parse(spaceController.text);
+                        printGreen(apartment.city);
+                      } catch (e) {
+                        printRed(e.toString());
+                      }
+                      apartment = ApartmentType.empty();
                     }
                   },
                   style: ElevatedButton.styleFrom(

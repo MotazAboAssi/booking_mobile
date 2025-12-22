@@ -7,7 +7,7 @@ class TenantViewInitial extends TenantViewStateCubit {}
 class TenantViewLoading extends TenantViewStateCubit {}
 
 class TenantViewSucceeful extends TenantViewStateCubit {
-  final List<ApartmentTypeForTenant> apartment;
+  final List<ApartmentType> apartment;
   TenantViewSucceeful({required this.apartment});
 }
 

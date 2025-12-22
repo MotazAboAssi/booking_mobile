@@ -1,4 +1,5 @@
 import 'package:booking/data/models/tenant_view/city_card.dart';
+import 'package:booking/helper/constant/cities.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +24,9 @@ class SectionSearchIn extends StatelessWidget {
             aspectRatio: 16 / 9,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemCount: cities.length,
               itemBuilder: (context, index) {
-                return CityCard();
+                return CityCard(city: cities[index]);
               },
             ),
           ),

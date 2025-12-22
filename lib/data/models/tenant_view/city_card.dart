@@ -3,9 +3,9 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
 import 'package:flutter/material.dart';
 
-
 class CityCard extends StatelessWidget {
-  const CityCard({super.key});
+  final String city;
+  const CityCard({super.key, required this.city});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CityCard extends StatelessWidget {
             ),
             Center(
               child: Text(
-                "Damascus",
+                city,
                 style: TextStyle(
                   color: thirdly,
                   fontSize: rem(1.1),

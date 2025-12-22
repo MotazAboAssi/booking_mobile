@@ -1,7 +1,7 @@
 class ImageFromApartment {
-  final int id;
-  final int idApartment;
-  final String image;
+   int id;
+   int idApartment;
+   String image;
 
   ImageFromApartment({
     required this.id,

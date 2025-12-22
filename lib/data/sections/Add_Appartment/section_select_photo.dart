@@ -1,9 +1,16 @@
 import 'dart:ui' as border_type;
 
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_states.dart';
+import 'package:booking/types/apartment_type.dart';
+import 'package:booking/types/image_from_apartment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -49,44 +56,94 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
 
   @override
   Widget build(BuildContext context) {
+    printYallow(selectedImages.toString());
+    final double radiusCircul = 2;
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding:  EdgeInsets.all(rem(1)),
           child: GestureDetector(
-            onTap: pickImages,
+            onTap: () async {
+              try {
+                await pickImages();
+                ApartmentType apartment = BlocProvider.of<AddApartmentCubit>(
+                  context,
+                ).state.apartment;
+
+                for (int i = 0; i < selectedImages.length; i++) {
+                  apartment.images.add(
+                    ImageFromApartment(
+                      id: -1,
+                      idApartment: -1,
+                      image: selectedImages[i].path,
+                    ),
+                  );
+                }
+              } catch (e) {
+                printRed(e.toString());
+              }
+            },
             child: DottedBorder(
               options: RoundedRectDottedBorderOptions(
-                radius: Radius.circular(12),
-                color: primary,
+                radius: Radius.circular(rem(1.4)),
+                color: fourthly,
                 strokeWidth: 2,
                 dashPattern: [6, 4],
                 padding: EdgeInsets.all(3),
               ),
-              child: Container(
-                color: const Color.fromARGB(255, 172, 217, 238),
-                height: 150,
-                width: double.infinity,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.add_photo_alternate,
-                        color: border_type.Color.fromARGB(255, 59, 56, 245),
-                        size: 40,
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        "Add Photos",
-                        style: TextStyle(color: primary, fontSize: 16),
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        "Ubload at least 5 photos of your apartment",
-                        style: TextStyle(color: primary, fontSize: 10),
-                      ),
-                    ],
+              child: AspectRatio(
+                aspectRatio: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: fourthly.withAlpha(128),
+                    borderRadius: BorderRadius.circular(rem(1.4)),
+                  ),
+                  child: Center(
+                    child: Column(
+                      spacing: 6,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: rem(radiusCircul - 0.5),
+                          backgroundColor: fourthly.shade700,
+                          child: Icon(
+                            Icons.add_photo_alternate,
+                            color: thirdly,
+                            size: rem(radiusCircul),
+                          ),
+                        ),
+                        Text(
+                          "Add Photos",
+                          style: TextStyle(
+                            fontSize: rem(1),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Upload at least 5 photos of your apartment",
+                          style: TextStyle(
+                            fontSize: rem(0.9),
+                            color: const border_type.Color.fromARGB(
+                              255,
+                              92,
+                              92,
+                              92,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(rem(0.5)),
+                          decoration: BoxDecoration(
+                            color: fourthly.shade700,
+                            borderRadius: BorderRadius.circular(rem(0.4)),
+                          ),
+                          child: Text(
+                            "Uplaod",
+                            style: TextStyle(color: thirdly),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -123,6 +180,12 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto> {
                           onTap: () {
                             setState(() {
                               selectedImages.removeAt(index);
+
+                              ApartmentType apartment =
+                                  BlocProvider.of<AddApartmentCubit>(
+                                    context,
+                                  ).state.apartment;
+                              apartment.images.removeAt(index);
                             });
                           },
                           child: Container(

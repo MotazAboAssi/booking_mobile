@@ -4,7 +4,7 @@ import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class SectionDescription extends StatelessWidget {
-  final ApartmentTypeForTenant apartment;
+  final ApartmentType apartment;
 
   const SectionDescription({super.key, required this.apartment});
 

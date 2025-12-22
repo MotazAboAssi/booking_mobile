@@ -8,7 +8,7 @@ class TenantViewCubit extends Cubit<TenantViewStateCubit> {
   Future<void> getAllApartmentForTenant() async {
     try {
       emit(TenantViewLoading());
-      final List<ApartmentTypeForTenant> apartments = await HttpRequest()
+      final List<ApartmentType> apartments = await HttpRequest()
           .getAllApartementForTenant();
       emit(TenantViewSucceeful(apartment: apartments));
     } catch (e) {
