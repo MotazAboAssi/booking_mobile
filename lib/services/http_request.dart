@@ -19,7 +19,7 @@ class HttpRequest {
   );
 
   HttpRequest();
-
+// ************** for auth **************
   Future<Map<String, dynamic>> register(UserRegisterType user) async {
     try {
       printGreen(user.phone);
@@ -131,21 +131,18 @@ class HttpRequest {
       printRed("ERROR : $e");
     }
   }
+// ************** for auth **************
 
-  Future<List<UserRegisterType>> getAllTemporaryUsers() async {
+// ************** for admin **************
+  Future<bool> deleteUserByID(int idUser) async {
     final String? token = await AuthStorage().readData("token");
     try {
-      Response response = await dio.get(
-        "/getAllTemporaryUsers",
+      await dio.delete(
+        "/deleteUser/$idUser",
         options: Options(headers: authrizationHeaders(token!)),
       );
-      final List<dynamic> data = response.data;
-      List<UserRegisterType> temporaryUsers = [];
-      for (int i = 0; i < data.length; i++) {
-        temporaryUsers.add(UserRegisterType.fromJson(data[i]));
-      }
       printGreen("DONE");
-      return temporaryUsers;
+      return true;
     } on DioException catch (e) {
       printRed("ERROR : $e");
       throw Exception([e]);
@@ -174,6 +171,31 @@ class HttpRequest {
     }
   }
 
+
+  Future<List<UserRegisterType>> getAllTemporaryUsers() async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/getAllTemporaryUsers",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      final List<dynamic> data = response.data;
+      List<UserRegisterType> temporaryUsers = [];
+      for (int i = 0; i < data.length; i++) {
+        temporaryUsers.add(UserRegisterType.fromJson(data[i]));
+      }
+      printGreen("DONE");
+      return temporaryUsers;
+    } on DioException catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    } catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    }
+  }
+
+
   Future<List<UserRegisterType>> allUsers() async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -197,6 +219,7 @@ class HttpRequest {
     }
   }
 
+// ************** for admin **************
   Future<List<ApartmentType>> apartment() async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -339,4 +362,6 @@ class HttpRequest {
       printRed(e.toString());
     }
   }
+
+Future<void> 
 }
