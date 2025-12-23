@@ -125,7 +125,7 @@ class HttpRequest {
         "/logout",
         options: Options(headers: authrizationHeaders(token ?? "")),
       );
-      await AuthStorage().deleteData("token");
+      await AuthStorage().deleteAllData();
       printGreen("DONE");
     } catch (e) {
       printRed("ERROR : $e");
