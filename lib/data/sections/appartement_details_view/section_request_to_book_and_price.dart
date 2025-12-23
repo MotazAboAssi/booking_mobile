@@ -3,6 +3,7 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class SectionRequestToBookAndPrice extends StatelessWidget {
@@ -54,7 +55,7 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
                       );
                   if (picked != null) {
                     try {
-                      await HttpRequest().displayBookingsApartmentByID(
+                      await HttpRequest().bookingParticularApartmentByID(
                         apartment.idApartment,
                         picked.start,
                         picked.end,

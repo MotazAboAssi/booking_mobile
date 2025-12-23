@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:booking/data/sections/auth/login_view/section_login.dart';
 import 'package:booking/data/sections/auth/login_view/section_logo.dart';
 import 'package:booking/helper/constant/theme.dart';
@@ -29,26 +27,24 @@ class _LoginViewState extends State<LoginView> {
       builder: (BuildContext context, state) {
         // log((state is NavigateInitial).toString());
         if (state is NavigateInitial) {
-          if (state is NavigateLoading) {
-            return Scaffold(
-              body: Container(
-                color: Colors.blue,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.15,
-                      ),
-                      child: SectionLogo(),
+          return Scaffold(
+            body: Container(
+              color: Colors.blue,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.15,
                     ),
-                    Expanded(child: SectionLogin()),
-                  ],
-                ),
+                    child: SectionLogo(),
+                  ),
+                  Expanded(child: SectionLogin()),
+                ],
               ),
-            );
-          }
-        } else if (state is NavigateTo) {
+            ),
+          );
+        } else{// if (state is NavigateTo) {
           return Scaffold(
             body: Center(
               child: CircleAvatar(

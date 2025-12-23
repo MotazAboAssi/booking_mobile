@@ -13,7 +13,6 @@ class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
     // await AuthStorage().deleteAllData();
     final String? role = await AuthStorage().readData("role");
     emit(NavigateLoading());
-    printGreen(state.role.toString());
     if (role != null && role.isNotEmpty) {
       emit(NavigateTo(role: role));
       if (state.role == UserRole.tenant.name) {

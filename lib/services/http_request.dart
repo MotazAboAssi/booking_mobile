@@ -20,7 +20,7 @@ class HttpRequest {
   );
 
   HttpRequest();
-// ************** for auth **************
+  // ************** for auth **************
   Future<Map<String, dynamic>> register(UserRegisterType user) async {
     try {
       printGreen(user.phone);
@@ -82,14 +82,14 @@ class HttpRequest {
       Response response = await dio.post(
         "/login",
         data: {
-          'phone': user["phone"].toString().substring(5),
+          'phone': user["phone"].tpseoString().substring(5),
           'password': user["password"],
         },
       );
 
       await AuthStorage().writeData("token", response.data["token"]);
       await AuthStorage().writeData("role", response.data["user"]["role"]);
-      
+
       printGreen('token : ${response.data["token"]}');
       printGreen('response : ${response.data}');
       return UserRegisterType.fromJson(response.data["user"]);
@@ -129,9 +129,9 @@ class HttpRequest {
       printRed("ERROR : $e");
     }
   }
-// ************** for auth **************
+  // ************** for auth **************
 
-// ************** for admin **************
+  // ************** for admin **************
   Future<bool> deleteUserByID(int idUser) async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -169,7 +169,6 @@ class HttpRequest {
     }
   }
 
-
   Future<List<UserRegisterType>> getAllTemporaryUsers() async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -192,7 +191,6 @@ class HttpRequest {
       throw Exception([e]);
     }
   }
-
 
   Future<List<UserRegisterType>> allUsers() async {
     final String? token = await AuthStorage().readData("token");
@@ -217,7 +215,39 @@ class HttpRequest {
     }
   }
 
-// ************** for admin **************
+  // ************** for admin **************
+  // ************** for landlord **************
+
+  Future<ApartmentType> displayBookingsApartmentByID(
+    int idApartment,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    final String? token = await AuthStorage().readData("token");
+
+    try {
+      Response response = await dio.get(
+        "/BookingsApartment/$idApartment",
+        options: Options(
+          headers: {
+            ...authrizationHeaders(token!),
+            "start_date": startDate,
+            "end_date": endDate,
+          },
+        ),
+      );
+
+      printGreen(response.data.toString());
+      return ApartmentType.fromJson(response.data);
+    } on DioException catch (e) {
+      printRed("ERROR : ${e.response?.data.toString()}");
+      throw Exception([e]);
+    } catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    }
+  }
+
   Future<List<ApartmentType>> apartment() async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -242,36 +272,24 @@ class HttpRequest {
     }
   }
 
-  Future<ApartmentType> displayBookingsApartmentByID(
-    int idApartment,
-    DateTime startDate,
-    DateTime endDate,
-  ) async {
+  Future<void> addApartmentForLandlord(ApartmentType apartment) async {
     final String? token = await AuthStorage().readData("token");
-
+    final formData = await createFormData(apartment.images, {});
     try {
-      Response response = await dio.get(
-        "/BookingsApartment/$idApartment",
-        options: Options(
-          headers: {
-            'Authorization':
-                'Bearer 3|3ikPhaBT21Du9u66sqxjbDAVBujREDbtAEyEKmNJe061c959',
-            "start_date": startDate,
-            "end_date": endDate,
-          },
-        ),
+      Response response = await dio.post(
+        "$api/apartment?city=${apartment.city}&town=${apartment.town}&space=${apartment.space}&rooms=${apartment.rooms}&price_for_month=${apartment.priceForMonth}&description=${apartment.description}&features=${apartment.features.toString()}",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+        data: formData,
       );
-
-      printGreen(response.data.toString());
-      return ApartmentType.fromJson(response.data);
-    } on DioException catch (e) {
-      printRed("ERROR : ${e.response?.data.toString()}");
-      throw Exception([e]);
+      printGreen(response.data);
     } catch (e) {
-      printRed("ERROR : $e");
-      throw Exception([e]);
+      printRed(e.toString());
+      throw Exception(e);
     }
   }
+
+  // ************** for landlord **************
+  // ************** for tenant **************
 
   // Future<ApartmentType> bookingsLandlord() async {
   //   final String? token = await AuthStorage().readData("token");
@@ -330,22 +348,6 @@ class HttpRequest {
     }
   }
 
-  Future<void> addApartmentForLandlord(ApartmentType apartment) async {
-    final String? token = await AuthStorage().readData("token");
-    final formData = await createFormData(apartment.images, {});
-    try {
-      Response response = await dio.post(
-        "$api/apartment?city=${apartment.city}&town=${apartment.town}&space=${apartment.space}&rooms=${apartment.rooms}&price_for_month=${apartment.priceForMonth}&description=${apartment.description}&features=${apartment.features.toString()}",
-        options: Options(headers: authrizationHeaders(token ?? "")),
-        data: formData,
-      );
-      printGreen(response.data);
-    } catch (e) {
-      printRed(e.toString());
-      throw Exception(e);
-    }
-  }
-
   Future<void> displayAvailableDateForParticularApartment(int id) async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -358,4 +360,33 @@ class HttpRequest {
     }
   }
 
+  Future<void> bookingParticularApartmentByID(
+    int id,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      printGrey(startDate.toIso8601String().split("T")[0].toString());
+      printGrey(endDate.toString());
+      Response response = await dio.post(
+        "/apartments/booking/$id",
+        data: {
+          "start_date": startDate.toIso8601String().split("T")[0],
+          "end_date": endDate.toIso8601String().split("T")[0],
+        },
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      printGreen(response.data.toString());
+    } on DioException catch (e) {
+      printYallow(e.response.toString());
+      printYallow(e.error.toString());
+      printYallow(e.message.toString());
+      printYallow(e.type.name);
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
 }
+
+// ************** for tenant **************

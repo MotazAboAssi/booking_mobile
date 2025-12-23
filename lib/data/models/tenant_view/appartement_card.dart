@@ -1,9 +1,9 @@
+import 'dart:developer';
+
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/print.dart';
-import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
@@ -25,13 +25,15 @@ class AppartementCard extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () async {
-                  final token = await AuthStorage().readData("token");
-                  printGreen(token!);
-                  Navigator.pushNamed(
-                    context,
-                    appartementDetailsView,
-                    arguments: {"apartment": apartment},
-                  );
+                  try {
+                    Navigator.pushNamed(
+                      context,
+                      appartementDetailsView,
+                      arguments: {"apartment": apartment},
+                    );
+                  } catch (e) {
+                    log(e.toString());
+                  }
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
