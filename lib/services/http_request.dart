@@ -324,4 +324,19 @@ class HttpRequest {
       throw Exception(e);
     }
   }
+
+  // Future<void> filterForTenant(){
+
+  // }
+  Future<void> displayAvailableDateForParticularApartment(int id) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/apartments/$id",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
 }
