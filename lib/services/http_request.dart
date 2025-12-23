@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
@@ -49,12 +50,8 @@ class HttpRequest {
     } on PathNotFoundException catch (_) {
       if (user.profileImage.path == "") {
         throw Exception("pls, enter profile image because is required .");
-      } else if (user.profileImage.path != "") {
-        throw Exception("pls, try again enter profile image .");
       } else if (user.idImage.path == "") {
         throw Exception("pls, enter id image because is required .");
-      } else if (user.idImage.path != "") {
-        throw Exception("pls, try again enter id image .");
       } else {
         throw Exception("try again enter either same or another image .");
       }
@@ -92,8 +89,9 @@ class HttpRequest {
 
       await AuthStorage().writeData("token", response.data["token"]);
       await AuthStorage().writeData("role", response.data["user"]["role"]);
-
+      
       printGreen('token : ${response.data["token"]}');
+      printGreen('response : ${response.data}');
       return UserRegisterType.fromJson(response.data["user"]);
     } on DioException catch (e) {
       printRed(e.response.toString());
@@ -244,7 +242,7 @@ class HttpRequest {
     }
   }
 
-  Future<ApartmentType> bookingsApartmentByID(
+  Future<ApartmentType> displayBookingsApartmentByID(
     int idApartment,
     DateTime startDate,
     DateTime endDate,
@@ -348,9 +346,6 @@ class HttpRequest {
     }
   }
 
-  // Future<void> filterForTenant(){
-
-  // }
   Future<void> displayAvailableDateForParticularApartment(int id) async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -363,5 +358,4 @@ class HttpRequest {
     }
   }
 
-Future<void> 
 }

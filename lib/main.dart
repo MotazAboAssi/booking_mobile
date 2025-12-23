@@ -63,15 +63,7 @@ class MyApp extends StatelessWidget {
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-      // initialRoute: loginView,
-      home: Scaffold(
-        body: FutureBuilder(
-          future: HttpRequest().getAllApartementForTenant(),
-          builder: (context, snapshot) {
-            return Text("data");
-          },
-        ),
-      ),
+      initialRoute: loginView,
     );
   }
 }

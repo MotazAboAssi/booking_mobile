@@ -65,6 +65,7 @@ class SectionGroupOfInputField extends StatelessWidget {
           validatorsProps: [FormBuilderValidators.lastName()],
         ),
         FormBuilderDateTimePicker(
+          
           keyboardType: TextInputType.none,
           inputType: InputType.date,
           initialEntryMode: DatePickerEntryMode.calendarOnly,

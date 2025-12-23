@@ -29,33 +29,38 @@ class _LoginViewState extends State<LoginView> {
       builder: (BuildContext context, state) {
         // log((state is NavigateInitial).toString());
         if (state is NavigateInitial) {
-          return Scaffold(
-            body: Container(
-              color: Colors.blue,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.15,
+          if (state is NavigateLoading) {
+            return Scaffold(
+              body: Container(
+                color: Colors.blue,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.15,
+                      ),
+                      child: SectionLogo(),
                     ),
-                    child: SectionLogo(),
-                  ),
-                  Expanded(child: SectionLogin()),
-                ],
+                    Expanded(child: SectionLogin()),
+                  ],
+                ),
+              ),
+            );
+          }
+        } else if (state is NavigateTo) {
+          return Scaffold(
+            body: Center(
+              child: CircleAvatar(
+                backgroundColor: fourthly,
+                radius: rem(5),
+                child: Icon(Icons.apartment, size: rem(5), color: thirdly),
               ),
             ),
           );
         }
-        return Scaffold(
-          body: Center(
-            child: CircleAvatar(
-              backgroundColor: fourthly,
-              radius: rem(5),
-              child: Icon(Icons.apartment, size: rem(5), color: thirdly),
-            ),
-          ),
-        );
+
+        return Container();
       },
     );
   }

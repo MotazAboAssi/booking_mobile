@@ -10,9 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
   NavigateFromLoginCubit() : super(NavigateInitial(role: ''));
   void routeFromLogin(BuildContext context) async {
+    // await AuthStorage().deleteAllData();
     final String? role = await AuthStorage().readData("role");
     emit(NavigateLoading());
+    printGreen(state.role.toString());
     if (role != null && role.isNotEmpty) {
+      emit(NavigateTo(role: role));
       if (state.role == UserRole.tenant.name) {
         navigateTo(context, tenantView);
       } else {
@@ -20,6 +23,5 @@ class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
       }
     }
     printRed("text");
-    emit(NavigateTo(role: role ?? ''));
   }
 }

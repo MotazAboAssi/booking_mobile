@@ -54,7 +54,7 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
                       );
                   if (picked != null) {
                     try {
-                      await HttpRequest().bookingsApartmentByID(
+                      await HttpRequest().displayBookingsApartmentByID(
                         apartment.idApartment,
                         picked.start,
                         picked.end,
