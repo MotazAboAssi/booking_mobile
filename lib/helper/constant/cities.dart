@@ -1,4 +1,5 @@
 List<String> cities = [
+  "As-Suwayda",
   "Abu Kamal",
   "Afrin",
   "Al-Bab",
@@ -22,6 +23,5 @@ List<String> cities = [
   "Qamishli",
   "Raqqa",
   "Salamiyah",
-  "As-Suwayda",
   "Tartus",
 ];

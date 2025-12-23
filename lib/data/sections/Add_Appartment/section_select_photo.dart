@@ -4,10 +4,8 @@ import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_cubit.dart';
-import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_states.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/image_from_apartment.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +34,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
 
   @override
   Widget build(BuildContext context) {
+    printGreen(selectedImages.toString());
     final double radiusCircul = 2;
     return Column(
       children: [

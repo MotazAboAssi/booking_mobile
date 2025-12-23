@@ -7,6 +7,8 @@ import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:booking/presentation/cubit/auth/login/login_state_cubit.dart';
+import 'package:booking/services/auth_storage.dart';
+import 'package:booking/types/user_role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -31,8 +33,13 @@ class ButtonSignIn extends StatelessWidget {
                 final Map<String, dynamic> input = form.value;
                 final cubit = BlocProvider.of<LoginCubit>(context);
                 try {
+                  final String? role = await AuthStorage().readData("role");
                   await cubit.login(input);
-                  // navigateTo(context, tenantView);
+                  if (role == UserRole.tenant.name) {
+                    navigateTo(context, tenantView);
+                  } else {
+                    navigateTo(context, landlordDashBoard);
+                  }
                 } catch (e) {
                   log(e.toString());
                 }

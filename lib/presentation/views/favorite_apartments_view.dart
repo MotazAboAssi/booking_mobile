@@ -14,7 +14,7 @@ class FavoriteApartments extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: AspectRatio(
                 aspectRatio: 1,
-                child: AppartementCard(isFavorite: true),
+                child: AppartementCard(),
               ),
             );
           },

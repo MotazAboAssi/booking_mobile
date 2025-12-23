@@ -2,16 +2,18 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class AppartementCard extends StatelessWidget {
-  final bool isFavorite;
   final ApartmentType? apartment;
-  const AppartementCard({super.key, required this.isFavorite, this.apartment});
+  const AppartementCard({super.key, this.apartment});
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isFavorite = ValueNotifier<bool>(false);
     return Card(
       color: thirdly,
       elevation: 0,
@@ -19,18 +21,20 @@ class AppartementCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 2),
       child: LayoutBuilder(
         builder: (context, card) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                appartementDetailsView,
-                arguments: {"apartment": apartment},
-              );
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
+          return Stack(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  final token = await AuthStorage().readData("token");
+                  printGreen(token!);
+                  Navigator.pushNamed(
+                    context,
+                    appartementDetailsView,
+                    arguments: {"apartment": apartment},
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: card.maxHeight * 0.6,
@@ -49,111 +53,143 @@ class AppartementCard extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                    Positioned(
-                      right: 10,
-                      top: 10,
-                      child: InkWell(
-                        child: CircleAvatar(
-                          backgroundColor: primary.withAlpha(125),
-                          child: Center(
-                            child: Icon(
-                              Icons.favorite,
-                              color: isFavorite
-                                  ? const Color.fromARGB(255, 255, 17, 0)
-                                  : thirdly,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  // color: Th,
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    spacing: 5,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
+                    Container(
+                      // color: Th,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        spacing: 5,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              LayoutBuilder(
+                                builder:
+                                    (
+                                      BuildContext context,
+                                      BoxConstraints constraints,
+                                    ) {
+                                      return SizedBox(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: constraints.maxWidth * 0.5,
+                                              child: Text(
+                                                "${apartment?.description}",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: rem(1),
+                                                  fontWeight: FontWeight.w900,
+                                                ),
+                                              ),
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "${apartment?.rating}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                              ),
                               Text(
-                                "Modern Apartement in Abdoun",
+                                "${apartment?.city}, ${apartment?.town}",
                                 style: TextStyle(
                                   fontSize: rem(1),
-                                  fontWeight: FontWeight.w900,
+                                  color: secondary,
                                 ),
                               ),
+                            ],
+                          ),
+                          Row(
+                            spacing: rem(1),
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Icon(Icons.square, color: secondary),
                                   Text(
-                                    "${apartment?.rating}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    "${apartment?.rooms} rooms",
+                                    style: TextStyle(color: secondary),
                                   ),
-                                  Icon(Icons.star, color: Colors.amber),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.square_foot_sharp,
+                                    color: secondary,
+                                  ),
+                                  Text(
+                                    "${apartment?.space} m\u00B2",
+                                    style: TextStyle(color: secondary),
+                                  ),
                                 ],
                               ),
                             ],
                           ),
-                          Text(
-                            "${apartment?.city}, ${apartment?.town}",
-                            style: TextStyle(
-                              fontSize: rem(1),
-                              color: secondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
                           Row(
                             children: [
-                              Icon(Icons.square, color: secondary),
                               Text(
-                                "${apartment?.rooms} rooms",
-                                style: TextStyle(color: secondary),
+                                "\$${apartment?.priceForMonth}",
+                                style: TextStyle(
+                                  fontSize: rem(1.5),
+                                  fontWeight: FontWeight.bold,
+                                  color: fourthly,
+                                ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.square_foot_sharp, color: secondary),
-                              Text(
-                                "${apartment?.space} m\u00B2",
-                                style: TextStyle(color: secondary),
-                              ),
+                              Text(" / month"),
                             ],
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "\$${apartment?.priceForMonth}",
-                            style: TextStyle(
-                              fontSize: rem(1.5),
-                              fontWeight: FontWeight.bold,
-                              color: fourthly,
-                            ),
-                          ),
-                          Text(" / month"),
-                        ],
+                    ),
+                  ],
+                ),
+              ),
+
+              Positioned(
+                right: 5,
+                top: 5,
+                child: InkWell(
+                  onTap: () {
+                    isFavorite.value = !isFavorite.value;
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: primary.withAlpha(125),
+                    child: Center(
+                      child: ValueListenableBuilder(
+                        valueListenable: isFavorite,
+                        builder: (context, value, child) {
+                          return Icon(
+                            Icons.favorite,
+                            color: isFavorite.value
+                                ? const Color.fromARGB(255, 255, 17, 0)
+                                : thirdly,
+                          );
+                        },
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),

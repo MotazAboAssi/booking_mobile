@@ -220,16 +220,30 @@ class HttpRequest {
     }
   }
 
-  Future<ApartmentType> bookingsApartmentByID(int idApartment) async {
+  Future<ApartmentType> bookingsApartmentByID(
+    int idApartment,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+
     final String? token = await AuthStorage().readData("token");
+
     try {
       Response response = await dio.get(
         "/BookingsApartment/$idApartment",
-        options: Options(headers: authrizationHeaders(token!)),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer 3|3ikPhaBT21Du9u66sqxjbDAVBujREDbtAEyEKmNJe061c959',
+            "start_date": startDate,
+            "end_date": endDate,
+          },
+        ),
       );
+
+      printGreen(response.data.toString());
       return ApartmentType.fromJson(response.data);
     } on DioException catch (e) {
-      printRed("ERROR : $e");
+      printRed("ERROR : ${e.response?.data.toString()}");
       throw Exception([e]);
     } catch (e) {
       printRed("ERROR : $e");
@@ -290,7 +304,7 @@ class HttpRequest {
       }
       throw Exception("Error Connection");
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception(e);
     }
   }
 

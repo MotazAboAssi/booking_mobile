@@ -13,7 +13,6 @@ import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
 import 'package:booking/presentation/views/land_lord_add_apartment.dart';
 import 'package:booking/presentation/views/land_lord_dashboard.dart';
-import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,31 +54,20 @@ class MyApp extends StatelessWidget {
         addApartment: (context) => LandLordAddApartment(),
         landlordDashBoard: (context) => LandLordDashboard(),
         mybooking: (context) => MyBookingView(),
-        loginView: (context) => LoginView(),
+        loginView: (context) => BlocProvider(
+          create: (_) => NavigateFromLoginCubit(),
+          child: LoginView(),
+        ),
         registerView: (context) => RegisterView(),
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-
-      home: BlocProvider(
-        create: (context) => NavigateFromLoginCubit(),
-        child: LoginView(),
-      ),
-
-      // initialRoute: addApartment,
-      // home: Scaffold(
-      //   body: FutureBuilder(
-      //     future: HttpRequest().getAllApartementForTenant(),
-      //     builder: (context, snapshot) {
-      //       return Center(child: Text("data"));
-      //     },
-      //   ),
-      // ),
-      // initialRoute:,
-      // home: RoleSelection(),
+      initialRoute: loginView,
     );
   }
 }
+
+
 
 class ImagePickerExample extends StatefulWidget {
   const ImagePickerExample({super.key});

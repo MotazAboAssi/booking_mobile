@@ -1,4 +1,3 @@
-import 'package:booking/data/models/appartement_details_view/amention_card.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/constant/cities.dart';
 import 'package:booking/helper/constant/theme.dart';
@@ -290,12 +289,12 @@ class _BasicDatailsState extends State<BasicDatails> {
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? fourthly.withAlpha(50)
-                                    : Colors.grey.withOpacity(0.05),
+                                    : Colors.grey.withAlpha(13),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color: isSelected
                                       ? Colors.blue
-                                      : Colors.grey.withOpacity(0.2),
+                                      : Colors.grey.withAlpha(51),
                                 ),
                               ),
                               child: Row(
@@ -372,7 +371,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                         );
                         apartment.rooms = int.parse(roomsController.text);
                         apartment.space = int.parse(spaceController.text);
-                        printGreen(apartment.city);
+                        
                       } catch (e) {
                         printRed(e.toString());
                       }

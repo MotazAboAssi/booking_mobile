@@ -12,6 +12,7 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> isFavorite = ValueNotifier<bool>(false);
     printGreen(apartment!.images[0].image.toString());
     return Stack(
       children: [
@@ -31,8 +32,18 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: primary.withAlpha(127),
               child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.favorite, color: thirdly),
+                onPressed: () {
+                  isFavorite.value = !isFavorite.value;
+                },
+                icon: ValueListenableBuilder(
+                  valueListenable: isFavorite,
+                  builder: (context, value, child) {
+                    return Icon(
+                      Icons.favorite,
+                      color: isFavorite.value ? Colors.red : thirdly,
+                    );
+                  },
+                ),
               ),
             ),
           ),

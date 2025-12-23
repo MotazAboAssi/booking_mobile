@@ -20,8 +20,8 @@ Dialog amentionDisplayDialog(List<int> amention) {
           ),
           itemCount: amention.length,
           itemBuilder: (BuildContext context, int index) => AmentionCard(
-            icon: amentions[amention[index]].icon,
-            title: amentions[amention[index]].title,
+            icon: amentions[amention[index]-1].icon,
+            title: amentions[amention[index]-1].title,
             fontSize: 0.7,
             iconsSize: 2,
           ),

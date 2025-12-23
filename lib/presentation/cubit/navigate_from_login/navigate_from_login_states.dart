@@ -8,6 +8,9 @@ class NavigateInitial extends NavigateFromLoginStates {
   NavigateInitial({required super.role});
 }
 
+class NavigateLoading extends NavigateFromLoginStates {
+  NavigateLoading({ super.role = ""});
+}
 class NavigateTo extends NavigateFromLoginStates {
   NavigateTo({required super.role});
 }

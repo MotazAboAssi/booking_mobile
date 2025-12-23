@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:booking/data/sections/auth/login_view/section_login.dart';
 import 'package:booking/data/sections/auth/login_view/section_logo.dart';
+import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
+import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,30 +18,42 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   @override
-  void initState() {
-    final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
-    if (cubit.state.role.isNotEmpty) cubit.routeFromLogin(context);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.15,
+    final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
+    cubit.routeFromLogin(context);
+    return BlocBuilder(
+      bloc: NavigateFromLoginCubit(),
+      builder: (BuildContext context, state) {
+        log((state is NavigateTo).toString());
+        if (state is NavigateTo) {
+          return Scaffold(
+            body: Container(
+              color: Colors.blue,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.15,
+                    ),
+                    child: SectionLogo(),
+                  ),
+                  Expanded(child: SectionLogin()),
+                ],
               ),
-              child: SectionLogo(),
             ),
-            Expanded(child: SectionLogin()),
-          ],
-        ),
-      ),
+          );
+        }
+        return Scaffold(
+          body: Center(
+            child: CircleAvatar(
+              backgroundColor: fourthly,
+              radius: rem(5),
+              child: Icon(Icons.apartment, size: rem(5), color: thirdly),
+            ),
+          ),
+        );
+      },
     );
   }
 }

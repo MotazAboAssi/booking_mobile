@@ -1,3 +1,4 @@
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_state_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
@@ -12,7 +13,8 @@ class TenantViewCubit extends Cubit<TenantViewStateCubit> {
           .getAllApartementForTenant();
       emit(TenantViewSucceeful(apartment: apartments));
     } catch (e) {
-      emit(TenantViewFaild(error: e.toString().split(":")[1]));
+      printRed(e.toString());
+      emit(TenantViewFaild(error: e.toString() ));
     }
   }
 }

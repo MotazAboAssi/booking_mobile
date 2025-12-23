@@ -104,7 +104,6 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                               return AspectRatio(
                                 aspectRatio: 1,
                                 child: AppartementCard(
-                                  isFavorite: false,
                                   apartment: null,
                                 ),
                               );
@@ -122,7 +121,6 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                                 return AspectRatio(
                                   aspectRatio: 1,
                                   child: AppartementCard(
-                                    isFavorite: false,
                                     apartment: state.apartment[index],
                                   ),
                                 );

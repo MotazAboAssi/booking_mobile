@@ -1,6 +1,7 @@
-import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
@@ -17,36 +18,61 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
         color: thirdly,
         boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+      child: Builder(
+        builder: (context) {
+          return Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "${apartment.priceForMonth}\$",
-                style: TextStyle(
-                  fontSize: rem(1.5),
-                  fontWeight: FontWeight.bold,
-                  color: fourthly,
+              Row(
+                children: [
+                  Text(
+                    "${apartment.priceForMonth}\$",
+                    style: TextStyle(
+                      fontSize: rem(1.5),
+                      fontWeight: FontWeight.bold,
+                      color: fourthly,
+                    ),
+                  ),
+                  Text(" /month"),
+                ],
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(10),
+                  ),
+                  backgroundColor: fourthly,
+                ),
+                onPressed: () async {
+                  final DateTimeRange<DateTime>? picked =
+                      await showDateRangePicker(
+                        context: context,
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2050),
+                      );
+                  if (picked != null) {
+                    try {
+                      await HttpRequest().bookingsApartmentByID(
+                        apartment.idApartment,
+                        picked.start,
+                        picked.end,
+                      );
+                    } catch (e) {
+                      printRed(e.toString());
+                    }
+                  }
+                },
+
+                child: Text(
+                  "Request to Book",
+                  style: TextStyle(color: thirdly),
                 ),
               ),
-              Text(" /month"),
             ],
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(10),
-              ),
-              backgroundColor: fourthly,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, mybooking);
-            },
-            child: Text("Request to Book", style: TextStyle(color: thirdly)),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
