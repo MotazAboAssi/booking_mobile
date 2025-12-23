@@ -21,11 +21,14 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
     cubit.routeFromLogin(context);
+
     return BlocBuilder(
+      buildWhen: (previous, current) =>
+          previous.runtimeType != current.runtimeType,
       bloc: NavigateFromLoginCubit(),
       builder: (BuildContext context, state) {
-        log((state is NavigateTo).toString());
-        if (state is NavigateTo) {
+        // log((state is NavigateInitial).toString());
+        if (state is NavigateInitial) {
           return Scaffold(
             body: Container(
               color: Colors.blue,

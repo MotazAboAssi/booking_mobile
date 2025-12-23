@@ -4,17 +4,19 @@ import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/methods/comapre_two_date.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
+import 'package:booking/types/user_role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-
 
 class SectionGroupOfInputField extends StatelessWidget {
   const SectionGroupOfInputField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String role =
+        (ModalRoute.of(context)?.settings.arguments as Map)["role"];
     final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
     return Column(
       spacing: rem(1),
@@ -63,6 +65,7 @@ class SectionGroupOfInputField extends StatelessWidget {
           validatorsProps: [FormBuilderValidators.lastName()],
         ),
         FormBuilderDateTimePicker(
+          keyboardType: TextInputType.none,
           inputType: InputType.date,
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           format: DateFormat('dd-MM-yyyy'),
@@ -84,6 +87,25 @@ class SectionGroupOfInputField extends StatelessWidget {
           firstDate: DateTime(1990, 1, 1),
           lastDate: DateTime(5000),
         ),
+
+        role == UserRole.tenant.name
+            ? InputFieldForm(
+                name: balanceKey,
+                hintText: "How you have money ? ",
+                labelTeaxt: toCapitalize(lastNameKey),
+                validatorsProps: [
+                  FormBuilderValidators.notZeroNumber(),
+                  FormBuilderValidators.hasNumericChars(),
+                  (value) {
+                    if (value?.replaceFirst(",", "") != value) {
+                      return "mustn't use ','";
+                    }
+                    return null;
+                  },
+                ],
+                textInputType: TextInputType.number,
+              )
+            : Container(),
       ],
     );
   }

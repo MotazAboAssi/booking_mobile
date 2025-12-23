@@ -1,5 +1,6 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/user_role.dart';
@@ -18,6 +19,7 @@ class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
         navigateTo(context, landlordDashBoard);
       }
     }
+    printRed("text");
     emit(NavigateTo(role: role ?? ''));
   }
 }

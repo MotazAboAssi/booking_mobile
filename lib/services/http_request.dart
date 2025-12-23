@@ -36,6 +36,7 @@ class HttpRequest {
         'first_name': user.firstName,
         'last_name': user.lastName,
         'role': user.role.name,
+        'balance': user.balance,
         'birthday': user.birthday.toIso8601String().split("T")[0],
         'profile_image': await MultipartFile.fromFile(user.profileImage.path),
         'id_image': await MultipartFile.fromFile(user.idImage.path),
@@ -225,7 +226,6 @@ class HttpRequest {
     DateTime startDate,
     DateTime endDate,
   ) async {
-
     final String? token = await AuthStorage().readData("token");
 
     try {
@@ -233,7 +233,8 @@ class HttpRequest {
         "/BookingsApartment/$idApartment",
         options: Options(
           headers: {
-            'Authorization': 'Bearer 3|3ikPhaBT21Du9u66sqxjbDAVBujREDbtAEyEKmNJe061c959',
+            'Authorization':
+                'Bearer 3|3ikPhaBT21Du9u66sqxjbDAVBujREDbtAEyEKmNJe061c959',
             "start_date": startDate,
             "end_date": endDate,
           },

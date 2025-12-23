@@ -27,6 +27,7 @@ class ButtonSignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final role = (ModalRoute.of(context)?.settings.arguments as Map)["role"];
     return ElevatedButton(
       onPressed: context.select<RegisterCubit, void Function()?>((value) {
         final state = value.state;
@@ -48,13 +49,11 @@ class ButtonSignUp extends StatelessWidget {
                   lastName: input[lastNameKey],
                   profileImage: File(imageProfile?.path ?? ""),
                   idImage: File(imageIDCard?.path ?? ""),
-                  role:
-                      (ModalRoute.of(context)?.settings.arguments
-                              as Map)["role"] ==
-                          "tenant"
-                      ? UserRole.tenant
-                      : UserRole.landlord,
+                  role: role == "tenant" ? UserRole.tenant : UserRole.landlord,
                   birthday: input[dateOfBirthKey],
+                  balance: role == UserRole.tenant.name
+                      ? int.parse(input[balanceKey])
+                      : 0,
                 );
                 try {
                   await cubit.register(user);

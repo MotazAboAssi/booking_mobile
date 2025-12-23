@@ -13,6 +13,7 @@ class UserRegisterType {
   final File _idImage;
   final UserRole _role;
   final DateTime _birthday;
+  final int _balance;
 
   UserRegisterType({
     required String phone,
@@ -23,6 +24,7 @@ class UserRegisterType {
     required File idImage,
     required UserRole role,
     required DateTime birthday,
+    required int balance,
     int? id,
   }) : _phone = phone,
        _password = password,
@@ -32,6 +34,7 @@ class UserRegisterType {
        _idImage = idImage,
        _role = role,
        _birthday = birthday,
+       _balance = balance,
        _id = id;
 
   String get phone => _phone;
@@ -42,34 +45,9 @@ class UserRegisterType {
   File get idImage => _idImage;
   UserRole get role => _role;
   DateTime get birthday => _birthday;
+  int get balance => _balance;
   int? get id => _id;
 
-  factory UserRegisterType.empty() {
-    return UserRegisterType(
-      id: 0,
-      phone: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      profileImage: File(''),
-      idImage: File(''),
-      role: UserRole.tenant,
-      birthday: DateTime(2000, 1, 1),
-    );
-  }
-
-  factory UserRegisterType.simple() {
-    return UserRegisterType(
-      phone: '11111111',
-      password: '11111111',
-      firstName: 'John',
-      lastName: 'Doe',
-      profileImage: File('/home/motaz/Pictures/test.png'),
-      idImage: File('/home/motaz/Pictures/test.png'),
-      role: UserRole.tenant,
-      birthday: DateTime(1990, 2, 1),
-    );
-  }
 
   factory UserRegisterType.fromJson(Map<String, dynamic> json) {
     // final json = data["data"]["0"];
@@ -83,7 +61,7 @@ class UserRegisterType {
       profileImage: File(json['profile_image']),
       idImage: File(json['id_image']),
       role: json['role'] == 'landlord' ? UserRole.landlord : UserRole.tenant,
-      birthday: DateTime.parse(json['birthday']),
+      birthday: DateTime.parse(json['birthday']), balance: 0,
     );
   }
 }
