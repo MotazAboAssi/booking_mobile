@@ -15,7 +15,7 @@ class BodyTenantView extends StatelessWidget {
         create: (BuildContext context) => TenantViewCubit(),
         child: CustomScrollView(
           slivers: [
-            // SectionSearchAndFilter(),
+            SectionSearchAndFilter(),
             SectionMostPopular(),
             SectionSearchIn(),
           ],

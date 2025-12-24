@@ -30,11 +30,11 @@ typedef StringFunVoid = String Function();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     // printGreen(AuthStorage().readData("token") as String);
     return MaterialApp(
+      navigatorKey: navigatorKey,
       /*
       // dark mode and light mode setting
       theme: ThemeData(
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-      initialRoute: loginView,
+      initialRoute: landlordDashBoard,
     );
   }
 }
