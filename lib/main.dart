@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // printGreen(AuthStorage().readData("token") as String);
     return MaterialApp(
-      navigatorKey: navigatorKey,
       /*
       // dark mode and light mode setting
       theme: ThemeData(
