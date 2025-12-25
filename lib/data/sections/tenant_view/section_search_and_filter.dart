@@ -21,7 +21,7 @@ class SectionSearchAndFilter extends StatelessWidget {
           title: TextFormField(
             decoration: InputDecoration(
               hintText: "Search by ..",
-              prefixIcon: GestureDetector(child: Icon(Icons.search)),
+              prefixIcon: InkWell(child: Icon(Icons.search)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

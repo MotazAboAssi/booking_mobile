@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:booking/helper/constant/pick_image_from_camera.dart';
 import 'package:booking/helper/constant/pick_image_from_gallery.dart';
@@ -42,7 +41,7 @@ class _SectionPickImagePictureIDState extends State<SectionPickImagePictureID> {
                   ),
                 ),
         ),
-        GestureDetector(
+        InkWell(
           onTap: () async {
             XFile? imageFromSource;
             await showAlertDialog(context, imagePicker, (ch) async {

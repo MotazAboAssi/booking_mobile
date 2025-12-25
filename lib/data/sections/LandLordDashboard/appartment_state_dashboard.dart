@@ -49,7 +49,7 @@ class _AppartmentStateDashboardState extends State<AppartmentStateDashboard> {
     bool isSelected = selectedTab == index;
 
     return Expanded(
-      child: GestureDetector(
+      child: InkWell(
         onTap: () => setState(() => selectedTab = index),
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 12),

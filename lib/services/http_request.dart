@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
@@ -82,7 +81,7 @@ class HttpRequest {
       Response response = await dio.post(
         "/login",
         data: {
-          'phone': user["phone"].tpseoString().substring(5),
+          'phone': user["phone"].toString().substring(5),
           'password': user["password"],
         },
       );
@@ -360,7 +359,7 @@ class HttpRequest {
     }
   }
 
-  Future<void> bookingParticularApartmentByID(
+  Future<Map<String, dynamic>> bookingParticularApartmentByID(
     int id,
     DateTime startDate,
     DateTime endDate,
@@ -378,13 +377,20 @@ class HttpRequest {
         options: Options(headers: authrizationHeaders(token!)),
       );
       printGreen(response.data.toString());
+      return {"success": true, "data": response.data.toString()};
     } on DioException catch (e) {
       printYallow(e.response.toString());
       printYallow(e.error.toString());
       printYallow(e.message.toString());
       printYallow(e.type.name);
+      if (e.response?.statusCode == 400) {
+        throw Exception((e.response as Map)["message"]);
+      }
+      throw Exception(e.response);
     } catch (e) {
       printRed(e.toString());
+
+      throw Exception(e);
     }
   }
 }

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:booking/helper/constant/images.dart';
@@ -59,7 +58,7 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
                 child: CircleAvatar(
                   backgroundColor: fourthly,
                   radius: rem(radiusIcon - 0.1),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () async {
                       XFile? imageFromSource;
                       await showAlertDialog(context, imagePicker, (ch) async {

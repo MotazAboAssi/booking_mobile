@@ -40,7 +40,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
       children: [
         Padding(
           padding: EdgeInsets.all(rem(1)),
-          child: GestureDetector(
+          child: InkWell(
             onTap: () async {
               try {
                 await pickImages();
@@ -155,7 +155,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                       Positioned(
                         top: 0,
                         right: 0,
-                        child: GestureDetector(
+                        child: InkWell(
                           onTap: () {
                             setState(() {
                               selectedImages.removeAt(index);

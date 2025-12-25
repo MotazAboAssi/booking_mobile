@@ -23,7 +23,7 @@ class AppartementCard extends StatelessWidget {
         builder: (context, card) {
           return Stack(
             children: [
-              GestureDetector(
+              InkWell(
                 onTap: () async {
                   try {
                     Navigator.pushNamed(

@@ -271,7 +271,7 @@ class _BasicDatailsState extends State<BasicDatails> {
 
                         return Padding(
                           padding: EdgeInsets.only(bottom: 8.0),
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () {
                               setState(() {
                                 if (isSelected) {
@@ -371,7 +371,6 @@ class _BasicDatailsState extends State<BasicDatails> {
                         );
                         apartment.rooms = int.parse(roomsController.text);
                         apartment.space = int.parse(spaceController.text);
-                        
                       } catch (e) {
                         printRed(e.toString());
                       }

@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // printGreen(AuthStorage().readData("token") as String);
     return MaterialApp(
       /*
       // dark mode and light mode setting

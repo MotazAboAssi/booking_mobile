@@ -33,7 +33,7 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
 
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: GestureDetector(onTap: () {}, child: Text("Skip for now")),
+          child: InkWell(onTap: () {}, child: Text("Skip for now")),
         ),
       ],
     );

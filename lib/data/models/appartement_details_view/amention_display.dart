@@ -19,7 +19,7 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
       );
     });
     arr.add(
-      GestureDetector(
+      InkWell(
         onTap: () async {
           await showDialog(
             context: context,

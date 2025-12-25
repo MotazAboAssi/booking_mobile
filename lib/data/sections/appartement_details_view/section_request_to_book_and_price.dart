@@ -3,7 +3,6 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class SectionRequestToBookAndPrice extends StatelessWidget {
@@ -50,8 +49,18 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
                       await showDateRangePicker(
                         context: context,
                         initialEntryMode: DatePickerEntryMode.calendarOnly,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2050),
+                        firstDate: DateTime.now().add(const Duration(days: 1)),
+                        lastDate: DateTime.now()
+                            .add(const Duration(days: 1))
+                            .add(const Duration(days: 2000)),
+                        selectableDayPredicate:
+                            (day, selectedStartDay, selectedEndDay) {
+                              final isDisabled = disabledDates.any(
+                                (disabledDay) => isSameDay(disabledDay, day),
+                              );
+
+                              return !isDisabled;
+                            },
                       );
                   if (picked != null) {
                     try {
@@ -77,4 +86,14 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
       ),
     );
   }
+}
+
+final List<DateTime> disabledDates = [
+  // DateTime(2025, 1, 10),
+  DateTime(2025, 12, 25),
+  DateTime(2026, 1, 5),
+];
+
+bool isSameDay(DateTime a, DateTime b) {
+  return a.year == b.year && a.month == b.month && a.day == b.day;
 }
