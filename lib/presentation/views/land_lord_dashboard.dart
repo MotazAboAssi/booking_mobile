@@ -15,7 +15,7 @@ class _MyWidgetState extends State<LandLordDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbarLandLordDashboard(),
-      body: BodyLandLordDashboard(),
+      body: LandlordDashboard(),
       bottomNavigationBar: LandLordDashboardBottomNavigationBar(),
     );
   }

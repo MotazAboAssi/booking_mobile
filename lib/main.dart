@@ -29,7 +29,6 @@ typedef StringFunVoid = String Function();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,7 +60,7 @@ class MyApp extends StatelessWidget {
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-      initialRoute: loginView,
+      initialRoute: landlordDashBoard,
     );
   }
 }
