@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/test/navigation_observe.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
 import 'package:booking/presentation/views/booking_confirme.dart';
 import 'package:booking/presentation/views/auth/role_selection_view.dart';
@@ -13,9 +14,8 @@ import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
 import 'package:booking/presentation/views/land_lord_add_apartment.dart';
 import 'package:booking/presentation/views/land_lord_dashboard.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/test/navigation_observe.dart';
 
 typedef VoidCallBackFile = void Function(File?);
 typedef FileCallBackvoid = File? Function();

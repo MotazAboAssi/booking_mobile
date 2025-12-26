@@ -8,6 +8,7 @@ import 'package:booking/data/sections/appartement_details_view/section_request_t
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +47,10 @@ class AppartementDetailsView extends StatelessWidget {
                       children: [
                         SectionTitleAndPosition(apartment: apartment),
                         SectionAppartementFeature(apartment: apartment),
-                        SectionLandLordProfile(apartment: apartment),
+                        BlocProvider(
+                          create: (BuildContext context) => FetchUserCubit(),
+                          child: SectionLandLordProfile(apartment: apartment),
+                        ),
                         SectionDescription(apartment: apartment),
                         SectionAmentions(apartment: apartment),
                         SectionLocation(apartment: apartment),

@@ -20,6 +20,7 @@ class HttpRequest {
 
   HttpRequest();
   // ************** for auth **************
+
   Future<Map<String, dynamic>> register(UserRegisterType user) async {
     try {
       printGreen(user.phone);
@@ -128,9 +129,11 @@ class HttpRequest {
       printRed("ERROR : $e");
     }
   }
+
   // ************** for auth **************
 
   // ************** for admin **************
+
   Future<bool> deleteUserByID(int idUser) async {
     final String? token = await AuthStorage().readData("token");
     try {
@@ -215,6 +218,7 @@ class HttpRequest {
   }
 
   // ************** for admin **************
+
   // ************** for landlord **************
 
   Future<ApartmentType> displayBookingsApartmentByID(
@@ -288,6 +292,7 @@ class HttpRequest {
   }
 
   // ************** for landlord **************
+
   // ************** for tenant **************
 
   // Future<ApartmentType> bookingsLandlord() async {
@@ -395,12 +400,23 @@ class HttpRequest {
   }
 
   // ************** for tenant **************
+
+  // ************** for any user **************
+
   Future<UserRegisterType> fetchUserByID(int id) async {
+    final String? token = await AuthStorage().readData("token");
     try {
-      Response response = await dio.get("profile/$id");
-      return UserRegisterType.fromJson(response.data);
+      Response response = await dio.get(
+        "/profile/$id",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      return UserRegisterType.fromJson(response.data["user"]);
+    } on DioException catch (e) {
+      throw Exception(e.response);
     } catch (e) {
       throw Exception(e.toString());
     }
   }
+
+  // ************** for any user **************
 }

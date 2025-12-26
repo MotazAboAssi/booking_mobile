@@ -96,7 +96,6 @@
 //   }
 // }
 
-import 'package:booking/main.dart';
 import 'package:flutter/material.dart';
 
 class LandlordDashboard extends StatelessWidget {

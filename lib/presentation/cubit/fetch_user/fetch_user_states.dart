@@ -16,8 +16,8 @@ class FetchUserLoading extends FetchUserStates {
 }
 
 class FetchUserSuccessful extends FetchUserStates {
-  final UserRegisterType person;
-  FetchUserSuccessful(this.person) : super(user: person, errorMessage: null);
+  FetchUserSuccessful(UserRegisterType user)
+    : super(user: user, errorMessage: null);
 }
 
 class FetchUserFaild extends FetchUserStates {

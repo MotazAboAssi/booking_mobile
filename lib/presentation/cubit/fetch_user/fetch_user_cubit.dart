@@ -1,3 +1,4 @@
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/user_register_type.dart';
@@ -11,6 +12,7 @@ class FetchUserCubit extends Cubit<FetchUserStates> {
       UserRegisterType user = await HttpRequest().fetchUserByID(id);
       emit(FetchUserSuccessful(user));
     } catch (e) {
+      printRed(e.toString());
       emit(FetchUserFaild(e.toString()));
     }
   }

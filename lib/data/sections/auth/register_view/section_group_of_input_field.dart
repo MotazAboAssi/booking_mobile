@@ -15,8 +15,8 @@ class SectionGroupOfInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String role =
-        (ModalRoute.of(context)?.settings.arguments as Map)["role"];
+    // final String role =
+    //     (ModalRoute.of(context)?.settings.arguments as Map)["role"];
     final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
     return Column(
       spacing: rem(1),
@@ -89,24 +89,24 @@ class SectionGroupOfInputField extends StatelessWidget {
           lastDate: DateTime(5000),
         ),
 
-        role == UserRole.tenant.name
-            ? InputFieldForm(
-                name: balanceKey,
-                hintText: "How you have money ? ",
-                labelTeaxt: toCapitalize(lastNameKey),
-                validatorsProps: [
-                  FormBuilderValidators.notZeroNumber(),
-                  FormBuilderValidators.hasNumericChars(),
-                  (value) {
-                    if (value?.replaceFirst(",", "") != value) {
-                      return "mustn't use ','";
-                    }
-                    return null;
-                  },
-                ],
-                textInputType: TextInputType.number,
-              )
-            : Container(),
+        // role == UserRole.tenant.name
+        //     ? InputFieldForm(
+        //         name: balanceKey,
+        //         hintText: "How you have money ? ",
+        //         labelTeaxt: toCapitalize(lastNameKey),
+        //         validatorsProps: [
+        //           FormBuilderValidators.notZeroNumber(),
+        //           FormBuilderValidators.hasNumericChars(),
+        //           (value) {
+        //             if (value?.replaceFirst(",", "") != value) {
+        //               return "mustn't use ','";
+        //             }
+        //             return null;
+        //           },
+        //         ],
+        //         textInputType: TextInputType.number,
+        //       )
+        //     : Container(),
       ],
     );
   }

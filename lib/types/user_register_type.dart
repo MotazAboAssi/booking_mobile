@@ -48,7 +48,6 @@ class UserRegisterType {
   int get balance => _balance;
   int? get id => _id;
 
-
   factory UserRegisterType.fromJson(Map<String, dynamic> json) {
     // final json = data["data"]["0"];
     log(json.toString());
@@ -61,7 +60,8 @@ class UserRegisterType {
       profileImage: File(json['profile_image']),
       idImage: File(json['id_image']),
       role: json['role'] == 'landlord' ? UserRole.landlord : UserRole.tenant,
-      birthday: DateTime.parse(json['birthday']), balance: 0,
+      birthday: DateTime.parse(json['birthday']),
+      balance: 0,
     );
   }
 }

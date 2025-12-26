@@ -55,8 +55,6 @@ class _LoginViewState extends State<LoginView> {
             ),
           );
         }
-
-        return Container();
       },
     );
   }
