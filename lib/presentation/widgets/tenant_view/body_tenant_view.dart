@@ -11,15 +11,12 @@ class BodyTenantView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (BuildContext context) => TenantViewCubit(),
-        child: CustomScrollView(
-          slivers: [
-            SectionSearchAndFilter(),
-            SectionMostPopular(),
-            SectionSearchIn(),
-          ],
-        ),
+      child: CustomScrollView(
+        slivers: [
+          SectionSearchAndFilter(),
+          SectionMostPopular(),
+          SectionSearchIn(),
+        ],
       ),
     );
   }

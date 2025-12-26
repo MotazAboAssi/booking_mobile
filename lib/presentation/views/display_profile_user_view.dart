@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:booking/helper/constant/images.dart';
+import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class DisplayProfileUserView extends StatelessWidget {
                     SectionImagePickerProfile(image: user?.profileImage),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: rem(1)),
-                      child: SectionGroupOfInputField(user: user,),
+                      child: SectionGroupOfInputField(user: user),
                     ),
                   ],
                 );
@@ -52,7 +53,7 @@ class SectionImagePickerProfile extends StatelessWidget {
         radius: rem(radiusProfile - 0.1),
         backgroundImage: image == null
             ? AssetImage(anonymousManAvatar)
-            : FileImage(image!),
+            : fetchImageFromDB(image!.path),
       ),
     );
   }

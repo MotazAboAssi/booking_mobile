@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
+import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,10 +48,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorObservers: [Observ()],
       routes: {
-        tenantView: (context) => TenantView(),
+        tenantView: (context) => BlocProvider(
+          create: (BuildContext context) => TenantViewCubit(),
+          child: TenantView(),
+        ),
         appartementDetailsView: (context) => AppartementDetailsView(),
         rateYourStayView: (context) => RateYourStayView(),
-        favoriteApartments: (context) => FavoriteApartments(),
+        favoriteApartments: (context) => BlocProvider(
+          create: (context) => FavoriteApartmentViewCubit(),
+          child: FavoriteApartments(),
+        ),
         addApartment: (context) => LandLordAddApartment(),
         landlordDashBoard: (context) => LandLordDashboard(),
         mybooking: (context) => MyBookingView(),

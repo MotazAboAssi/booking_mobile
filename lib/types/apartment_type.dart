@@ -1,4 +1,5 @@
 import 'package:booking/helper/methods/convert_string_to_list_of_integer.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/types/image_from_apartment.dart';
 
 class ApartmentType {
@@ -36,6 +37,7 @@ class ApartmentType {
     for (int i = 0; i < (arrImg?.length ?? 0); i++) {
       pictures.add(ImageFromApartment.fromJson(arrImg![i]));
     }
+    // printGreen(json.toString());
     return ApartmentType(
       idApartment: json["id"],
       idLandlord: json["user_id"],

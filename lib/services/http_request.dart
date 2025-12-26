@@ -401,20 +401,21 @@ class HttpRequest {
     }
   }
 
-  Future<void> toggleFavoriteParticularApartmentByID(int id) async {
+  Future<bool> toggleFavoriteParticularApartmentByID(int id) async {
     try {
       final String? token = await AuthStorage().readData("token");
-      Response response = await dio.post(
+      await dio.post(
         "/apartments/toggleFavourite/$id",
-        options: Options(
-          headers: authrizationHeaders(
-            token!,
-          ),
-        ),
+        options: Options(headers: authrizationHeaders(token!)),
       );
-      printGreen(response.data.toString());
+      return true;
+    } on DioException catch (e) {
+      if (e.type.name == "connectionError") {
+        throw Exception("connection error");
+      }
+      throw Exception(e.toString());
     } catch (e) {
-      printRed(e.toString());
+      throw Exception(e.toString());
     }
   }
 

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
 import 'package:booking/helper/test/print.dart';
@@ -63,7 +67,7 @@ class LandLordProfileCard extends StatelessWidget {
       onTap: () => Navigator.push<void>(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) => DisplayProfileUserView(user: user,),
+          builder: (BuildContext context) => DisplayProfileUserView(user: user),
         ),
       ),
       child: Padding(
@@ -74,7 +78,12 @@ class LandLordProfileCard extends StatelessWidget {
             Row(
               spacing: 10,
               children: [
-                CircleAvatar(backgroundImage: networkImage, radius: 30),
+                CircleAvatar(
+                  backgroundImage: user?.profileImage == null
+                      ? AssetImage(anonymousManAvatar)
+                      : fetchImageFromDB(user!.profileImage.path),
+                  radius: 30,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

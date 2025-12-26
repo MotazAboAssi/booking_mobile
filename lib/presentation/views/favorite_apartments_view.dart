@@ -1,24 +1,122 @@
-import 'package:booking/data/models/tenant_view/appartement_card.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class FavoriteApartments extends StatelessWidget {
+import 'package:booking/data/models/tenant_view/appartement_card.dart';
+import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/navigate_to.dart';
+import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
+import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_states.dart';
+import 'package:booking/types/apartment_type.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+class FavoriteApartments extends StatefulWidget {
   const FavoriteApartments({super.key});
+
+  @override
+  State<FavoriteApartments> createState() => _FavoriteApartmentsState();
+}
+
+class _FavoriteApartmentsState extends State<FavoriteApartments> {
+  @override
+  void initState() {
+    super.initState();
+    final cubit = BlocProvider.of<FavoriteApartmentViewCubit>(context);
+    try {
+      cubit.getAllFavoriteApartment();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: AppartementCard(),
-              ),
-            );
-          },
+      floatingActionButton: InkWell(
+        onTap: () async {
+          final cubit = context.read<FavoriteApartmentViewCubit>();
+          await cubit.getAllFavoriteApartment();
+        },
+        child: Padding(
+          padding: EdgeInsets.only(bottom: rem(0.5)),
+          child: CircleAvatar(
+            backgroundColor: fourthly,
+            child: Icon(Icons.refresh, color: thirdly),
+          ),
         ),
+      ),
+      bottomNavigationBar: ConvexAppBar(
+        backgroundColor: fourthly,
+        items: [
+          TabItem(icon: Icons.home, title: 'Home'),
+          TabItem(icon: Icons.favorite, title: 'Favorite'),
+          TabItem(icon: Icons.settings, title: 'Settings'),
+        ],
+        onTap: (index) {
+          if (index == 0) navigateTo(context, tenantView);
+          if (index == 1) navigateTo(context, favoriteApartments);
+          if (index == 2) navigateTo(context, tenantView);
+        },
+        initialActiveIndex: 1,
+      ),
+      body: SafeArea(
+        child:
+            BlocBuilder<
+              FavoriteApartmentViewCubit,
+              FavoriteApartmentViewStates
+            >(
+              builder: (context, state) {
+                if (state is FavoriteApartmentViewFaild) {
+                  return Text("No Internet");
+                } else if (state is FavoriteApartmentViewSuccessful) {
+                  final List<ApartmentType> favoroites = state.favorites;
+                  return favoroites.isEmpty
+                      ? Padding(
+                          padding: EdgeInsets.all(rem(1)),
+                          child: Center(
+                            child: Text(
+                              "No Favorite Apartments yet",
+                              style: TextStyle(
+                                fontSize: rem(2),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: favoroites.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: AppartementCard(
+                                  apartment: ApartmentType.empty(),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                } else {
+                  return Skeletonizer(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: AppartementCard(),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
+            ),
       ),
     );
   }
