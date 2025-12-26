@@ -1,9 +1,12 @@
+import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
-import 'package:booking/services/http_request.dart';
+import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_states.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SectionRequestToBookAndPrice extends StatelessWidget {
   final ApartmentType apartment;
@@ -18,79 +21,131 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
         color: thirdly,
         boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
       ),
-      child: Builder(
-        builder: (context) {
-          return Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Text(
-                    "${apartment.priceForMonth}\$",
-                    style: TextStyle(
-                      fontSize: rem(1.5),
-                      fontWeight: FontWeight.bold,
-                      color: fourthly,
-                    ),
-                  ),
-                  Text(" /month"),
-                ],
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(10),
-                  ),
-                  backgroundColor: fourthly,
-                ),
-                onPressed: () async {
-                  final DateTimeRange<DateTime>? picked =
-                      await showDateRangePicker(
-                        context: context,
-                        initialEntryMode: DatePickerEntryMode.calendarOnly,
-                        firstDate: DateTime.now().add(const Duration(days: 1)),
-                        lastDate: DateTime.now()
-                            .add(const Duration(days: 1))
-                            .add(const Duration(days: 2000)),
-                        selectableDayPredicate:
-                            (day, selectedStartDay, selectedEndDay) {
-                              final isDisabled = disabledDates.any(
-                                (disabledDay) => isSameDay(disabledDay, day),
-                              );
-
-                              return !isDisabled;
-                            },
-                      );
-                  if (picked != null) {
-                    try {
-                      await HttpRequest().bookingParticularApartmentByID(
-                        apartment.idApartment,
-                        picked.start,
-                        picked.end,
-                      );
-                    } catch (e) {
-                      printRed(e.toString());
-                    }
-                  }
-                },
-
-                child: Text(
-                  "Request to Book",
-                  style: TextStyle(color: thirdly),
+              Text(
+                "${apartment.priceForMonth}\$",
+                style: TextStyle(
+                  fontSize: rem(1.5),
+                  fontWeight: FontWeight.bold,
+                  color: fourthly,
                 ),
               ),
+              Text(" /month"),
             ],
-          );
-        },
+          ),
+          RequestBookButton(apartment: apartment),
+        ],
       ),
+    );
+  }
+}
+
+class RequestBookButton extends StatelessWidget {
+  const RequestBookButton({super.key, required this.apartment});
+  final ApartmentType apartment;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<BookingApartmentCubit, BookingApartmentStates>(
+      // bloc: BookingApartmentCubit(),
+      builder: (BuildContext context, state) {
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: fourthly,
+            disabledBackgroundColor: context.select<Null, Color?>((_) {
+              if (state is BookingApartmentSuccessful) {
+                return Colors.green;
+              } else if (state is BookingApartmentLoading) {
+                return Colors.grey;
+              } else {
+                return null;
+              }
+            }),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(10),
+            ),
+          ),
+          onPressed: context.select<Null, void Function()?>((_) {
+            if (state is BookingApartmentInitial ||
+                state is BookingApartmentFaild) {
+              return () async {
+                final DateTimeRange<DateTime>? picked =
+                    await showDateRangePicker(
+                      context: context,
+                      initialEntryMode: DatePickerEntryMode.calendarOnly,
+                      firstDate: DateTime.now().add(const Duration(days: 1)),
+                      lastDate: DateTime.now()
+                          .add(const Duration(days: 1))
+                          .add(const Duration(days: 2000)),
+                      selectableDayPredicate:
+                          (day, selectedStartDay, selectedEndDay) {
+                            final isDisabled = disabledDates.any(
+                              (disabledDay) => isSameDay(disabledDay, day),
+                            );
+
+                            return !isDisabled;
+                          },
+                    );
+                if (picked != null) {
+                  final cubit = context.read<BookingApartmentCubit>();
+                  cubit.booking(
+                    apartment.idApartment,
+                    picked.start,
+                    picked.end,
+                  );
+                }
+              };
+            }
+            return () {
+              printRed("object");
+            };
+          }),
+          child: context.select<Null, Widget?>((_) {
+            if (state is BookingApartmentLoading) {
+              return SizedBox(
+                width: rem(1),
+                height: rem(1),
+                child: CircularProgressIndicator(color: thirdly),
+              );
+            } else if (state is BookingApartmentSuccessful) {
+              return Icon(Icons.check);
+            } else {
+              return Text("Request to Book", style: TextStyle(color: thirdly));
+            }
+          }),
+        );
+      },
+      listener: (context, state) {
+        if ((state is BookingApartmentSuccessful)) {
+          customSnakBar(
+            margin: EdgeInsets.only(bottom: rem(4)),
+            context: context,
+            state: state,
+            color: Colors.green,
+            message: "Done send Request for lanlord",
+          );
+        } else if (state is BookingApartmentFaild) {
+          customSnakBar(
+            margin: EdgeInsets.only(bottom: rem(4)),
+            context: context,
+            state: state,
+            color: Colors.red,
+            message: state.errorMessage,
+          );
+        }
+      },
     );
   }
 }
 
 final List<DateTime> disabledDates = [
   // DateTime(2025, 1, 10),
-  DateTime(2025, 12, 25),
+  DateTime(2025, 12, 27),
   DateTime(2026, 1, 5),
 ];
 

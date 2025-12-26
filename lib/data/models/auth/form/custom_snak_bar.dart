@@ -5,9 +5,11 @@ void customSnakBar({
   required state,
   required Color color,
   required String message,
+  EdgeInsetsGeometry? margin
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      margin: margin,      
       duration: Duration(seconds: 5),
       backgroundColor: color,
       content: Text(message, style: TextStyle(fontSize: 20)),

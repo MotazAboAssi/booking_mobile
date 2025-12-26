@@ -7,8 +7,10 @@ import 'package:booking/data/sections/appartement_details_view/section_location.
 import 'package:booking/data/sections/appartement_details_view/section_request_to_book_and_price.dart';
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppartementDetailsView extends StatelessWidget {
   const AppartementDetailsView({super.key});
@@ -54,9 +56,12 @@ class AppartementDetailsView extends StatelessWidget {
                 ),
               ],
             ),
-            Align(
-              alignment: AlignmentGeometry.bottomCenter,
-              child: SectionRequestToBookAndPrice(apartment: apartment),
+            BlocProvider(
+              create: (BuildContext context) => BookingApartmentCubit(),
+              child: Align(
+                alignment: AlignmentGeometry.bottomCenter,
+                child: SectionRequestToBookAndPrice(apartment: apartment),
+              ),
             ),
           ],
         ),

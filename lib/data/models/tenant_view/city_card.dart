@@ -11,7 +11,7 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await AuthStorage().deleteAllData();
+        // await AuthStorage().deleteAllData();
       },
       child: AspectRatio(
         aspectRatio: 2 / 3,

@@ -384,7 +384,7 @@ class HttpRequest {
       printYallow(e.message.toString());
       printYallow(e.type.name);
       if (e.response?.statusCode == 400) {
-        throw Exception((e.response as Map)["message"]);
+        throw Exception((e.response?.data as Map<String, dynamic>)["message"]);
       }
       throw Exception(e.response);
     } catch (e) {
@@ -393,6 +393,14 @@ class HttpRequest {
       throw Exception(e);
     }
   }
-}
 
-// ************** for tenant **************
+  // ************** for tenant **************
+  Future<UserRegisterType> fetchUserByID(int id) async {
+    try {
+      Response response = await dio.get("profile/$id");
+      return UserRegisterType.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+}
