@@ -49,7 +49,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                   context,
                 ).state.apartment;
                 for (int i = 0; i < selectedImages.length; i++) {
-                  apartment.images.add(
+                  apartment.images!.add(
                     ImageFromApartment(
                       id: -1,
                       idApartment: -1,
@@ -164,7 +164,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                                   BlocProvider.of<AddApartmentCubit>(
                                     context,
                                   ).state.apartment;
-                              apartment.images.removeAt(index);
+                              apartment.images!.removeAt(index);
                             });
                           },
                           child: Container(

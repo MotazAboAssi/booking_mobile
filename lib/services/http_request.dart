@@ -3,6 +3,7 @@ import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/methods/create_form_data.dart';
 import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/views/favorite_apartments_view.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/user_register_type.dart';
@@ -277,7 +278,7 @@ class HttpRequest {
 
   Future<void> addApartmentForLandlord(ApartmentType apartment) async {
     final String? token = await AuthStorage().readData("token");
-    final formData = await createFormData(apartment.images, {});
+    final formData = await createFormData(apartment.images!, {});
     try {
       Response response = await dio.post(
         "$api/apartment?city=${apartment.city}&town=${apartment.town}&space=${apartment.space}&rooms=${apartment.rooms}&price_for_month=${apartment.priceForMonth}&description=${apartment.description}&features=${apartment.features.toString()}",
@@ -359,6 +360,7 @@ class HttpRequest {
         "/apartments/$id",
         options: Options(headers: authrizationHeaders(token!)),
       );
+      printGreen(response.data.toString());
     } catch (e) {
       printRed(e.toString());
     }
@@ -396,6 +398,43 @@ class HttpRequest {
       printRed(e.toString());
 
       throw Exception(e);
+    }
+  }
+
+  Future<void> toggleFavoriteParticularApartmentByID(int id) async {
+    try {
+      final String? token = await AuthStorage().readData("token");
+      Response response = await dio.post(
+        "/apartments/toggleFavourite/$id",
+        options: Options(
+          headers: authrizationHeaders(
+            token!,
+          ),
+        ),
+      );
+      printGreen(response.data.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
+  Future<List<ApartmentType>> getFavoriteApartments() async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/apartments/favorites",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      final List<dynamic> data = response.data["Favorites"];
+      final List<ApartmentType> favorite = [];
+      // printGreen(response.data.toString());
+      for (int i = 0; i < data.length; i++) {
+        favorite.add(ApartmentType.fromJson(data[i]));
+      }
+      return favorite;
+    } catch (e) {
+      printYallow(e.toString());
+      throw Exception(e.toString());
     }
   }
 

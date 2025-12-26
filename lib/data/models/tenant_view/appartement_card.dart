@@ -45,7 +45,7 @@ class AppartementCard extends StatelessWidget {
                             ? DecorationImage(
                                 fit: BoxFit.fill,
                                 image: fetchImageFromDB(
-                                  apartment!.images[0].image,
+                                  apartment!.images![0].image,
                                 ),
                               )
                             : null,

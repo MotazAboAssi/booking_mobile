@@ -13,14 +13,14 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> isFavorite = ValueNotifier<bool>(false);
-    printGreen(apartment!.images[0].image.toString());
+    printGreen(apartment!.images![0].image.toString());
     return Stack(
       children: [
         Container(
           decoration: apartment != null
               ? BoxDecoration(
                   image: DecorationImage(
-                    image: fetchImageFromDB(apartment!.images[0].image),
+                    image: fetchImageFromDB(apartment!.images![0].image),
                   ),
                 )
               : null,

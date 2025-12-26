@@ -14,6 +14,7 @@ import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
 import 'package:booking/presentation/views/land_lord_add_apartment.dart';
 import 'package:booking/presentation/views/land_lord_dashboard.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
 
@@ -61,6 +62,12 @@ class MyApp extends StatelessWidget {
         roleSelectionView: (context) => RoleSelectionView(),
       },
       initialRoute: loginView,
+      // home: Scaffold(
+      //   body: FutureBuilder(
+      //     future: HttpRequest().getFavoriteApartments(),
+      //     builder: (context, snapshot) => Text("data"),
+      //   ),
+      // ),
     );
   }
 }
