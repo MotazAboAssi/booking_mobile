@@ -78,6 +78,7 @@ class HttpRequest {
     }
   }
 
+
   Future<UserRegisterType> login(Map<String, dynamic> user) async {
     try {
       Response response = await dio.post(
@@ -90,6 +91,7 @@ class HttpRequest {
 
       await AuthStorage().writeData("token", response.data["token"]);
       await AuthStorage().writeData("role", response.data["user"]["role"]);
+      await AuthStorage().writeData("id_user", response.data["user"]["id"]);
 
       printGreen('token : ${response.data["token"]}');
       printGreen('response : ${response.data}');

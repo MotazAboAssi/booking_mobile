@@ -11,8 +11,8 @@ class AuthStorage {
   // );
   final storage = FlutterSecureStorage();
 
-  Future<void> writeData(String key, String value) async {
-    await storage.write(key: key, value: value);
+  Future<void> writeData(String key, dynamic value) async {
+    await storage.write(key: key, value: value.toString());
   }
 
   Future<String?> readData(String key) async {

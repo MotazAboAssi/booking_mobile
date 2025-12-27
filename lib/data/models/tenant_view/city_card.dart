@@ -1,5 +1,6 @@
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 
 class CityCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        // await AuthStorage().deleteAllData();
+        await AuthStorage().deleteAllData();
       },
       child: AspectRatio(
         aspectRatio: 2 / 3,

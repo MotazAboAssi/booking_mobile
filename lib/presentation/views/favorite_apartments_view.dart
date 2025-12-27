@@ -7,6 +7,8 @@ import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_states.dart';
+import 'package:booking/presentation/widgets/button_refresh.dart';
+import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -35,33 +37,13 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: InkWell(
-        onTap: () async {
+      floatingActionButton: ButtonRefresh(
+        action: () async {
           final cubit = context.read<FavoriteApartmentViewCubit>();
           await cubit.getAllFavoriteApartment();
         },
-        child: Padding(
-          padding: EdgeInsets.only(bottom: rem(0.5)),
-          child: CircleAvatar(
-            backgroundColor: fourthly,
-            child: Icon(Icons.refresh, color: thirdly),
-          ),
-        ),
       ),
-      bottomNavigationBar: ConvexAppBar(
-        backgroundColor: fourthly,
-        items: [
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.favorite, title: 'Favorite'),
-          TabItem(icon: Icons.settings, title: 'Settings'),
-        ],
-        onTap: (index) {
-          if (index == 0) navigateTo(context, tenantView);
-          if (index == 1) navigateTo(context, favoriteApartments);
-          if (index == 2) navigateTo(context, tenantView);
-        },
-        initialActiveIndex: 1,
-      ),
+      bottomNavigationBar: CustomeBottomNavigationBar(index: 1,),
       body: SafeArea(
         child:
             BlocBuilder<

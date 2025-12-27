@@ -1,7 +1,7 @@
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:flutter/material.dart';
-import 'package:booking/data/models/display_profile_user_view/card.dart';
+import 'package:booking/data/models/display_profile_user_view/card_info.dart';
 
 class SectionGroupOfInputField extends StatelessWidget {
   final UserRegisterType? user;
@@ -15,8 +15,14 @@ class SectionGroupOfInputField extends StatelessWidget {
       spacing: rem(1),
       children: [
         CardInfo(icon: Icons.phone, title: '+9639${user?.phone}'),
-        CardInfo(icon: Icons.person, title: '${user?.firstName} ${user?.lastName}'),
-        CardInfo(icon: Icons.date_range, title: '${user?.birthday.toLocal()}'.split(' ')[0]),
+        CardInfo(
+          icon: Icons.person,
+          title: '${user?.firstName} ${user?.lastName}',
+        ),
+        CardInfo(
+          icon: Icons.date_range,
+          title: '${user?.birthday.toLocal()}'.split(' ')[0],
+        ),
       ],
     );
   }
