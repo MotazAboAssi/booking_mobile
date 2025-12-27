@@ -60,7 +60,6 @@ class RequestBookButton extends StatelessWidget {
       builder: (BuildContext context, state) {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: fourthly,
             disabledBackgroundColor: context.select<Null, Color?>((_) {
               if (state is BookingApartmentSuccessful) {
                 return Colors.green;
@@ -70,6 +69,7 @@ class RequestBookButton extends StatelessWidget {
                 return null;
               }
             }),
+            backgroundColor: fourthly,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(10),
             ),
@@ -117,7 +117,7 @@ class RequestBookButton extends StatelessWidget {
                 child: CircularProgressIndicator(color: thirdly),
               );
             } else if (state is BookingApartmentSuccessful) {
-              return Icon(Icons.check);
+              return Icon(Icons.check, color: thirdly,);
             } else {
               return Text("Request to Book", style: TextStyle(color: thirdly));
             }
@@ -131,7 +131,7 @@ class RequestBookButton extends StatelessWidget {
             context: context,
             state: state,
             color: Colors.green,
-            message: "Done send Request for lanlord",
+            message: state.response.toString(),
           );
         } else if (state is BookingApartmentFaild) {
           customSnakBar(

@@ -27,6 +27,14 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "My Account",
+          style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
+          
+        ),
+        centerTitle: true,
+      ),
       bottomNavigationBar: CustomeBottomNavigationBar(index: 3),
       body: SafeArea(
         child: Row(

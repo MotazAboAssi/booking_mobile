@@ -36,16 +36,23 @@ class _LandLordDashboardState extends State<MyBookingView> {
               cubit.getAllApartmentsBooking();
             },
           ),
-          appBar: const TabBar(
-            labelStyle: TextStyle(fontSize: 16),
-            labelColor: Color.fromARGB(255, 0, 0, 0),
-            unselectedLabelColor: Color.fromARGB(179, 124, 124, 124),
-            indicatorColor: Color.fromARGB(255, 12, 75, 194),
-            tabs: [
-              Tab(text: 'Current'),
-              Tab(text: 'Past'),
-              Tab(text: 'Canceled'),
-            ],
+          appBar: AppBar(
+            title: Text(
+              "My Booking",
+              style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            bottom: const TabBar(
+              labelStyle: TextStyle(fontSize: 16),
+              labelColor: Color.fromARGB(255, 0, 0, 0),
+              unselectedLabelColor: Color.fromARGB(179, 124, 124, 124),
+              indicatorColor: Color.fromARGB(255, 12, 75, 194),
+              tabs: [
+                Tab(text: 'Current'),
+                Tab(text: 'Past'),
+                Tab(text: 'Canceled'),
+              ],
+            ),
           ),
           bottomNavigationBar: CustomeBottomNavigationBar(index: 2),
           body: Padding(
@@ -60,7 +67,11 @@ class _LandLordDashboardState extends State<MyBookingView> {
                         apartments: booking
                             .where(
                               (apartment) =>
-                                  apartment.status.name == pendingKey,
+                                  apartment.status.name == pendingKey ||
+                                  (apartment.status.name == confirmedKey &&
+                                      DateTime.now().isBefore(
+                                        apartment.endDate,
+                                      )),
                             )
                             .toList(),
                       ),
@@ -68,7 +79,8 @@ class _LandLordDashboardState extends State<MyBookingView> {
                         apartments: booking
                             .where(
                               (apartment) =>
-                                  apartment.status.name == confirmedKey,
+                                  apartment.status.name == confirmedKey &&
+                                  DateTime.now().isAfter(apartment.endDate),
                             )
                             .toList(),
                       ),

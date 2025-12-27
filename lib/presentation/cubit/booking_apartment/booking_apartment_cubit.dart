@@ -11,13 +11,20 @@ class BookingApartmentCubit extends Cubit<BookingApartmentStates> {
     DateTime endDate,
   ) async {
     try {
-    emit(BookingApartmentLoading());
+      emit(BookingApartmentLoading());
       printRed("text");
       Map<String, dynamic> response = await HttpRequest()
           .bookingParticularApartmentByID(idApartment, startDate, endDate);
       emit(BookingApartmentSuccessful(response: response));
     } catch (e) {
-      emit(BookingApartmentFaild(errorMessage: e.toString().split(":")[1]));
+      emit(
+        BookingApartmentFaild(
+          errorMessage: e
+              .toString()
+              .replaceAll("Exception:", "")
+              .replaceAll("Error: ", ""),
+        ),
+      );
     }
   }
 }

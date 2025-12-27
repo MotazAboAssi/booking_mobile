@@ -416,8 +416,13 @@ class HttpRequest {
         },
         options: Options(headers: authrizationHeaders(token!)),
       );
-      printGreen(response.data.toString());
-      return {"success": true, "data": response.data.toString()};
+
+      if (response.data['message'] != null) {
+        printRed(response.data['message']);
+        throw Exception(response.data['message']);
+      }
+
+      return response.data;
     } on DioException catch (e) {
       printYallow(e.response.toString());
       printYallow(e.error.toString());

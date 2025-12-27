@@ -109,6 +109,9 @@ class Appartmentbooking extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 6),
+                    
+                    
+                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

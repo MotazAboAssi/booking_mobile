@@ -37,6 +37,13 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "My Wishlite",
+          style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       floatingActionButton: ButtonRefresh(
         action: () async {
           final cubit = context.read<FavoriteApartmentViewCubit>();
