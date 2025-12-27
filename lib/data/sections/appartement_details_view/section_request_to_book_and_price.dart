@@ -51,8 +51,12 @@ class RequestBookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<DateTime> disabledDates = [
+      // DateTime(2025, 1, 10),
+      DateTime(2026, 1, 6),
+      DateTime(2026, 1, 5),
+    ];
     return BlocConsumer<BookingApartmentCubit, BookingApartmentStates>(
-      // bloc: BookingApartmentCubit(),
       builder: (BuildContext context, state) {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -76,6 +80,7 @@ class RequestBookButton extends StatelessWidget {
               return () async {
                 final DateTimeRange<DateTime>? picked =
                     await showDateRangePicker(
+                      errorFormatText: "Invalid format",
                       context: context,
                       initialEntryMode: DatePickerEntryMode.calendarOnly,
                       firstDate: DateTime.now().add(const Duration(days: 1)),
@@ -87,7 +92,7 @@ class RequestBookButton extends StatelessWidget {
                             final isDisabled = disabledDates.any(
                               (disabledDay) => isSameDay(disabledDay, day),
                             );
-
+                            // throw Exception("dddddd");
                             return !isDisabled;
                           },
                     );
@@ -142,12 +147,6 @@ class RequestBookButton extends StatelessWidget {
     );
   }
 }
-
-final List<DateTime> disabledDates = [
-  // DateTime(2025, 1, 10),
-  DateTime(2025, 12, 27),
-  DateTime(2026, 1, 5),
-];
 
 bool isSameDay(DateTime a, DateTime b) {
   return a.year == b.year && a.month == b.month && a.day == b.day;

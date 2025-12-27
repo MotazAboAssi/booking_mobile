@@ -38,7 +38,7 @@ class HttpRequest {
         'first_name': user.firstName,
         'last_name': user.lastName,
         'role': user.role.name,
-        'balance': user.balance,
+        'balance': 0,
         'birthday': user.birthday.toIso8601String().split("T")[0],
         'profile_image': await MultipartFile.fromFile(user.profileImage.path),
         'id_image': await MultipartFile.fromFile(user.idImage.path),

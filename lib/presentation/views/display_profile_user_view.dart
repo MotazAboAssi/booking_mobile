@@ -72,7 +72,7 @@ class SectionGroupOfInputField extends StatelessWidget {
       children: [
         Card(icon: Icons.phone, title: '+9639${user?.phone}'),
         Card(icon: Icons.person, title: '${user?.firstName} ${user?.lastName}'),
-        Card(icon: Icons.date_range, title: '${user?.birthday}'),
+        Card(icon: Icons.date_range, title: '${user?.birthday.toLocal()}'.split(' ')[0]),
       ],
     );
   }
