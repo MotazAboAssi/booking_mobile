@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
-import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
+import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/views/profile_view.dart';
-import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +20,6 @@ import 'package:booking/presentation/views/rate_your_stay_view.dart';
 import 'package:booking/presentation/views/tenant_view.dart';
 import 'package:booking/presentation/views/land_lord_add_apartment.dart';
 import 'package:booking/presentation/views/land_lord_dashboard.dart';
-import 'package:booking/services/http_request.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/test/navigation_observe.dart';
 
@@ -64,7 +63,10 @@ class MyApp extends StatelessWidget {
         ),
         addApartment: (context) => LandLordAddApartment(),
         landlordDashBoard: (context) => LandLordDashboard(),
-        mybooking: (context) => MyBookingView(),
+        mybooking: (context) => BlocProvider(
+          create: (context) => MyBookingViewCubit(),
+          child: MyBookingView(),
+        ),
         loginView: (context) => BlocProvider(
           create: (_) => NavigateFromLoginCubit(),
           child: LoginView(),

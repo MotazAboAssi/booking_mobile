@@ -1,7 +1,13 @@
+import 'package:booking/helper/constant/my_booking_keys.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
+import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_states.dart';
+import 'package:booking/presentation/widgets/button_refresh.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/presentation/widgets/my_Booking/body_my_booking.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class MyBookingView extends StatefulWidget {
   const MyBookingView({super.key});
@@ -12,11 +18,24 @@ class MyBookingView extends StatefulWidget {
 
 class _LandLordDashboardState extends State<MyBookingView> {
   @override
+  void initState() {
+    super.initState();
+    final cubit = context.read<MyBookingViewCubit>();
+    cubit.getAllApartmentsBooking();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: SafeArea(
         child: Scaffold(
+          floatingActionButton: ButtonRefresh(
+            action: () async {
+              final cubit = context.read<MyBookingViewCubit>();
+              cubit.getAllApartmentsBooking();
+            },
+          ),
           appBar: const TabBar(
             labelStyle: TextStyle(fontSize: 16),
             labelColor: Color.fromARGB(255, 0, 0, 0),
@@ -31,8 +50,70 @@ class _LandLordDashboardState extends State<MyBookingView> {
           bottomNavigationBar: CustomeBottomNavigationBar(index: 2),
           body: Padding(
             padding: EdgeInsets.only(top: rem(1)),
-            child: const TabBarView(
-              children: [BodyMyBooking(), BodyMyBooking(), BodyMyBooking()],
+            child: BlocBuilder<MyBookingViewCubit, MyBookingViewStates>(
+              builder: (context, state) {
+                final booking = state.bookings;
+                if (state is MyBookingViewSuccessful) {
+                  return TabBarView(
+                    children: [
+                      BodyMyBooking(
+                        apartments: booking
+                            .where(
+                              (apartment) =>
+                                  apartment.status.name == pendingKey,
+                            )
+                            .toList(),
+                      ),
+                      BodyMyBooking(
+                        apartments: booking
+                            .where(
+                              (apartment) =>
+                                  apartment.status.name == confirmedKey,
+                            )
+                            .toList(),
+                      ),
+                      BodyMyBooking(
+                        apartments: booking
+                            .where(
+                              (apartment) =>
+                                  apartment.status.name == canceledKey,
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  );
+                }
+                return Skeletonizer(
+                  child: TabBarView(
+                    children: [
+                      BodyMyBooking(
+                        apartments: booking
+                            .where(
+                              (apartment) =>
+                                  apartment.status.name == pendingKey,
+                            )
+                            .toList(),
+                      ),
+                      BodyMyBooking(
+                        apartments: booking
+                            .where(
+                              (apartment) =>
+                                  apartment.status.name == confirmedKey,
+                            )
+                            .toList(),
+                      ),
+                      BodyMyBooking(
+                        apartments: booking
+                            .where(
+                              (apartment) =>
+                                  apartment.status.name == canceledKey,
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),

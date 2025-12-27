@@ -1,8 +1,10 @@
 import 'package:booking/data/models/MyBooking/appartment_booking.dart';
+import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class BodyMyBooking extends StatelessWidget {
-  const BodyMyBooking({super.key});
+  final List<BookingApartmentType> apartments;
+  const BodyMyBooking({super.key, required this.apartments});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +13,15 @@ class BodyMyBooking extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 7 / 6,
         child: ListView.builder(
-          itemCount: 6,
+          itemCount: apartments.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return AspectRatio(aspectRatio: 1, child: Appartmentbooking());
+            return apartments.isEmpty
+                ? Container()
+                : AspectRatio(
+                    aspectRatio: 1,
+                    child: Appartmentbooking(apartment: apartments[index]),
+                  );
           },
         ),
       ),

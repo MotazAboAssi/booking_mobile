@@ -1,11 +1,15 @@
+import 'package:booking/helper/constant/my_booking_keys.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
+import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Appartmentbooking extends StatelessWidget {
-  const Appartmentbooking({super.key});
+  final BookingApartmentType? apartment;
+  const Appartmentbooking({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +52,18 @@ class Appartmentbooking extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              "confirmed",
+                              '${apartment?.status.name}',
                               style: TextStyle(
-                                color: Colors.green,
+                                color: context.select<Null, Color?>((_) {
+                                  if (apartment?.status.name == pendingKey) {
+                                    return Colors.grey;
+                                  } else if (apartment?.status.name ==
+                                      confirmedKey) {
+                                    return Colors.green;
+                                  } else {
+                                    return Colors.red;
+                                  }
+                                }),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -90,7 +103,7 @@ class Appartmentbooking extends StatelessWidget {
                       children: [
                         Icon(Icons.date_range, color: Colors.grey),
                         Text(
-                          "oct 25 - oct 30 , 2025 ",
+                          "${apartment?.startDate.toIso8601String().split("T")[0]} / ${apartment?.endDate.toIso8601String().split("T")[0]}",
                           style: TextStyle(color: Colors.grey),
                         ),
                       ],

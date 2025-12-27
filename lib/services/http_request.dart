@@ -3,9 +3,9 @@ import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/methods/create_form_data.dart';
 import 'package:booking/helper/test/print.dart';
-import 'package:booking/presentation/views/favorite_apartments_view.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:booking/types/booking_apartment_type.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:dio/dio.dart';
 
@@ -219,6 +219,39 @@ class HttpRequest {
     }
   }
 
+  Future<void> deleteUser(int id) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.delete(
+        "/deleteUser/$id",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      printGreen(response.data);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) printRed("this user not found !!");
+      printRed(e.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
+  Future<void> increaseUserBalanceByID(int id, double amount) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.post(
+        "/increaseBalance/$id",
+        data: {"amount": amount},
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      printGreen(response.data);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) printRed("e.response.toString()");
+      printRed(e.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
   // ************** for admin **************
 
   // ************** for landlord **************
@@ -293,42 +326,6 @@ class HttpRequest {
     }
   }
 
-  Future<void> deleteUser(int id) async {
-    final String? token = await AuthStorage().readData("token");
-    try {
-      Response response = await dio.delete(
-        "/deleteUser/$id",
-        options: Options(headers: authrizationHeaders(token!)),
-      );
-      printGreen(response.data);
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 404) printRed("this user not found !!");
-      printRed(e.toString());
-    } catch (e) {
-      printRed(e.toString());
-    }
-  }
-
-  Future<void> increaseUserBalanceByID(int id, double amount) async {
-    final String? token = await AuthStorage().readData("token");
-    try {
-      Response response = await dio.post(
-        "/increaseBalance/$id",
-        data: {"amount": amount},
-        options: Options(headers: authrizationHeaders(token!)),
-      );
-      printGreen(response.data);
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 404) printRed("e.response.toString()");
-      printRed(e.toString());
-    } catch (e) {
-      printRed(e.toString());
-    }
-  }
-  // ************** for landlord **************
-
-  // ************** for tenant **************
-
   // Future<ApartmentType> bookingsLandlord() async {
   //   final String? token = await AuthStorage().readData("token");
   //   try {
@@ -345,6 +342,10 @@ class HttpRequest {
   //     throw Exception([e]);
   //   }
   // }
+
+  // ************** for landlord **************
+
+  // ************** for tenant **************
 
   Future<ApartmentType> getApartmentByID(int idApartment) async {
     final token = await AuthStorage().readData("token");
@@ -417,6 +418,37 @@ class HttpRequest {
       );
       printGreen(response.data.toString());
       return {"success": true, "data": response.data.toString()};
+    } on DioException catch (e) {
+      printYallow(e.response.toString());
+      printYallow(e.error.toString());
+      printYallow(e.message.toString());
+      printYallow(e.type.name);
+      if (e.response?.statusCode == 400) {
+        throw Exception((e.response?.data as Map<String, dynamic>)["message"]);
+      }
+      throw Exception(e.response);
+    } catch (e) {
+      printRed(e.toString());
+
+      throw Exception(e);
+    }
+  }
+
+  Future<List<BookingApartmentType>> getAllbookingApartments() async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/apartments/booking",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      printGreen(response.data.toString());
+      List<dynamic> data = response.data;
+      List<BookingApartmentType> bookings = [];
+      for (int i = 0; i < data.length; i++) {
+        bookings.add(BookingApartmentType.fromJson(data[i]));
+      }
+      printGreen("DONE");
+      return bookings;
     } on DioException catch (e) {
       printYallow(e.response.toString());
       printYallow(e.error.toString());
