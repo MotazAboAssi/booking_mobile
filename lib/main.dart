@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
       },
-      initialRoute: landlordDashBoard,
+      initialRoute: tenantView,
     );
   }
 }
