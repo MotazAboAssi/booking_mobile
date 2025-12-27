@@ -379,7 +379,7 @@ class HttpRequest {
       if (e.response != null && e.response?.statusCode == 403) {
         throw Exception("wrong login again login");
       }
-      throw Exception("Error Connection");
+      throw Exception("No Internet 😢");
     } catch (e) {
       throw Exception(e);
     }

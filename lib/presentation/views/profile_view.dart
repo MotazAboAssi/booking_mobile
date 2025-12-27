@@ -50,21 +50,35 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                       ],
                     );
-                  }
-                  return Skeletonizer(
-                    child: Column(
-                      spacing: rem(1),
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SectionImagePickerProfile(),
-                        SectionGroupOfInputField(),
-                        CardInfo(
-                          icon: Icons.account_balance_wallet,
-                          title: '${1000} \$',
+                  } else if (state is FetchUserFaild) {
+                    return Padding(
+                      padding: EdgeInsets.all(rem(1)),
+                      child: Center(
+                        child: Text(
+                          "No Internet 😢",
+                          style: TextStyle(
+                            fontSize: rem(2),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ],
-                    ),
-                  );
+                      ),
+                    );
+                  } else {
+                    return Skeletonizer(
+                      child: Column(
+                        spacing: rem(1),
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SectionImagePickerProfile(),
+                          SectionGroupOfInputField(),
+                          CardInfo(
+                            icon: Icons.account_balance_wallet,
+                            title: '${1000} \$',
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
               ),
             ),

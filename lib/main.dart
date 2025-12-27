@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
         ),
       },
       // home: SettingView(),
-      // initialRoute: loginView,
+      initialRoute: loginView,
       // home: Scaffold(
       //   body: FutureBuilder(
       //     future: HttpRequest().increaseUserBalanceByID(2, 1000),

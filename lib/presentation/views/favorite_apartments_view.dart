@@ -43,7 +43,7 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
           await cubit.getAllFavoriteApartment();
         },
       ),
-      bottomNavigationBar: CustomeBottomNavigationBar(index: 1,),
+      bottomNavigationBar: CustomeBottomNavigationBar(index: 1),
       body: SafeArea(
         child:
             BlocBuilder<
@@ -53,29 +53,26 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
               builder: (context, state) {
                 if (state is FavoriteApartmentViewFaild) {
                   return Padding(
-                          padding: EdgeInsets.all(rem(1)),
-                          child: Center(
-                            child: Text(
-                              "No Internet 😢",
-                              style: TextStyle(
-                                fontSize: rem(2),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        );
+                    padding: EdgeInsets.all(rem(1)),
+                    child: Center(
+                      child: Text(
+                        "No Internet 😢",
+                        style: TextStyle(
+                          fontSize: rem(2),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
                 } else if (state is FavoriteApartmentViewSuccessful) {
                   final List<ApartmentType> favoroites = state.favorites;
                   return favoroites.isEmpty
-                      ? Padding(
-                          padding: EdgeInsets.all(rem(1)),
-                          child: Center(
-                            child: Text(
-                              "No Favorite Apartments yet",
-                              style: TextStyle(
-                                fontSize: rem(2),
-                                fontWeight: FontWeight.bold,
-                              ),
+                      ? Center(
+                          child: Text(
+                            "No Favorite ❤️ Apartments yet",
+                            style: TextStyle(
+                              fontSize: rem(1),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         )
@@ -87,7 +84,7 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
                               child: AspectRatio(
                                 aspectRatio: 1,
                                 child: AppartementCard(
-                                  apartment: ApartmentType.empty(),
+                                  apartment: favoroites[index],
                                 ),
                               ),
                             );

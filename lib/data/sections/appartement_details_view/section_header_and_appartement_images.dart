@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
@@ -13,14 +14,15 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> isFavorite = ValueNotifier<bool>(false);
-    printGreen(apartment!.images![0].image.toString());
     return Stack(
       children: [
         Container(
           decoration: apartment != null
               ? BoxDecoration(
                   image: DecorationImage(
-                    image: fetchImageFromDB(apartment!.images![0].image),
+                    image: apartment!.images!.isEmpty
+                        ? AssetImage(anonymousManAvatar)
+                        : fetchImageFromDB(apartment!.images![0].image),
                   ),
                 )
               : null,

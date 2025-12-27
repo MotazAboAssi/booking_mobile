@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
+import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
@@ -47,9 +48,11 @@ class AppartementCard extends StatelessWidget {
                         image: apartment != null
                             ? DecorationImage(
                                 fit: BoxFit.fill,
-                                image: fetchImageFromDB(
-                                  apartment!.images![0].image,
-                                ),
+                                image: apartment!.images!.isEmpty
+                                    ? AssetImage(anonymousManAvatar)
+                                    : fetchImageFromDB(
+                                        apartment!.images![0].image,
+                                      ),
                               )
                             : null,
                         borderRadius: BorderRadius.only(
