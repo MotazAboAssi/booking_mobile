@@ -1,3 +1,4 @@
+import 'package:booking/data/models/display_profile_user_view/card_info.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_group_of_input_field.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_image_picker_profile.dart';
 import 'package:booking/helper/methods/rem.dart';
@@ -43,6 +44,10 @@ class _ProfileViewState extends State<ProfileView> {
                       children: [
                         SectionImagePickerProfile(image: user?.profileImage),
                         SectionGroupOfInputField(user: user),
+                        CardInfo(
+                          icon: Icons.account_balance_wallet,
+                          title: '${user?.balance.toString()} \$',
+                        ),
                       ],
                     );
                   }
@@ -53,6 +58,10 @@ class _ProfileViewState extends State<ProfileView> {
                       children: [
                         SectionImagePickerProfile(),
                         SectionGroupOfInputField(),
+                        CardInfo(
+                          icon: Icons.account_balance_wallet,
+                          title: '${1000} \$',
+                        ),
                       ],
                     ),
                   );

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/types/user_role.dart';
 
 class UserRegisterType {
@@ -61,7 +62,7 @@ class UserRegisterType {
       idImage: File(json['id_image']),
       role: json['role'] == 'landlord' ? UserRole.landlord : UserRole.tenant,
       birthday: DateTime.parse(json['birthday']),
-      balance: 0,
+      balance: json[balanceKey],
     );
   }
 }

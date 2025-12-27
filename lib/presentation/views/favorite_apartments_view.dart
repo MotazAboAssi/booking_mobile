@@ -52,7 +52,18 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
             >(
               builder: (context, state) {
                 if (state is FavoriteApartmentViewFaild) {
-                  return Text("No Internet");
+                  return Padding(
+                          padding: EdgeInsets.all(rem(1)),
+                          child: Center(
+                            child: Text(
+                              "No Internet 😢",
+                              style: TextStyle(
+                                fontSize: rem(2),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
                 } else if (state is FavoriteApartmentViewSuccessful) {
                   final List<ApartmentType> favoroites = state.favorites;
                   return favoroites.isEmpty

@@ -78,18 +78,18 @@ class MyApp extends StatelessWidget {
         ),
       },
       // home: SettingView(),
-      // initialRoute: loginView,
-      home: Scaffold(
-        body: FutureBuilder(
-          future: HttpRequest().deleteUser(3),
-          builder: (context, snapshot) => ElevatedButton(
-            onPressed: () async {
-              await AuthStorage().deleteAllData();
-            },
-            child: Center(child: Text("data")),
-          ),
-        ),
-      ),
+      initialRoute: loginView,
+      // home: Scaffold(
+      //   body: FutureBuilder(
+      //     future: HttpRequest().increaseUserBalanceByID(2, 1000),
+      //     builder: (context, snapshot) => ElevatedButton(
+      //       onPressed: () async {
+      //         await AuthStorage().deleteAllData();
+      //       },
+      //       child: Center(child: Text("data")),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
