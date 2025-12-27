@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
           child: ProfileView(),
         ),
       },
+<<<<<<< HEAD
       // home: SettingView(),
       initialRoute: loginView,
       // home: Scaffold(
@@ -90,6 +91,9 @@ class MyApp extends StatelessWidget {
       //     ),
       //   ),
       // ),
+=======
+      initialRoute: tenantView,
+>>>>>>> Ammar-Branch
     );
   }
 }
