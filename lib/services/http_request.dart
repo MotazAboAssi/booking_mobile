@@ -6,6 +6,7 @@ import 'package:booking/helper/test/print.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
+import 'package:booking/types/filter_type.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:dio/dio.dart';
 
@@ -421,7 +422,9 @@ class HttpRequest {
         printRed(response.data['message']);
         throw Exception(response.data['message']);
       }
-
+      if (response.data['id'] != null) {
+        return {"success": true, "data": "Done send request to landlord"};
+      }
       return response.data;
     } on DioException catch (e) {
       printYallow(e.response.toString());
@@ -508,9 +511,27 @@ class HttpRequest {
     }
   }
 
-  // Future<void> filterApartment (){
-
-  // }
+  Future<List<FilterType>> filterApartment(FilterType filter) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      final String query =
+          'city=${filter.city}&town=${filter.town}&min_price=${filter.minPrice}&max_price=${filter.maxPrice}&rooms=${filter.minRooms}&min_rating=${filter.minRating}&min-space=${filter.minSpace}&max-space=${filter.maxSpace}';
+      Response response = await dio.get(
+        "/apartments/filter?$query",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      final List<dynamic> data = response.data['apartments'];
+      final List<FilterType> apartments = [];
+      for (int i = 0; i < data.length; i++) {
+        apartments.add(FilterType.fromJson(data[i]));
+      }
+      printGreen(response.data["apartments"]);
+      return apartments;
+    } catch (e) {
+      printRed(e.toString());
+      throw Exception(e);
+    }
+  }
 
   // Future<void> getAllBookingApartment(){
 

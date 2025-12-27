@@ -1,6 +1,7 @@
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/helper/constant/cities.dart';
 
@@ -39,7 +40,7 @@ class SectionSearchAndFilter extends StatelessWidget {
                     ),
                   ),
                   builder: (context) {
-                    return const FilterBottomSheet();
+                    return SafeArea(child: const BodyFilterView());
                   },
                 );
               },
@@ -62,14 +63,14 @@ class SectionSearchAndFilter extends StatelessWidget {
   }
 }
 
-class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({super.key});
+class BodyFilterView extends StatefulWidget {
+  const BodyFilterView({super.key});
 
   @override
-  State<FilterBottomSheet> createState() => _FilterBottomSheetState();
+  State<BodyFilterView> createState() => _BodyFilterViewState();
 }
 
-class _FilterBottomSheetState extends State<FilterBottomSheet> {
+class _BodyFilterViewState extends State<BodyFilterView> {
   RangeValues priceRange = const RangeValues(0, 10000);
   RangeValues roomsRange = const RangeValues(1, 12);
   RangeValues areaRange = const RangeValues(40, 500);
@@ -94,14 +95,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: rem(1.5),
           children: [
-            const Text(
-              "Filter",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-
+            // const Text(
+            //   "Filter",
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // ),
             const Text("City", style: TextStyle(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
+            // const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               value: selectedCity,
               hint: const Text("Select city"),
@@ -224,8 +225,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ],
             ),
 
-            const SizedBox(height: 16),
-
+            // const SizedBox(height: 16),
             const Text(
               "Features",
               style: TextStyle(fontWeight: FontWeight.w600),
@@ -279,7 +279,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                               color: isSelected ? Colors.blue : Colors.grey,
                               size: 24,
                             ),
-                            const SizedBox(width: 15),
+                            // const SizedBox(width: 15),
                             Expanded(
                               child: Text(
                                 item.title,
@@ -308,24 +308,24 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
 
+            // const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  print(priceRange);
+                  printYallow(priceRange.toString()); //TODO
+                  printYallow(roomsRange.toString()); //TODO
+                  printYallow(areaRange.toString()); //TODO
+                  printYallow(selectedCity.toString()); //TODO
+                  printYallow(selectedAmenities.toString()); //TODO
                 },
 
-                child: Text(
-                  "Apply Filter",
-                  style: TextStyle(color: Colors.blue),
-                ),
+                child: Text("Apply Filter", style: TextStyle(color: fourthly)),
               ),
             ),
 
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
           ],
         ),
       ),

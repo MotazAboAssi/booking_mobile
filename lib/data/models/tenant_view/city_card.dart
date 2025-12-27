@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/services/auth_storage.dart';
@@ -11,7 +12,7 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await AuthStorage().deleteAllData();
+        Navigator.pushNamed(context, filterView, arguments: {"city": city});
       },
       child: AspectRatio(
         aspectRatio: 2 / 3,
