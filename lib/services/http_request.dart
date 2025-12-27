@@ -78,7 +78,6 @@ class HttpRequest {
     }
   }
 
-
   Future<UserRegisterType> login(Map<String, dynamic> user) async {
     try {
       Response response = await dio.post(
@@ -294,6 +293,22 @@ class HttpRequest {
     }
   }
 
+  Future<void> deleteUser(int id) async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.delete(
+        "/deleteUser/$id",
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+      printGreen(response.data);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) printRed("this user not found !!");
+      printRed(e.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
   // ************** for landlord **************
 
   // ************** for tenant **************
@@ -441,6 +456,9 @@ class HttpRequest {
     }
   }
 
+  // Future<void> getAllBookingApartment(){
+
+  // }
   // ************** for tenant **************
 
   // ************** for any user **************

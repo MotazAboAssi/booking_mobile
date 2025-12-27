@@ -4,6 +4,7 @@ import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/views/profile_view.dart';
+import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -77,13 +78,18 @@ class MyApp extends StatelessWidget {
         ),
       },
       // home: SettingView(),
-      initialRoute: loginView,
-      // home: Scaffold(
-      //   body: FutureBuilder(
-      //     future: HttpRequest().getFavoriteApartments(),
-      //     builder: (context, snapshot) => Text("data"),
-      //   ),
-      // ),
+      // initialRoute: loginView,
+      home: Scaffold(
+        body: FutureBuilder(
+          future: HttpRequest().deleteUser(3),
+          builder: (context, snapshot) => ElevatedButton(
+            onPressed: () async {
+              await AuthStorage().deleteAllData();
+            },
+            child: Center(child: Text("data")),
+          ),
+        ),
+      ),
     );
   }
 }

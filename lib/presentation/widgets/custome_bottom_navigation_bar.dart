@@ -12,6 +12,7 @@ class CustomeBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConvexAppBar(
+      disableDefaultTabController: true,
       backgroundColor: fourthly,
       items: [
         TabItem(icon: Icons.search, title: 'Search'),

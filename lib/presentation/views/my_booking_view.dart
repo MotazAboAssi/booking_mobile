@@ -1,3 +1,5 @@
+import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/presentation/widgets/my_Booking/body_my_booking.dart';
 
@@ -13,12 +15,9 @@ class _LandLordDashboardState extends State<MyBookingView> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("My Booking"),
-          centerTitle: true,
-          leading: Icon(Icons.arrow_back),
-          bottom: const TabBar(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: const TabBar(
             labelStyle: TextStyle(fontSize: 16),
             labelColor: Color.fromARGB(255, 0, 0, 0),
             unselectedLabelColor: Color.fromARGB(179, 124, 124, 124),
@@ -29,9 +28,13 @@ class _LandLordDashboardState extends State<MyBookingView> {
               Tab(text: 'Canceled'),
             ],
           ),
-        ),
-        body: const TabBarView(
-          children: [BodyMyBooking(), BodyMyBooking(), BodyMyBooking()],
+          bottomNavigationBar: CustomeBottomNavigationBar(index: 2),
+          body: Padding(
+            padding: EdgeInsets.only(top: rem(1)),
+            child: const TabBarView(
+              children: [BodyMyBooking(), BodyMyBooking(), BodyMyBooking()],
+            ),
+          ),
         ),
       ),
     );
