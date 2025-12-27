@@ -92,7 +92,6 @@ class RequestBookButton extends StatelessWidget {
                             final isDisabled = disabledDates.any(
                               (disabledDay) => isSameDay(disabledDay, day),
                             );
-                            // throw Exception("dddddd");
                             return !isDisabled;
                           },
                     );
