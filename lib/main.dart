@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
+import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
+import 'package:booking/presentation/views/display_filter_view.dart';
 import 'package:booking/presentation/views/filter_view.dart';
 import 'package:booking/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +81,11 @@ class MyApp extends StatelessWidget {
           create: (_) => FetchUserCubit(),
           child: ProfileView(),
         ),
-        filterView: (_) => FilterView(),
+        filterView: (_) => BlocProvider(
+          create: (BuildContext context) => FilterViewCubit(),
+          child: FilterView(),
+        ),
+        displayFilterView:(_) => DisplayFilterView()
       },
       // home: SettingView(),
       initialRoute: loginView,

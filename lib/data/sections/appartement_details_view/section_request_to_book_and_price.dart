@@ -129,7 +129,6 @@ class RequestBookButton extends StatelessWidget {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
             context: context,
-            state: state,
             color: Colors.green,
             message: state.response.toString(),
           );
@@ -137,7 +136,6 @@ class RequestBookButton extends StatelessWidget {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
             context: context,
-            state: state,
             color: Colors.red,
             message: state.errorMessage,
           );

@@ -511,21 +511,22 @@ class HttpRequest {
     }
   }
 
-  Future<List<FilterType>> filterApartment(FilterType filter) async {
+  Future<List<ApartmentType>> filterApartment(FilterType filter) async {
     final String? token = await AuthStorage().readData("token");
     try {
       final String query =
-          'city=${filter.city}&town=${filter.town}&min_price=${filter.minPrice}&max_price=${filter.maxPrice}&rooms=${filter.minRooms}&min_rating=${filter.minRating}&min-space=${filter.minSpace}&max-space=${filter.maxSpace}';
+          'city=${filter.city}&${filter.town != null ?'town=${filter.town}&' :""}min_price=${filter.minPrice}&max_price=${filter.maxPrice}&rooms=${filter.minRooms}&min_rating=${filter.minRating}&min-space=${filter.minSpace}&max-space=${filter.maxSpace}';
+  //  'city=As-Suwayda&town=null&min_price=0&max_price=10000&rooms=1&min_rating=0&min-space=40&max-space=500'
       Response response = await dio.get(
         "/apartments/filter?$query",
         options: Options(headers: authrizationHeaders(token ?? "")),
       );
+      printGreen(response.data["apartments"].toString());
       final List<dynamic> data = response.data['apartments'];
-      final List<FilterType> apartments = [];
+      final List<ApartmentType> apartments = [];
       for (int i = 0; i < data.length; i++) {
-        apartments.add(FilterType.fromJson(data[i]));
+        apartments.add(ApartmentType.fromJson(data[i]));
       }
-      printGreen(response.data["apartments"]);
       return apartments;
     } catch (e) {
       printRed(e.toString());

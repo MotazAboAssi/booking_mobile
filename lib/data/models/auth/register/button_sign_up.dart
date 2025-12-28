@@ -110,7 +110,6 @@ class ButtonSignUp extends StatelessWidget {
           if ((state is RegisterSuccessfuly)) {
             customSnakBar(
               context: c,
-              state: state,
               color: Colors.green,
               message: "✅ DONE ,Requist to Join",
             );
@@ -119,7 +118,6 @@ class ButtonSignUp extends StatelessWidget {
           } else if (state is RegisterFailed) {
             customSnakBar(
               context: c,
-              state: state,
               color: Colors.red,
               message: state.errorMessage,
             );

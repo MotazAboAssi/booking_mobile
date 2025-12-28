@@ -236,7 +236,6 @@ class FavoriteApartmentButton extends StatelessWidget {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
             context: context,
-            state: state,
             color: Colors.red,
             message: state.message!,
           );

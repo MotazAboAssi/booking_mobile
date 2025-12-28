@@ -1,24 +1,24 @@
-import 'package:booking/types/filter_type.dart';
+import 'package:booking/types/apartment_type.dart';
 
 class FilterViewStates {
-  final List<FilterType> filter;
+  final List<ApartmentType> resFilter;
   final String? message;
 
-  FilterViewStates({required this.filter, required this.message});
+  FilterViewStates({required this.resFilter, required this.message});
 }
 
 class FilterViewInitial extends FilterViewStates {
-  FilterViewInitial({required super.filter, required super.message});
+  FilterViewInitial({required super.resFilter, required super.message});
 }
 
 class FilterViewLoading extends FilterViewStates {
-  FilterViewLoading({required super.filter, required super.message});
+  FilterViewLoading({required super.resFilter, required super.message});
 }
 
 class FilterViewSuccessful extends FilterViewStates {
-  FilterViewSuccessful({required super.filter, required super.message});
+  FilterViewSuccessful({required super.resFilter, required super.message});
 }
 
 class FilterViewFaild extends FilterViewStates {
-  FilterViewFaild({required super.filter, required super.message});
+  FilterViewFaild({required super.resFilter, required super.message});
 }

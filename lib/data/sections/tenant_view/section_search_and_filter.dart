@@ -1,9 +1,16 @@
+import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
+import 'package:booking/presentation/cubit/filter_view/filter_view_states.dart';
+import 'package:booking/types/filter_type.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/helper/constant/cities.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:math' as math;
 
 class SectionSearchAndFilter extends StatelessWidget {
   const SectionSearchAndFilter({super.key});
@@ -74,7 +81,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
   RangeValues priceRange = const RangeValues(0, 10000);
   RangeValues roomsRange = const RangeValues(1, 12);
   RangeValues areaRange = const RangeValues(40, 500);
-  String? selectedCity;
+  String? selectedTown;
 
   bool hasWifi = false;
   bool hasParking = false;
@@ -104,7 +111,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             const Text("City", style: TextStyle(fontWeight: FontWeight.w600)),
             // const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: selectedCity,
+              value: selectedTown,
               hint: const Text("Select city"),
               items: cities
                   .map(
@@ -113,7 +120,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                   .toList(),
               onChanged: (value) {
                 setState(() {
-                  selectedCity = value;
+                  selectedTown = value;
                 });
               },
               decoration: InputDecoration(
@@ -137,7 +144,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: rem(6),
                   child: Text(
                     "السعر الشهري",
@@ -167,7 +174,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: rem(6),
                   child: Text(
                     " مساحة المنزل",
@@ -197,7 +204,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: rem(6),
                   child: Text(
                     "عدد الغرف",
@@ -312,16 +319,74 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             // const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  printYallow(priceRange.toString()); //TODO
-                  printYallow(roomsRange.toString()); //TODO
-                  printYallow(areaRange.toString()); //TODO
-                  printYallow(selectedCity.toString()); //TODO
-                  printYallow(selectedAmenities.toString()); //TODO
-                },
+              child: BlocConsumer<FilterViewCubit, FilterViewStates>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: context
+                        .select<FilterViewCubit, void Function()?>((cubit) {
+                          final state = cubit.state;
+                          if (state is FilterViewLoading) {
+                            return null;
+                          }
+                          return () async {
+                            printYallow(priceRange.toString()); //TODO
+                            printYallow(roomsRange.toString()); //TODO
+                            printYallow(areaRange.toString()); //TODO
+                            printYallow(selectedTown.toString()); //TODO
+                            printYallow(selectedAmenities.toString()); //TODO
+                            final city =
+                                (ModalRoute.of(context)?.settings.arguments
+                                    as Map)['city'];
+                                          
 
-                child: Text("Apply Filter", style: TextStyle(color: fourthly)),
+                            final filter = FilterType(
+                              city: city,
+                              town: selectedTown,
+                              maxPrice: priceRange.end.floor(),
+                              minPrice: priceRange.start.floor(),
+                              minRooms: roomsRange.start.floor(),
+                              maxRooms: roomsRange.end.floor(),
+                              minSpace: areaRange.start.floor(),
+                              maxSpace: areaRange.end.floor(),
+                              minRating: 0,
+                            );
+                            await cubit.filter(filter);
+                            printRed("start");
+                            if (state is FilterViewSuccessful) {
+                              if (state.resFilter.isNotEmpty) {
+                                Navigator.pushNamed(
+                                  context,
+                                  displayFilterView,
+                                  arguments: {"apartments": state.resFilter},
+                                );
+                              }
+                            }
+                          };
+                        }),
+
+                    child: Text(
+                      "Apply Filter",
+                      style: TextStyle(color: fourthly),
+                    ),
+                  );
+                },
+                listener: (BuildContext context, FilterViewStates state) {
+                  if (state is FilterViewSuccessful) {
+                    if (state.resFilter.isEmpty) {
+                      customSnakBar(
+                        context: context,
+                        color: Colors.green,
+                        message: "Not Found",
+                      );
+                    } else if (state is FilterViewFaild) {
+                      customSnakBar(
+                        context: context,
+                        color: Colors.red,
+                        message: state.toString(),
+                      );
+                    }
+                  }
+                },
               ),
             ),
 

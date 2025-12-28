@@ -11,3 +11,4 @@ const String mybooking = "MyBookingView";
 const String bookingconfirme = "BookingConfirme";
 const String profileView = "ProfileView";
 const String filterView = "FilterView";
+const String displayFilterView = "DisplayFilterView";

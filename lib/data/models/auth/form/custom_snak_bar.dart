@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 void customSnakBar({
   required BuildContext context,
-  required state,
   required Color color,
   required String message,
   EdgeInsetsGeometry? margin

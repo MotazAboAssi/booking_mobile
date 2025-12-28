@@ -96,7 +96,6 @@ class ButtonSignIn extends StatelessWidget {
           if ((state is LoginSuccessfuly)) {
             customSnakBar(
               context: context,
-              state: state,
               color: Colors.green,
               message:
                   "Welcome to back ${state.user.firstName} ${state.user.lastName}",
@@ -104,7 +103,6 @@ class ButtonSignIn extends StatelessWidget {
           } else if (state is LoginFailed) {
             customSnakBar(
               context: context,
-              state: state,
               color: Colors.red,
               message: state.errorMessage,
             );
