@@ -350,13 +350,19 @@ class HttpRequest {
 
   Future<ApartmentType> getApartmentByID(int idApartment) async {
     final token = await AuthStorage().readData("token");
+    printYallow('id : $idApartment');
     try {
       Response response = await dio.get(
-        '/apartment/Tenant/$idApartment',
+        '/apartments/Tenant/$idApartment',
         options: Options(headers: authrizationHeaders(token!)),
       );
       printGreen(response.data.toString());
-      return ApartmentType.fromJson(response.data as Map<String, dynamic>);
+      return ApartmentType.fromJson(
+        response.data['apartment'] as Map<String, dynamic>,
+      );
+    } on DioException catch (e) {
+      printRed('e.response.toString() : ${e.response.toString()}');
+      return ApartmentType.empty();
     } catch (e) {
       printRed('Error fetching apartment by ID: $e');
       return ApartmentType.empty();
@@ -366,7 +372,6 @@ class HttpRequest {
   Future<List<ApartmentType>> getAllApartementForTenant() async {
     final String? token = await AuthStorage().readData("token");
     try {
-
       Response response = await dio.get(
         "/apartments/Tenant",
         options: Options(headers: authrizationHeaders(token ?? "")),
@@ -448,6 +453,27 @@ class HttpRequest {
       printRed(e.toString());
 
       throw Exception(e);
+    }
+  }
+
+  Future<void> updateBookingParticularApartmentByID(
+    int id,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    try {
+      String? token = await AuthStorage().readData("token");
+      Response response = await dio.put(
+        '/apartments/booking/$id',
+        options: Options(headers: authrizationHeaders(token ?? "")),
+        data: {
+          "start_date": startDate.toIso8601String().split("T")[0],
+          "end_date": endDate.toIso8601String().split("T")[0],
+        },
+      );
+      printGreen(response.data.toString());
+    } catch (e) {
+      printRed(e.toString());
     }
   }
 

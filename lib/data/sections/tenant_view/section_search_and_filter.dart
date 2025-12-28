@@ -78,7 +78,7 @@ class BodyFilterView extends StatefulWidget {
 
 class _BodyFilterViewState extends State<BodyFilterView> {
   RangeValues priceRange = const RangeValues(0, 10000);
-  RangeValues roomsRange = const RangeValues(1, 12);
+  RangeValues roomsRange = const RangeValues(1, 8);
   RangeValues areaRange = const RangeValues(40, 500);
   String? selectedTown;
 
@@ -213,8 +213,8 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 Expanded(
                   child: RangeSlider(
                     min: 1,
-                    max: 12,
-                    divisions: 12,
+                    max: 8,
+                    divisions: 7,
                     values: roomsRange,
                     activeColor: Colors.blue,
                     labels: RangeLabels(
@@ -338,6 +338,12 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 },
                 builder: (context, state) {
                   return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: fourthly,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(rem(0.5)),
+                      ),
+                    ),
                     onPressed: state is FilterViewLoading
                         ? null
                         : () {
@@ -367,7 +373,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                           )
                         : Text(
                             "Apply Filter",
-                            style: TextStyle(color: fourthly),
+                            style: TextStyle(color: thirdly),
                           ),
                   );
                 },

@@ -80,7 +80,6 @@ class RequestBookButton extends StatelessWidget {
               return () async {
                 final DateTimeRange<DateTime>? picked =
                     await showDateRangePicker(
-                      errorFormatText: "Invalid format",
                       context: context,
                       initialEntryMode: DatePickerEntryMode.calendarOnly,
                       firstDate: DateTime.now().add(const Duration(days: 1)),
