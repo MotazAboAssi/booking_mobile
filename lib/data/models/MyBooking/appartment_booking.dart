@@ -3,6 +3,9 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/services/http_request.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,9 +112,7 @@ class Appartmentbooking extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 6),
-                    
-                    
-                    
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -134,11 +135,15 @@ class Appartmentbooking extends StatelessWidget {
                                 horizontal: 20,
                               ), // حجم اللزر
                             ),
-                            onPressed: () => {
+                            onPressed: () async {
+                              final ApartmentType house = await HttpRequest()
+                                  .getApartmentByID(apartment!.apartmentID);
+                              printRed(apartment!.apartmentID.toString());
                               Navigator.pushNamed(
                                 context,
                                 appartementDetailsView,
-                              ),
+                                arguments: {"apartment": house},
+                              );
                             },
                             child: Text(
                               "view details",

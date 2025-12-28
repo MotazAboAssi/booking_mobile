@@ -15,6 +15,7 @@ class BookingApartmentCubit extends Cubit<BookingApartmentStates> {
       printRed("text");
       Map<String, dynamic> response = await HttpRequest()
           .bookingParticularApartmentByID(idApartment, startDate, endDate);
+          
       emit(BookingApartmentSuccessful(response: response['data']));
     } catch (e) {
       emit(

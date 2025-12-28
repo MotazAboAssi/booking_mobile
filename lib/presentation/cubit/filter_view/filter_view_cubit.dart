@@ -13,6 +13,7 @@ class FilterViewCubit extends Cubit<FilterViewStates> {
         FilterViewLoading(resFilter: state.resFilter, message: state.message),
       );
       List<ApartmentType> data = await HttpRequest().filterApartment(res);
+      if (data.isEmpty) throw Exception("Not Found");
       emit(FilterViewSuccessful(resFilter: data, message: state.message));
     } catch (e) {
       emit(FilterViewFaild(resFilter: state.resFilter, message: e.toString()));

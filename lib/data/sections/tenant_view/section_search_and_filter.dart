@@ -10,7 +10,6 @@ import 'package:booking/types/filter_type.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/helper/constant/cities.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:math' as math;
 
 class SectionSearchAndFilter extends StatelessWidget {
   const SectionSearchAndFilter({super.key});
@@ -320,24 +319,31 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             SizedBox(
               width: double.infinity,
               child: BlocConsumer<FilterViewCubit, FilterViewStates>(
+                listener: (context, state) {
+                  if (state is FilterViewSuccessful) {
+                    Navigator.pushNamed(
+                      context,
+                      displayFilterView,
+                      arguments: {"apartments": state.resFilter},
+                    );
+                  }
+
+                  if (state is FilterViewFaild) {
+                    customSnakBar(
+                      context: context,
+                      color: Colors.red,
+                      message: state.message!,
+                    );
+                  }
+                },
                 builder: (context, state) {
                   return ElevatedButton(
-                    onPressed: context
-                        .select<FilterViewCubit, void Function()?>((cubit) {
-                          final state = cubit.state;
-                          if (state is FilterViewLoading) {
-                            return null;
-                          }
-                          return () async {
-                            printYallow(priceRange.toString()); //TODO
-                            printYallow(roomsRange.toString()); //TODO
-                            printYallow(areaRange.toString()); //TODO
-                            printYallow(selectedTown.toString()); //TODO
-                            printYallow(selectedAmenities.toString()); //TODO
+                    onPressed: state is FilterViewLoading
+                        ? null
+                        : () {
                             final city =
                                 (ModalRoute.of(context)?.settings.arguments
                                     as Map)['city'];
-                                          
 
                             final filter = FilterType(
                               city: city,
@@ -350,42 +356,20 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                               maxSpace: areaRange.end.floor(),
                               minRating: 0,
                             );
-                            await cubit.filter(filter);
-                            printRed("start");
-                            if (state is FilterViewSuccessful) {
-                              if (state.resFilter.isNotEmpty) {
-                                Navigator.pushNamed(
-                                  context,
-                                  displayFilterView,
-                                  arguments: {"apartments": state.resFilter},
-                                );
-                              }
-                            }
-                          };
-                        }),
 
-                    child: Text(
-                      "Apply Filter",
-                      style: TextStyle(color: fourthly),
-                    ),
+                            context.read<FilterViewCubit>().filter(filter);
+                          },
+                    child: state is FilterViewLoading
+                        ? SizedBox(
+                            width: rem(1),
+                            height: rem(1),
+                            child: CircularProgressIndicator(color: thirdly),
+                          )
+                        : Text(
+                            "Apply Filter",
+                            style: TextStyle(color: fourthly),
+                          ),
                   );
-                },
-                listener: (BuildContext context, FilterViewStates state) {
-                  if (state is FilterViewSuccessful) {
-                    if (state.resFilter.isEmpty) {
-                      customSnakBar(
-                        context: context,
-                        color: Colors.green,
-                        message: "Not Found",
-                      );
-                    } else if (state is FilterViewFaild) {
-                      customSnakBar(
-                        context: context,
-                        color: Colors.red,
-                        message: state.toString(),
-                      );
-                    }
-                  }
                 },
               ),
             ),

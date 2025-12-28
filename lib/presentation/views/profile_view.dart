@@ -4,10 +4,10 @@ import 'package:booking/data/sections/display_profile_user_view/section_image_pi
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
-import 'package:booking/services/auth_storage.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +42,7 @@ class _ProfileViewState extends State<ProfileView> {
                   return Dialog(
                     insetPadding: EdgeInsets.all(rem(5)),
                     child: Padding(
-                      padding:  EdgeInsets.all(rem(1)),
+                      padding: EdgeInsets.all(rem(1)),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -58,8 +58,12 @@ class _ProfileViewState extends State<ProfileView> {
                             children: [
                               TextButton(
                                 onPressed: () async {
-                                  await HttpRequest().logout();
-                                  navigateTo(context, loginView);
+                                  try {
+                                    await HttpRequest().logout();
+                                    navigateTo(context, loginView);
+                                  } catch (e) {
+                                    printYallow(e.toString());
+                                  }
                                 },
                                 child: Text("Ok"),
                               ),

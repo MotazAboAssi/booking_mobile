@@ -4,7 +4,7 @@ class BookingApartmentInitial extends BookingApartmentStates {}
 class BookingApartmentLoading extends BookingApartmentStates {}
 
 class BookingApartmentSuccessful extends BookingApartmentStates {
-  final Map response;
+  final String response;
 
   BookingApartmentSuccessful({required this.response});
 }

@@ -51,9 +51,7 @@ class ButtonSignUp extends StatelessWidget {
                   idImage: File(imageIDCard?.path ?? ""),
                   role: role == "tenant" ? UserRole.tenant : UserRole.landlord,
                   birthday: input[dateOfBirthKey],
-                  balance: role == UserRole.tenant.name
-                      ? int.parse(input[balanceKey])
-                      : 0,
+                  balance: 0,
                 );
                 try {
                   await cubit.register(user);

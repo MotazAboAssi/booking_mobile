@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => FilterViewCubit(),
           child: FilterView(),
         ),
-        displayFilterView:(_) => DisplayFilterView()
+        displayFilterView: (_) => DisplayFilterView(),
       },
       // home: SettingView(),
       initialRoute: loginView,

@@ -9,7 +9,7 @@ void customSnakBar({
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       margin: margin,      
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 2),
       backgroundColor: color,
       content: Text(message, style: TextStyle(fontSize: 20)),
       behavior: SnackBarBehavior.floating,

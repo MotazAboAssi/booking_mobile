@@ -17,7 +17,7 @@ class BodyMyBooking extends StatelessWidget {
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
             return apartments.isEmpty
-                ? Container()
+                ? null
                 : AspectRatio(
                     aspectRatio: 1,
                     child: Appartmentbooking(apartment: apartments[index]),

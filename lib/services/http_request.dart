@@ -366,24 +366,33 @@ class HttpRequest {
   Future<List<ApartmentType>> getAllApartementForTenant() async {
     final String? token = await AuthStorage().readData("token");
     try {
+
       Response response = await dio.get(
         "/apartments/Tenant",
         options: Options(headers: authrizationHeaders(token ?? "")),
       );
       final List<dynamic> data = response.data["apartments"];
-      printGreen(data.toString());
       final List<ApartmentType> apartemnts = [];
       for (int i = 0; i < data.length; i++) {
         apartemnts.add(ApartmentType.fromJson(data[i]));
       }
       return apartemnts;
     } on DioException catch (e) {
-      if (e.response != null && e.response?.statusCode == 403) {
-        throw Exception("wrong login again login");
+      printRed(e.type.name);
+      printRed(e.response!.data.toString());
+      // printRed(e.toString());
+      if (e.type.name == 'connectionError') {
+        throw Exception("No Internet 😢");
+      } else if (e.response?.statusCode == 401 &&
+          e.response?.data['message'] != null &&
+          e.response!.data['message'] == 'Unauthenticated') {
+        print("object");
+        await AuthStorage().deleteAllData();
       }
-      throw Exception("No Internet 😢");
+      throw Exception(e.toString());
     } catch (e) {
-      throw Exception(e);
+      printYallow(e.toString());
+      throw Exception(e.toString());
     }
   }
 
@@ -515,8 +524,8 @@ class HttpRequest {
     final String? token = await AuthStorage().readData("token");
     try {
       final String query =
-          'city=${filter.city}&${filter.town != null ?'town=${filter.town}&' :""}min_price=${filter.minPrice}&max_price=${filter.maxPrice}&rooms=${filter.minRooms}&min_rating=${filter.minRating}&min-space=${filter.minSpace}&max-space=${filter.maxSpace}';
-  //  'city=As-Suwayda&town=null&min_price=0&max_price=10000&rooms=1&min_rating=0&min-space=40&max-space=500'
+          'city=${filter.city}&${filter.town != null ? 'town=${filter.town}&' : ""}min_price=${filter.minPrice}&max_price=${filter.maxPrice}&rooms=${filter.minRooms}&min_rating=${filter.minRating}&min-space=${filter.minSpace}&max-space=${filter.maxSpace}';
+      //  'city=As-Suwayda&town=null&min_price=0&max_price=10000&rooms=1&min_rating=0&min-space=40&max-space=500'
       Response response = await dio.get(
         "/apartments/filter?$query",
         options: Options(headers: authrizationHeaders(token ?? "")),

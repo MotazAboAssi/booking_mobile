@@ -7,10 +7,11 @@ class FilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final city = (ModalRoute.of(context)?.settings.arguments as Map)['city'];
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Filter",
+          "Filter in $city",
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

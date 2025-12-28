@@ -9,7 +9,9 @@ class RegisterCubit extends Cubit<RegisterStateCubit> {
     emit(UnderRegistrationInRegister());
     try {
       final Map<String, dynamic> response = await HttpRequest().register(user);
-      emit(RegisterSuccessfuly(user: UserRegisterType.fromJson(response["data"]["0"])));
+      emit(
+        RegisterSuccessfuly(user: UserRegisterType.fromJson(response["data"]['0'])),
+      );
     } catch (error) {
       emit(RegisterFailed(errorMessage: error.toString().split(":")[1]));
       throw Exception(error);

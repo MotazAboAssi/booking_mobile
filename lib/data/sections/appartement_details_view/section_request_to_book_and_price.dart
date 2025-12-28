@@ -117,14 +117,14 @@ class RequestBookButton extends StatelessWidget {
                 child: CircularProgressIndicator(color: thirdly),
               );
             } else if (state is BookingApartmentSuccessful) {
-              return Icon(Icons.check, color: thirdly,);
+              return Icon(Icons.check, color: thirdly);
             } else {
               return Text("Request to Book", style: TextStyle(color: thirdly));
             }
           }),
         );
       },
-      listener: (context, state) {
+      listener: (context, state) async {
         if ((state is BookingApartmentSuccessful)) {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
@@ -132,6 +132,8 @@ class RequestBookButton extends StatelessWidget {
             color: Colors.green,
             message: state.response.toString(),
           );
+          await Future.delayed(const Duration(seconds: 1));
+          Navigator.pop(context);
         } else if (state is BookingApartmentFaild) {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
