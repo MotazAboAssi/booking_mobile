@@ -1,14 +1,12 @@
-import 'dart:io';
 
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/image_network.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
-import 'package:booking/presentation/views/display_profile_user_view.dart';
+import 'package:booking/presentation/views/tenant/display_profile_user_view.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:flutter/material.dart';

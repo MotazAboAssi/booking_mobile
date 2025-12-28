@@ -1,5 +1,7 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -132,7 +134,7 @@ class RequestBookButton extends StatelessWidget {
             message: state.response.toString(),
           );
           await Future.delayed(const Duration(seconds: 1));
-          Navigator.pop(context);
+          navigateTo(context, mybooking);
         } else if (state is BookingApartmentFaild) {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),

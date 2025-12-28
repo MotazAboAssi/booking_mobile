@@ -4,7 +4,6 @@ import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/methods/comapre_two_date.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
-import 'package:booking/types/user_role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';

@@ -2,7 +2,6 @@ import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 

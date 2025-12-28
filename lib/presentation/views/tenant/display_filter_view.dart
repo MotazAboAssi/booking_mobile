@@ -1,7 +1,6 @@
 import 'package:booking/data/models/tenant_view/appartement_card.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
-import 'package:booking/types/filter_type.dart';
 import 'package:flutter/material.dart';
 
 class DisplayFilterView extends StatelessWidget {
@@ -13,6 +12,13 @@ class DisplayFilterView extends StatelessWidget {
         (ModalRoute.of(context)?.settings.arguments as Map)['apartments'];
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Filter',
+          style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: ListView.builder(
           itemCount: apartments.length,

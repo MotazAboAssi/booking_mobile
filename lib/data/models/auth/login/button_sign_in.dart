@@ -5,7 +5,6 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:booking/presentation/cubit/auth/login/login_state_cubit.dart';
 import 'package:booking/services/auth_storage.dart';
@@ -35,7 +34,6 @@ class ButtonSignIn extends StatelessWidget {
                 try {
                   await cubit.login(input);
                   final String? role = await AuthStorage().readData("role");
-                  printWhite(role.toString());
                   if (role == "tenant") {
                     navigateTo(context, tenantView);
                   } else {

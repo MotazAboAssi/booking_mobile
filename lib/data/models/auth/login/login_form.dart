@@ -2,7 +2,6 @@ import 'package:booking/data/models/auth/form/input_field_form.dart';
 import 'package:booking/data/models/auth/login/button_sign_in.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +32,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    printYallow("object");
     final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
     return FormBuilder(
       key: formKey,

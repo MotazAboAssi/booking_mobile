@@ -1,7 +1,6 @@
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_states.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/booking_apartment_type.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyBookingViewCubit extends Cubit<MyBookingViewStates> {

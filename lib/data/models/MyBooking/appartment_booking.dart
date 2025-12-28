@@ -4,8 +4,6 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
-import 'package:booking/helper/test/print.dart';
-import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
@@ -34,7 +32,7 @@ class Appartmentbooking extends StatelessWidget {
         color: thirdly,
         elevation: 0,
 
-        margin: EdgeInsets.symmetric(horizontal: 2),
+        margin: EdgeInsets.symmetric(horizontal: 2, vertical: rem(0.5)),
         child: LayoutBuilder(
           builder: (context, card) {
             return Column(
@@ -58,14 +56,16 @@ class Appartmentbooking extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  // color: Th,
+                  // : Th,
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    spacing: rem(0.3),
+                    spacing: rem(0.5),
+                    
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
-                        spacing: rem(0.5),
+                        spacing: rem(0.8),
+                    
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -158,36 +158,29 @@ class ConfirmedButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(
-                255,
-                70,
-                134,
-                231,
-              ), // لون الخلفية
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8), // بدون انحناءات
+          child: Tooltip(
+            message: 'بدي نت',
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // بدون انحناءات
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 20,
+                ), // حجم اللزر
               ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ), // حجم اللزر
+              onPressed: null,
+              child: Text('Contact Owner'),
             ),
-            onPressed: null,
-            child: Text("view details", style: TextStyle(color: Colors.white)),
           ),
         ),
 
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(
-                255,
-                170,
-                172,
-                170,
-              ), // لون الخلفية
+              backgroundColor: Colors.red, // لون الخلفية
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8), // بدون انحناءات
               ),
@@ -196,8 +189,14 @@ class ConfirmedButton extends StatelessWidget {
                 horizontal: 20,
               ), // حجم الزر
             ),
-            onPressed: () => {},
-            child: Text("Contact owner", style: TextStyle(color: Colors.white)),
+            onPressed: () async {
+                  await HttpRequest().deleteBookingParticularApartmentByID(
+                  apartment!.bookingID,
+                );
+                final cubit = context.read<MyBookingViewCubit>();
+                cubit.getAllApartmentsBooking();
+            },
+            child: Text('Cancele', style: TextStyle(color: Colors.white)),
           ),
         ),
       ],

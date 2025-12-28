@@ -1,5 +1,4 @@
 import 'package:booking/helper/methods/convert_string_to_list_of_integer.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:booking/types/image_from_apartment.dart';
 
 class ApartmentType {

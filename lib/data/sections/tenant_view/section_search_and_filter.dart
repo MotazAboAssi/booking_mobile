@@ -3,7 +3,6 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_states.dart';
 import 'package:booking/types/filter_type.dart';
@@ -146,7 +145,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 SizedBox(
                   width: rem(6),
                   child: Text(
-                    "السعر الشهري",
+                    "Price For Month : ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -176,7 +175,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 SizedBox(
                   width: rem(6),
                   child: Text(
-                    " مساحة المنزل",
+                    "Space Apartment",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -206,7 +205,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 SizedBox(
                   width: rem(6),
                   child: Text(
-                    "عدد الغرف",
+                    "Rooms",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
