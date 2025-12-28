@@ -477,6 +477,22 @@ class HttpRequest {
     }
   }
 
+
+  Future<void> deleteBookingParticularApartmentByID(
+    int id,
+  ) async {
+    try {
+      String? token = await AuthStorage().readData("token");
+      Response response = await dio.put(
+        '/apartments/booking/$id',
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      printGreen(response.data.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
   Future<List<BookingApartmentType>> getAllbookingApartments() async {
     final String? token = await AuthStorage().readData("token");
     try {
