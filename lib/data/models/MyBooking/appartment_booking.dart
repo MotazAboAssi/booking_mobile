@@ -6,6 +6,7 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
@@ -249,8 +250,13 @@ class PendingButton extends StatelessWidget {
                     },
               );
               if (picked != null) {
-                final cubit = context.read<BookingApartmentCubit>();
-                cubit.booking(apartment!.apartmentID, picked.start, picked.end);
+                await HttpRequest().updateBookingParticularApartmentByID(
+                  apartment!.bookingID,
+                  picked.start,
+                  picked.end,
+                );
+                final cubit = context.read<MyBookingViewCubit>();
+                cubit.getAllApartmentsBooking();
               }
             },
             child: Text('Edit', style: TextStyle(color: thirdly)),
@@ -269,7 +275,13 @@ class PendingButton extends StatelessWidget {
                 horizontal: 20,
               ), // حجم الزر
             ),
-            onPressed: () => {},
+            onPressed: () async {
+                  await HttpRequest().deleteBookingParticularApartmentByID(
+                  apartment!.bookingID,
+                );
+                final cubit = context.read<MyBookingViewCubit>();
+                cubit.getAllApartmentsBooking();
+            },
             child: Text('Cancele', style: TextStyle(color: thirdly)),
           ),
         ),

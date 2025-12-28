@@ -483,7 +483,7 @@ class HttpRequest {
   ) async {
     try {
       String? token = await AuthStorage().readData("token");
-      Response response = await dio.put(
+      Response response = await dio.delete(
         '/apartments/booking/$id',
         options: Options(headers: authrizationHeaders(token ?? "")),
       );
