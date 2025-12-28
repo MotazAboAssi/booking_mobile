@@ -7,6 +7,7 @@ import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:booking/types/filter_type.dart';
+import 'package:booking/types/rate_type.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:dio/dio.dart';
 
@@ -477,10 +478,7 @@ class HttpRequest {
     }
   }
 
-
-  Future<void> deleteBookingParticularApartmentByID(
-    int id,
-  ) async {
+  Future<void> deleteBookingParticularApartmentByID(int id) async {
     try {
       String? token = await AuthStorage().readData("token");
       Response response = await dio.delete(
@@ -582,6 +580,23 @@ class HttpRequest {
     } catch (e) {
       printRed(e.toString());
       throw Exception(e);
+    }
+  }
+
+  Future<void> rateApartmentByID(int idApartment, RateType user) async {
+    try {
+      final String? token = await AuthStorage().readData("token");
+      Response response = await dio.post(
+        "/apartments/rate/$idApartment",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+        data: {
+          user.rate == null ? null : 'rate': user.rate,
+          user.comment == null ? null : 'comment': user.comment,
+        },
+      );
+      printGreen(response.data);
+    } catch (e) {
+      printRed(e.toString());
     }
   }
 
