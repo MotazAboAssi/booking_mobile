@@ -1,10 +1,23 @@
 class RateType {
-  final int? rate;
+  final int? overallExperlence;
+  final int? cleanLess;
+  final int? location;
+  final int? communication;
+  final int? value;
   final String? comment;
+  final int? rate;
 
-  RateType({required this.rate, required this.comment});
+  RateType({
+    required this.comment,
+    required this.rate,
+    this.overallExperlence,
+    this.cleanLess,
+    this.location,
+    this.communication,
+    this.value,
+  });
 
   factory RateType.fromJson(Map<String, dynamic> json) {
-    return RateType(rate: json['rate'], comment: json['comment']);
+    return RateType(comment: json['connemt'], rate: json['rate']);
   }
 }
