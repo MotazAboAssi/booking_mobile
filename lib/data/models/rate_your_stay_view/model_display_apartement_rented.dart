@@ -16,7 +16,8 @@ class ModelDisplayApartementRented extends StatelessWidget {
         visualDensity: VisualDensity(horizontal: 4, vertical: 4),
         title: Text(
           "Bright & Modern DownTown Loft",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          maxLines: 2,
+          style: TextStyle(fontWeight: FontWeight.bold,),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8),

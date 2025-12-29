@@ -1,16 +1,13 @@
 import 'dart:developer';
 
-import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/presentation/cubit/toggle_favorite_apartment_button/toggle_favorite_apartment_button_cubit.dart';
-import 'package:booking/presentation/cubit/toggle_favorite_apartment_button/toggle_favorite_apartment_button_states.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppartementCard extends StatelessWidget {
   final ApartmentType? apartment;
@@ -30,10 +27,12 @@ class AppartementCard extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   try {
+                    final ApartmentType house = await HttpRequest()
+                        .getApartmentByID(apartment!.idApartment);
                     Navigator.pushNamed(
                       context,
                       appartementDetailsView,
-                      arguments: {"apartment": apartment},
+                      arguments: {"apartment": house},
                     );
                   } catch (e) {
                     log(e.toString());
@@ -172,15 +171,6 @@ class AppartementCard extends StatelessWidget {
                 ),
               ),
 
-              Positioned(
-                right: 5,
-                top: 5,
-                child: BlocProvider(
-                  create: (BuildContext context) =>
-                      ToggleFavoriteApartmentButtonCubit(),
-                  child: FavoriteApartmentButton(apartment: apartment),
-                ),
-              ),
             ],
           );
         },
@@ -189,58 +179,4 @@ class AppartementCard extends StatelessWidget {
   }
 }
 
-class FavoriteApartmentButton extends StatelessWidget {
-  const FavoriteApartmentButton({super.key, this.apartment});
-  final ApartmentType? apartment;
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<
-      ToggleFavoriteApartmentButtonCubit,
-      ToggleFavoriteApartmentButtonStates
-    >(
-      builder: (BuildContext context, state) {
-        if (state is ToggleFavoriteApartmentButtonLoading) {
-          return CircleAvatar(
-            backgroundColor: primary.withAlpha(125),
-            child: Center(
-              child: SizedBox(
-                width: rem(1),
-                height: rem(1),
-                child: CircularProgressIndicator(color: thirdly),
-              ),
-            ),
-          );
-        }
-        return InkWell(
-          onTap: () async {
-            final ToggleFavoriteApartmentButtonCubit cubit = context
-                .read<ToggleFavoriteApartmentButtonCubit>();
-            await cubit.toggle(apartment!.idApartment);
-          },
-          child: CircleAvatar(
-            backgroundColor: primary.withAlpha(125),
-            child: Center(
-              child: Icon(
-                Icons.favorite,
-                color: state.isFavorite
-                    ? const Color.fromARGB(255, 255, 17, 0)
-                    : thirdly,
-              ),
-            ),
-          ),
-        );
-      },
-      listener: (BuildContext context, state) {
-        if (state is ToggleFavoriteApartmentButtonFaild) {
-          customSnakBar(
-            margin: EdgeInsets.only(bottom: rem(4)),
-            context: context,
-            color: Colors.red,
-            message: state.message!,
-          );
-        }
-      },
-    );
-  }
-}

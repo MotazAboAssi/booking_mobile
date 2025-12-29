@@ -4,6 +4,7 @@ import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_states.dart';
 import 'package:booking/presentation/widgets/button_refresh.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
+import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/presentation/widgets/my_Booking/body_my_booking.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +60,11 @@ class _LandLordDashboardState extends State<MyBookingView> {
             padding: EdgeInsets.only(top: rem(1)),
             child: BlocBuilder<MyBookingViewCubit, MyBookingViewStates>(
               builder: (context, state) {
-                final booking = state.bookings;
+                // final booking = state.bookings;
+                final List<BookingApartmentType> booking = [
+                  BookingApartmentType.empty(),
+                ];
+
                 if (state is MyBookingViewSuccessful) {
                   return TabBarView(
                     children: [

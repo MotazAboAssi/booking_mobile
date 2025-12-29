@@ -35,4 +35,17 @@ class BookingApartmentType {
           : BookingStatus.canceled,
     );
   }
+
+  factory BookingApartmentType.empty() {
+    // final ApartmentType apartment = ApartmentType.fromJson(json['apartment']);
+    return BookingApartmentType(
+      bookingID: 0,
+      userID: 0,
+      apartmentID: 0,
+      startDate: DateTime(2025, 12,27),
+      endDate: DateTime(2025, 12,28),
+      totalCost: 0,
+      status: BookingStatus.confirmed,
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:booking/data/models/MyBooking/appartment_booking.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 

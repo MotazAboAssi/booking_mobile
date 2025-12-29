@@ -60,12 +60,12 @@ class Appartmentbooking extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     spacing: rem(0.2),
-                    
+
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         spacing: rem(0.35),
-                    
+
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -131,6 +131,10 @@ class Appartmentbooking extends StatelessWidget {
                       apartment!.status.name == BookingStatus.pending.name
                           ? PendingButton(apartment: apartment)
                           : apartment!.status.name ==
+                                    BookingStatus.confirmed.name &&
+                                DateTime.now().isAfter(apartment!.endDate)
+                          ? ConfirmedPastButton(apartment: apartment)
+                          : apartment!.status.name ==
                                 BookingStatus.confirmed.name
                           ? ConfirmedButton(apartment: apartment)
                           : Container(),
@@ -142,6 +146,59 @@ class Appartmentbooking extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class ConfirmedPastButton extends StatelessWidget {
+  const ConfirmedPastButton({super.key, required this.apartment});
+
+  final BookingApartmentType? apartment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: rem(0.5),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Tooltip(
+            message: 'بدي نت',
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // بدون انحناءات
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 20,
+                ), // حجم اللزر
+              ),
+              onPressed: null,
+              child: Text('Contact Owner'),
+            ),
+          ),
+        ),
+
+        Expanded(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.yellow, // لون الخلفية
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8), // بدون انحناءات
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ), // حجم الزر
+            ),
+            onPressed: () async {
+              Navigator.pushNamed(context, rateYourStayView);
+            },
+            child: Text('Rate', style: TextStyle(color: primary)),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -162,7 +219,6 @@ class ConfirmedButton extends StatelessWidget {
             message: 'بدي نت',
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8), // بدون انحناءات
                 ),
@@ -190,11 +246,11 @@ class ConfirmedButton extends StatelessWidget {
               ), // حجم الزر
             ),
             onPressed: () async {
-                  await HttpRequest().deleteBookingParticularApartmentByID(
-                  apartment!.bookingID,
-                );
-                final cubit = context.read<MyBookingViewCubit>();
-                cubit.getAllApartmentsBooking();
+              await HttpRequest().deleteBookingParticularApartmentByID(
+                apartment!.bookingID,
+              );
+              final cubit = context.read<MyBookingViewCubit>();
+              cubit.getAllApartmentsBooking();
             },
             child: Text('Cancele', style: TextStyle(color: Colors.white)),
           ),
@@ -275,11 +331,11 @@ class PendingButton extends StatelessWidget {
               ), // حجم الزر
             ),
             onPressed: () async {
-                  await HttpRequest().deleteBookingParticularApartmentByID(
-                  apartment!.bookingID,
-                );
-                final cubit = context.read<MyBookingViewCubit>();
-                cubit.getAllApartmentsBooking();
+              await HttpRequest().deleteBookingParticularApartmentByID(
+                apartment!.bookingID,
+              );
+              final cubit = context.read<MyBookingViewCubit>();
+              cubit.getAllApartmentsBooking();
             },
             child: Text('Cancele', style: TextStyle(color: thirdly)),
           ),

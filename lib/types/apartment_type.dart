@@ -14,6 +14,7 @@ class ApartmentType {
   String description;
   List<int> features;
   List<ImageFromApartment>? images;
+   bool? isFavorite;
 
   ApartmentType({
     required this.city,
@@ -28,15 +29,41 @@ class ApartmentType {
     required this.idApartment,
     required this.idLandlord,
     required this.rating,
+    required this.isFavorite,
   });
 
-  factory ApartmentType.fromJson(Map<String, dynamic> json) {
+  factory ApartmentType.fromJsonWithFavorite(Map<String, dynamic> json) {
+    final apartment = json['apartment'];
+    final isFavorite = json['is_favorite'];
+    List<ImageFromApartment> pictures = [];
+    List<dynamic>? arrImg = apartment["images"];
+    for (int i = 0; i < (arrImg?.length ?? 0); i++) {
+      pictures.add(ImageFromApartment.fromJson(arrImg![i]));
+    }
+    // printGreen(json.toString());
+    return ApartmentType(
+      idApartment: apartment["id"],
+      idLandlord: apartment["user_id"],
+      city: apartment['city'],
+      town: apartment['town'],
+      space: apartment['space'],
+      rooms: apartment['rooms'],
+      location: apartment['location'],
+      priceForMonth: apartment['price_for_month'],
+      description: apartment['description'],
+      features: convertStringToListOfInteger(apartment['features']),
+      rating: apartment["rating"],
+      images: pictures,
+      isFavorite: isFavorite,
+    );
+  }
+
+  factory ApartmentType.fromJsonWithoutFivorite(Map<String, dynamic> json) {
     List<ImageFromApartment> pictures = [];
     List<dynamic>? arrImg = json["images"];
     for (int i = 0; i < (arrImg?.length ?? 0); i++) {
       pictures.add(ImageFromApartment.fromJson(arrImg![i]));
     }
-    // printGreen(json.toString());
     return ApartmentType(
       idApartment: json["id"],
       idLandlord: json["user_id"],
@@ -50,6 +77,7 @@ class ApartmentType {
       features: convertStringToListOfInteger(json['features']),
       rating: json["rating"],
       images: pictures,
+      isFavorite: false,
     );
   }
   factory ApartmentType.empty() {
@@ -65,6 +93,7 @@ class ApartmentType {
       idApartment: -1,
       idLandlord: -1,
       rating: 0,
+      isFavorite: false,
     );
   }
 }
