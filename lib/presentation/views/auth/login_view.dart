@@ -17,6 +17,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
+    
     final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
     cubit.routeFromLogin(context);
 

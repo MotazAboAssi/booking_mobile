@@ -59,12 +59,12 @@ class Appartmentbooking extends StatelessWidget {
                   // : Th,
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    spacing: rem(0.5),
+                    spacing: rem(0.2),
                     
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
-                        spacing: rem(0.8),
+                        spacing: rem(0.35),
                     
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

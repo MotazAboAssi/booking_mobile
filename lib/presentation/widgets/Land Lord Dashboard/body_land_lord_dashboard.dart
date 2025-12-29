@@ -96,6 +96,7 @@
 //   }
 // }
 
+import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 
 class LandlordDashboard extends StatelessWidget {
@@ -169,7 +170,7 @@ class LandlordDashboard extends StatelessWidget {
         'Rented',
         '8',
         Icons.check_circle,
-        onTap: () {
+        onTap: () async {
           _showApartmentsDialog(
             context,
             title: 'Rented Apartments',

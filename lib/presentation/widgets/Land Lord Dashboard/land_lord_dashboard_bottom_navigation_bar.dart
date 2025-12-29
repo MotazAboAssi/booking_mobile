@@ -1,3 +1,4 @@
+import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 
 class LandLordDashboardBottomNavigationBar extends StatefulWidget {
@@ -17,7 +18,8 @@ class _LandLordDashboardBottomNavigationBarState
     return BottomNavigationBar(
       currentIndex: currentIndex,
 
-      onTap: (index) {
+      onTap: (index) async {
+        await AuthStorage().deleteAllData();
         setState(() {
           currentIndex = index;
         });

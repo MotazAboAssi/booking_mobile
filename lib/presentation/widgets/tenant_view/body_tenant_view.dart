@@ -11,7 +11,7 @@ class BodyTenantView extends StatelessWidget {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          SectionSearchAndFilter(),
+          // SectionSearchAndFilter(),
           SectionMostPopular(),
           SectionSearchIn(),
         ],

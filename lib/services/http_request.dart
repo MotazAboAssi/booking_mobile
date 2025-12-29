@@ -583,6 +583,19 @@ class HttpRequest {
     }
   }
 
+  Future<void> getAllRateApartmentByID(int idApartment, RateType user) async {
+    try {
+      final String? token = await AuthStorage().readData("token");
+      Response response = await dio.get(
+        "/apartments/rate/$idApartment",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      printGreen(response.data);
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
   Future<void> rateApartmentByID(int idApartment, RateType user) async {
     try {
       final String? token = await AuthStorage().readData("token");

@@ -1,6 +1,7 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 
 class CityCard extends StatelessWidget {
