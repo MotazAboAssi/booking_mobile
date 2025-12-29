@@ -2,6 +2,7 @@ import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
+import 'package:booking/presentation/widgets/swiper_images.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
@@ -15,17 +16,16 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
     ValueNotifier<bool> isFavorite = ValueNotifier<bool>(false);
     return Stack(
       children: [
+        apartment!.images!.isEmpty ?
         Container(
           decoration: apartment != null
               ? BoxDecoration(
                   image: DecorationImage(
-                    image: apartment!.images!.isEmpty
-                        ? AssetImage(anonymousManAvatar)
-                        : fetchImageFromDB(apartment!.images![0].image),
+                    image: AssetImage(anonymousManAvatar) 
                   ),
                 )
               : null,
-        ),
+        ):SwiperImage(images: apartment?.images),
         Positioned(
           right: 0,
           child: Padding(
