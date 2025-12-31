@@ -1,8 +1,17 @@
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SectionShareDetails extends StatelessWidget {
+class SectionShareDetails extends StatefulWidget {
   const SectionShareDetails({super.key});
+
+  @override
+  State<SectionShareDetails> createState() => _SectionShareDetailsState();
+}
+
+class _SectionShareDetailsState extends State<SectionShareDetails> {
+  TextEditingController comment = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,7 @@ class SectionShareDetails extends StatelessWidget {
           child: TextField(
             maxLines: 5,
             maxLength: 500,
-
+            controller: comment,
             buildCounter:
                 (
                   context, {
@@ -33,6 +42,10 @@ class SectionShareDetails extends StatelessWidget {
                   required maxLength,
                 }) {
                   if (isFocused || currentLength != 0) {
+                    final pov = BlocProvider.of<RateYourStayCubit>(
+                      context,
+                    ).state.pov;
+                    pov.comment = comment.text;
                     if (currentLength == maxLength) {
                       return Text(
                         "$currentLength = $maxLength",

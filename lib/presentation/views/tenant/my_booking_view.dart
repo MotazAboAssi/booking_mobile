@@ -60,10 +60,7 @@ class _LandLordDashboardState extends State<MyBookingView> {
             padding: EdgeInsets.only(top: rem(1)),
             child: BlocBuilder<MyBookingViewCubit, MyBookingViewStates>(
               builder: (context, state) {
-                // final booking = state.bookings;
-                final List<BookingApartmentType> booking = [
-                  BookingApartmentType.empty(),
-                ];
+                final booking = state.bookings;
 
                 if (state is MyBookingViewSuccessful) {
                   return TabBarView(
@@ -107,7 +104,11 @@ class _LandLordDashboardState extends State<MyBookingView> {
                         apartments: booking
                             .where(
                               (apartment) =>
-                                  apartment.status.name == pendingKey,
+                                  apartment.status.name == pendingKey ||
+                                  (apartment.status.name == confirmedKey &&
+                                      DateTime.now().isBefore(
+                                        apartment.endDate,
+                                      )),
                             )
                             .toList(),
                       ),
@@ -115,7 +116,8 @@ class _LandLordDashboardState extends State<MyBookingView> {
                         apartments: booking
                             .where(
                               (apartment) =>
-                                  apartment.status.name == confirmedKey,
+                                  apartment.status.name == confirmedKey &&
+                                  DateTime.now().isAfter(apartment.endDate),
                             )
                             .toList(),
                       ),

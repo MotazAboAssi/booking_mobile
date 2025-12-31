@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class ModelFeatureRate extends StatelessWidget {
   final String feature;
+  final void Function(double) action;
 
-  const ModelFeatureRate({super.key, required this.feature});
+  const ModelFeatureRate({super.key, required this.feature, required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ModelFeatureRate extends StatelessWidget {
         ListTile(
           leading: Text(feature, style: TextStyle(fontSize: rem(1))),
 
-          trailing: ModelRatingBar(itemSize: rem(1.5)),
+          trailing: ModelRatingBar(itemSize: rem(1.5), action: action,),
         ),
       ],
     );

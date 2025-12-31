@@ -5,19 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RateYourStayCubit extends Cubit<RateYourStayStates> {
   RateYourStayCubit()
-    : super(
-        RateYourStayInitial(
-          pov: RateType(comment: null, rate: null),
-          message: null,
-        ),
-      );
+    : super(RateYourStayInitial(pov: RateType.empty(), message: null));
   Future<void> addRate(int idApartment, RateType povUser) async {
     try {
       emit(RateYourStayLoading(pov: state.pov, message: state.message));
       await HttpRequest().rateApartmentByID(idApartment, povUser);
       emit(RateYourStaySuccessful(pov: povUser, message: state.message));
     } catch (e) {
-      emit(RateYourStayFaild(pov: state.pov, message: e.toString()));
+      emit(
+        RateYourStayFaild(
+          pov: state.pov,
+          message: e.toString().replaceAll("Exception: ", ""),
+        ),
+      );
     }
   }
 }

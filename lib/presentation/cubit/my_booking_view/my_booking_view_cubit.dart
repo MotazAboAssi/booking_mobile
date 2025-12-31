@@ -10,12 +10,12 @@ class MyBookingViewCubit extends Cubit<MyBookingViewStates> {
  
   ) async {
     try {
-      // emit(
-      //   MyBookingViewInitial(bookings: state.bookings, message: state.message),
-      // );
-      // final List<BookingApartmentType> bookins = await HttpRequest()
-      //     .getAllbookingApartments();
-      emit(MyBookingViewSuccessful(bookings: [], message: state.message));
+      emit(
+        MyBookingViewInitial(bookings: state.bookings, message: state.message),
+      );
+      final List<BookingApartmentType> bookins = await HttpRequest()
+          .getAllbookingApartments();
+      emit(MyBookingViewSuccessful(bookings: bookins, message: state.message));
     } catch (e) {
       emit(MyBookingViewFaild(bookings: [], message: e.toString()));
     }

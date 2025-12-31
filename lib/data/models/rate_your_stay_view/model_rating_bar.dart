@@ -3,13 +3,24 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ModelRatingBar extends StatelessWidget {
   final double itemSize;
-  const ModelRatingBar({super.key, required this.itemSize});
+  final void Function(double)? action;
+  final double? initialRating;
+  final bool? ignoreGestures;
+  const ModelRatingBar({
+    super.key,
+    required this.itemSize,
+    this.action,
+    this.initialRating,
+    this.ignoreGestures,
+  });
 
   @override
   Widget build(BuildContext context) {
     return RatingBar(
       direction: Axis.horizontal,
       itemCount: 5,
+      ignoreGestures: ignoreGestures ?? false,
+      initialRating: initialRating ?? 0,
       glow: false,
       itemSize: itemSize,
       ratingWidget: RatingWidget(
@@ -18,9 +29,7 @@ class ModelRatingBar extends StatelessWidget {
         empty: Icon(Icons.star_border_rounded, color: Colors.amber),
       ),
       itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      onRatingUpdate: (rating) {
-        // print(rating);
-      },
+      onRatingUpdate: action ?? (double d) {},
     );
   }
 }

@@ -1,6 +1,7 @@
-import 'package:booking/data/models/rate_your_stay_view/model_rating_bar.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SectionOverallExperience extends StatelessWidget {
@@ -16,12 +17,12 @@ class SectionOverallExperience extends StatelessWidget {
         ),
 
         RatingBar.builder(
-          initialRating: 5,
+          initialRating: 0,
           itemCount: 5,
           glow: false,
           itemSize: rem(3),
           itemPadding: EdgeInsetsGeometry.all(rem(0.5)),
-          
+
           itemBuilder: (context, index) {
             switch (index) {
               case 0:
@@ -50,7 +51,8 @@ class SectionOverallExperience extends StatelessWidget {
             return Container();
           },
           onRatingUpdate: (rating) {
-            print(rating);
+            final pov = BlocProvider.of<RateYourStayCubit>(context).state.pov;
+            pov.overallExperlence =  rating.floor();
           },
         ),
       ],

@@ -15,7 +15,7 @@ class FilterViewCubit extends Cubit<FilterViewStates> {
       if (data.isEmpty) throw Exception("Not Found");
       emit(FilterViewSuccessful(resFilter: data, message: state.message));
     } catch (e) {
-      emit(FilterViewFaild(resFilter: state.resFilter, message: e.toString()));
+      emit(FilterViewFaild(resFilter: state.resFilter, message: e.toString().replaceAll("Exception: ", "")));
     }
   }
 }

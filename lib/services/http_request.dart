@@ -380,6 +380,7 @@ class HttpRequest {
       printRed(response.data.toString());
 
       final List<dynamic> data = response.data["apartments"];
+      printGreen(data.toString());
       final List<ApartmentType> apartemnts = [];
       for (int i = 0; i < data.length; i++) {
         apartemnts.add(ApartmentType.fromJsonWithoutFivorite(data[i]));
@@ -447,7 +448,7 @@ class HttpRequest {
       printYallow(e.error.toString());
       printYallow(e.message.toString());
       printYallow(e.type.name);
-      if (e.response?.statusCode == 400) {
+      if (e.response?.data['message'] != null) {
         throw Exception((e.response?.data as Map<String, dynamic>)["message"]);
       }
       throw Exception(e.response);
@@ -494,13 +495,12 @@ class HttpRequest {
 
   Future<List<BookingApartmentType>> getAllbookingApartments() async {
     final String? token = await AuthStorage().readData("token");
-    printGreen(token!);
     try {
       Response response = await dio.get(
         "/apartments/booking",
         options: Options(headers: authrizationHeaders(token!)),
       );
-      printGreen(response.data.toString());
+      printGreen(response.data[0].toString());
       List<dynamic> data = response.data;
       List<BookingApartmentType> bookings = [];
       for (int i = 0; i < data.length; i++) {
@@ -550,6 +550,7 @@ class HttpRequest {
         options: Options(headers: authrizationHeaders(token!)),
       );
       final List<dynamic> data = response.data["Favorites"];
+      printGreen(data.toString());
       final List<ApartmentType> favorite = [];
       for (int i = 0; i < data.length; i++) {
         favorite.add(ApartmentType.fromJsonWithoutFivorite(data[i]));
@@ -583,36 +584,51 @@ class HttpRequest {
     }
   }
 
-  Future<void> getAllRateApartmentByID(int idApartment, RateType user) async {
+  Future<void> rateApartmentByID(int idApartment, RateType user) async {
+    try {
+      printGreen(user.rate.toString());
+      if (user.rate == 0 && user.comment == null) {
+        throw Exception("enter comment or rate one at leatest");
+      }
+      final String? token = await AuthStorage().readData("token");
+      await dio.post(
+        "/apartments/rate/$idApartment",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+        data: user.rate == 0
+            ? {'comment': user.comment}
+            : user.comment == null
+            ? {'rate': user.rate}
+            : {'rate': user.rate, 'comment': user.comment},
+      );
+      // printGreen(response.data.toString());
+    } on DioException catch (e) {
+      throw Exception(e.requestOptions.data.toString());
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<List<RateType>> getAllRateForParticularApartmentByID(
+    int idApartment,
+  ) async {
     try {
       final String? token = await AuthStorage().readData("token");
       Response response = await dio.get(
-        "/apartments/rate/$idApartment",
-        options: Options(headers: authrizationHeaders(token ?? "")),
+        '/apartments/reviews/$idApartment',
+        options: Options(headers: authrizationHeaders(token!)),
       );
-      printGreen(response.data);
+      final List<dynamic> data = response.data['revewis'];
+      printYallow(data.toString());
+      final List<RateType> revewis = [];
+      for (int i = 0; i < data.length; i++) {
+        revewis.add(RateType.fromJson(data[i]));
+      }
+      return revewis;
     } catch (e) {
       printRed(e.toString());
+      throw Exception(e);
     }
   }
-
-  Future<void> rateApartmentByID(int idApartment, RateType user) async {
-    try {
-      final String? token = await AuthStorage().readData("token");
-      Response response = await dio.post(
-        "/apartments/rate/$idApartment",
-        options: Options(headers: authrizationHeaders(token ?? "")),
-        data: {
-          user.rate == null ? null : 'rate': user.rate,
-          user.comment == null ? null : 'comment': user.comment,
-        },
-      );
-      printGreen(response.data);
-    } catch (e) {
-      printRed(e.toString());
-    }
-  }
-
   // Future<void> getAllBookingApartment(){
 
   // }

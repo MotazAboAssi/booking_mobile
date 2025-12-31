@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
+import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
+import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/views/tenant/display_filter_view.dart';
 import 'package:booking/presentation/views/tenant/filter_view.dart';
@@ -54,11 +56,24 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [Observ()],
       routes: {
         tenantView: (context) => BlocProvider(
-          create: (BuildContext context) => TenantViewCubit(),
+          create: (context) => TenantViewCubit(),
           child: TenantView(),
         ),
-        appartementDetailsView: (context) => AppartementDetailsView(),
-        rateYourStayView: (context) => RateYourStayView(),
+        appartementDetailsView: (context) {
+          final args =
+              ModalRoute.of(context)!.settings.arguments
+                  as Map<String, dynamic>;
+
+          return BlocProvider(
+            create: (_) => GetAllRateYourStayCubit(),
+            child: AppartementDetailsView(apartment: args["apartment"]),
+          );
+        },
+ 
+        rateYourStayView: (context) => BlocProvider(
+          create: (BuildContext context) => RateYourStayCubit(),
+          child: RateYourStayView(),
+        ),
         favoriteApartments: (context) => BlocProvider(
           create: (context) => FavoriteApartmentViewCubit(),
           child: FavoriteApartments(),

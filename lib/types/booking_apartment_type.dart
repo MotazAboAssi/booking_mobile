@@ -1,3 +1,7 @@
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/types/apartment_type.dart';
+import 'package:booking/types/apartment_with_booking_type.dart';
+
 enum BookingStatus { pending, confirmed, canceled }
 
 class BookingApartmentType {
@@ -8,6 +12,7 @@ class BookingApartmentType {
   final int bookingID;
   final int totalCost;
   final BookingStatus status;
+  final ApartmentWithBookingType apartment;
 
   BookingApartmentType({
     required this.startDate,
@@ -17,10 +22,12 @@ class BookingApartmentType {
     required this.totalCost,
     required this.bookingID,
     required this.status,
+    required this.apartment,
   });
 
   factory BookingApartmentType.fromJson(Map<String, dynamic> json) {
-    // final ApartmentType apartment = ApartmentType.fromJson(json['apartment']);
+    printGrey(json.toString());
+    // final ApartmentWithBookingType apartment = ApartmentWithBookingType.fromJsonWithoutFivorite(json['apartment']);
     return BookingApartmentType(
       bookingID: json['id'],
       userID: json['user_id'],
@@ -28,6 +35,7 @@ class BookingApartmentType {
       startDate: DateTime.parse(json['start_date']),
       endDate: DateTime.parse(json['end_date']),
       totalCost: json['total_cost'],
+      apartment: ApartmentWithBookingType.fromJsonWithoutFivorite(json['apartment']),
       status: json['status'] == 'pending'
           ? BookingStatus.pending
           : json['status'] == 'confirmed'
@@ -42,10 +50,12 @@ class BookingApartmentType {
       bookingID: 0,
       userID: 0,
       apartmentID: 0,
-      startDate: DateTime(2025, 12,27),
-      endDate: DateTime(2025, 12,28),
+      startDate: DateTime(2025, 12, 27),
+      endDate: DateTime(2025, 12, 28),
       totalCost: 0,
       status: BookingStatus.confirmed,
+      apartment: ApartmentWithBookingType.empty(),
     );
   }
+  
 }

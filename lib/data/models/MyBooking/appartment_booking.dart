@@ -2,6 +2,7 @@ import 'package:booking/data/sections/appartement_details_view/section_request_t
 import 'package:booking/helper/constant/my_booking_keys.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/image_network.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
@@ -45,7 +46,9 @@ class Appartmentbooking extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: networkImage,
+                          image: fetchImageFromDB(
+                            apartment!.apartment.images![0].image,
+                          ),
                         ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
@@ -94,7 +97,9 @@ class Appartmentbooking extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Modern Apartement in Abdoun",
+                                "${apartment?.apartment.description}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: rem(1),
                                   fontWeight: FontWeight.w900,
@@ -107,7 +112,7 @@ class Appartmentbooking extends StatelessWidget {
                             children: [
                               Icon(Icons.location_on, color: Colors.grey),
                               Text(
-                                "Abdoun, Amman",
+                                "${apartment?.apartment.city} ${apartment?.apartment.town}",
                                 style: TextStyle(
                                   fontSize: rem(1),
                                   color: secondary,
@@ -193,7 +198,11 @@ class ConfirmedPastButton extends StatelessWidget {
               ), // حجم الزر
             ),
             onPressed: () async {
-              Navigator.pushNamed(context, rateYourStayView);
+              Navigator.pushNamed(
+                context,
+                rateYourStayView,
+                arguments: {'house': apartment},
+              );
             },
             child: Text('Rate', style: TextStyle(color: primary)),
           ),

@@ -1,3 +1,5 @@
+import 'package:booking/helper/test/print.dart';
+
 class FilterType {
   final String? city;
   final String? town;
@@ -22,13 +24,14 @@ class FilterType {
   });
 
   factory FilterType.fromJson(Map<String, dynamic> json) {
+    printGreen(json.toString());
     return FilterType(
       city: json['city'],
       town: json['town'],
       minPrice: json['min_price'],
       maxPrice: json['max_price'],
-      minRooms: 0,
-      maxRooms: json['rooms'],
+      minRooms: json['min_rooms'],
+      maxRooms: json['max_rooms'],
       minSpace: json['min-space'],
       maxSpace: json['max-space'],
       minRating: json['min_rating'],

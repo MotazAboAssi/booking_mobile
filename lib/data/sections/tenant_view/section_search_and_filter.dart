@@ -353,8 +353,8 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                             final filter = FilterType(
                               city: city,
                               town: selectedTown,
-                              maxPrice: priceRange.end.floor(),
                               minPrice: priceRange.start.floor(),
+                              maxPrice: priceRange.end.floor(),
                               minRooms: roomsRange.start.floor(),
                               maxRooms: roomsRange.end.floor(),
                               minSpace: areaRange.start.floor(),

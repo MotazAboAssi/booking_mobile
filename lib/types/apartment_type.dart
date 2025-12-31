@@ -1,4 +1,5 @@
 import 'package:booking/helper/methods/convert_string_to_list_of_integer.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/types/image_from_apartment.dart';
 
 class ApartmentType {
@@ -14,7 +15,7 @@ class ApartmentType {
   String description;
   List<int> features;
   List<ImageFromApartment>? images;
-   bool? isFavorite;
+  bool? isFavorite;
 
   ApartmentType({
     required this.city,
@@ -40,7 +41,8 @@ class ApartmentType {
     for (int i = 0; i < (arrImg?.length ?? 0); i++) {
       pictures.add(ImageFromApartment.fromJson(arrImg![i]));
     }
-    // printGreen(json.toString());
+    printBlueWithBold(json["rating"].toString());
+    printBlueWithBold(json.toString());
     return ApartmentType(
       idApartment: apartment["id"],
       idLandlord: apartment["user_id"],
@@ -52,7 +54,7 @@ class ApartmentType {
       priceForMonth: apartment['price_for_month'],
       description: apartment['description'],
       features: convertStringToListOfInteger(apartment['features']),
-      rating: apartment["rating"],
+      rating: double.parse(apartment["rating"].toString()).floor(),
       images: pictures,
       isFavorite: isFavorite,
     );
@@ -64,6 +66,7 @@ class ApartmentType {
     for (int i = 0; i < (arrImg?.length ?? 0); i++) {
       pictures.add(ImageFromApartment.fromJson(arrImg![i]));
     }
+    printBlueWithItalic(json.toString());
     return ApartmentType(
       idApartment: json["id"],
       idLandlord: json["user_id"],
@@ -75,7 +78,7 @@ class ApartmentType {
       priceForMonth: json['price_for_month'],
       description: json['description'],
       features: convertStringToListOfInteger(json['features']),
-      rating: json["rating"],
+      rating:  double.parse(json["rating"].toString()).floor(),
       images: pictures,
       isFavorite: false,
     );
