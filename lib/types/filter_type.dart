@@ -32,8 +32,8 @@ class FilterType {
       maxPrice: json['max_price'],
       minRooms: json['min_rooms'],
       maxRooms: json['max_rooms'],
-      minSpace: json['min-space'],
-      maxSpace: json['max-space'],
+      minSpace: json['min_space'],
+      maxSpace: json['max_space'],
       minRating: json['min_rating'],
     );
   }

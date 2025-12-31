@@ -5,7 +5,7 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_states.dart';
 import 'package:booking/presentation/widgets/button_refresh.dart';
-import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
+import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +46,7 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
           await cubit.getAllFavoriteApartment();
         },
       ),
-      bottomNavigationBar: CustomeBottomNavigationBar(index: 1),
+      bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 1),
       body: SafeArea(
         child:
             BlocBuilder<

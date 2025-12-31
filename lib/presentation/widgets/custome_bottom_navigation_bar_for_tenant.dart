@@ -4,9 +4,9 @@ import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
-class CustomeBottomNavigationBar extends StatelessWidget {
+class CustomeBottomNavigationBarForTenant extends StatelessWidget {
   final int index;
-  const CustomeBottomNavigationBar({super.key, required this.index});
+  const CustomeBottomNavigationBarForTenant({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
-import 'package:booking/presentation/widgets/custome_bottom_navigation_bar.dart';
+import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,7 +91,7 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         centerTitle: true,
       ),
-      bottomNavigationBar: CustomeBottomNavigationBar(index: 3),
+      bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 3),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(rem(1)),
