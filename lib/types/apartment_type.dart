@@ -60,7 +60,7 @@ class ApartmentType {
     );
   }
 
-  factory ApartmentType.fromJsonWithoutFivorite(Map<String, dynamic> json) {
+  factory ApartmentType.fromJsonWithoutFavorite(Map<String, dynamic> json) {
     List<ImageFromApartment> pictures = [];
     List<dynamic>? arrImg = json["images"];
     for (int i = 0; i < (arrImg?.length ?? 0); i++) {
@@ -78,7 +78,7 @@ class ApartmentType {
       priceForMonth: json['price_for_month'],
       description: json['description'],
       features: convertStringToListOfInteger(json['features']),
-      rating:  double.parse(json["rating"].toString()).floor(),
+      rating: double.parse(json["rating"].toString()).floor(),
       images: pictures,
       isFavorite: false,
     );

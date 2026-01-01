@@ -3,12 +3,15 @@ import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_cubit.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
+import 'package:booking/presentation/views/profile_view_landlord.dart';
 import 'package:booking/presentation/views/tenant/display_filter_view.dart';
 import 'package:booking/presentation/views/tenant/filter_view.dart';
-import 'package:booking/presentation/views/profile_view.dart';
+import 'package:booking/presentation/views/profile_view_tenant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
             child: AppartementDetailsView(apartment: args["apartment"]),
           );
         },
- 
+
         rateYourStayView: (context) => BlocProvider(
           create: (BuildContext context) => RateYourStayCubit(),
           child: RateYourStayView(),
@@ -79,7 +82,18 @@ class MyApp extends StatelessWidget {
           child: FavoriteApartments(),
         ),
         addApartment: (context) => LandLordAddApartment(),
-        landlordDashBoard: (context) => LandLordDashboard(),
+        landlordDashBoard: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider<DisplayBookingApartmentCubit>(
+              create: (_) => DisplayBookingApartmentCubit(),
+            ),
+            BlocProvider<FetchAllApartmentForLandlordCubit>(
+              create: (_) => FetchAllApartmentForLandlordCubit(),
+            ),
+          ],
+          child: const LandLordDashboard(),
+        ),
+
         mybooking: (context) => BlocProvider(
           create: (context) => MyBookingViewCubit(),
           child: MyBookingView(),
@@ -91,9 +105,13 @@ class MyApp extends StatelessWidget {
         registerView: (context) => RegisterView(),
         bookingconfirme: (context) => BookingConfirme(),
         roleSelectionView: (context) => RoleSelectionView(),
-        profileView: (context) => BlocProvider<FetchUserCubit>(
+        profileViewTenant: (context) => BlocProvider<FetchUserCubit>(
           create: (_) => FetchUserCubit(),
-          child: ProfileView(),
+          child: ProfileViewTenant(),
+        ),
+        profileViewLandLord: (context) => BlocProvider<FetchUserCubit>(
+          create: (_) => FetchUserCubit(),
+          child: ProfileViewLandlord(),
         ),
         filterView: (_) => BlocProvider(
           create: (BuildContext context) => FilterViewCubit(),

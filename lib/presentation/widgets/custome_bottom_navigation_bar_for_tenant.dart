@@ -23,7 +23,7 @@ class CustomeBottomNavigationBarForTenant extends StatelessWidget {
         if (index == 0) navigateTo(context, tenantView);
         if (index == 1) navigateTo(context, favoriteApartments);
         if (index == 2) navigateTo(context, mybooking);
-        if (index == 3) navigateTo(context, profileView);
+        if (index == 3) navigateTo(context, profileViewTenant);
       },
       initialActiveIndex: index,
     );

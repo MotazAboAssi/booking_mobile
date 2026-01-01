@@ -13,14 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
-
+class ProfileViewTenant extends StatefulWidget {
+  const ProfileViewTenant({super.key});
   @override
-  State<ProfileView> createState() => _ProfileViewState();
+  State<ProfileViewTenant> createState() => _ProfileViewTenantState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewTenantState extends State<ProfileViewTenant> {
   @override
   void initState() {
     super.initState();
@@ -31,6 +30,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 3),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -91,7 +91,6 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         centerTitle: true,
       ),
-      bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 3),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(rem(1)),
@@ -157,4 +156,9 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
   }
+
+  // CustomeBottomNavigationBarForTenant determineTypeBottomNavigationBar() {
+  //   if()
+  //   return CustomeBottomNavigationBarForTenant(index: 3);
+  // }
 }

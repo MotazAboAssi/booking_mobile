@@ -144,6 +144,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                             );
                     } else if (state is TenantViewFaild) {
                       return Container(
+                        padding: EdgeInsets.all(rem(1)),
                         margin: EdgeInsets.all(rem(0.5)),
                         decoration: BoxDecoration(
                           color: secondary,

@@ -278,7 +278,7 @@ class HttpRequest {
       );
 
       printGreen(response.data.toString());
-      return ApartmentType.fromJsonWithoutFivorite(response.data);
+      return ApartmentType.fromJsonWithoutFavorite(response.data);
     } on DioException catch (e) {
       printRed("ERROR : ${e.response?.data.toString()}");
       throw Exception([e]);
@@ -288,20 +288,25 @@ class HttpRequest {
     }
   }
 
-  Future<List<ApartmentType>> apartment() async {
+  Future<List<ApartmentType>> getAllApartmentForLandLord() async {
     final String? token = await AuthStorage().readData("token");
     try {
       Response response = await dio.get(
         "/apartment",
         options: Options(headers: authrizationHeaders(token!)),
       );
-      final List<dynamic> data = response.data;
+      final dynamic data = response.data;
       List<ApartmentType> apaetments = [];
-      for (int i = 0; i < data.length; i++) {
-        apaetments.add(ApartmentType.fromJsonWithoutFivorite(data[i]));
-        printGrey(apaetments[i].city);
+      if (data['apartment'] != null) {
+        List<dynamic> apartments = data['apartment'];
+        for (int i = 0; i < apartments.length; i++) {
+          apaetments.add(ApartmentType.fromJsonWithoutFavorite(apartments[i]));
+          printGrey(apaetments[i].city);
+        }
+      } else {
+        throw Exception("don't arrive correct data");
       }
-      printGreen("DONE");
+      printGreen(data.toString());
       return apaetments;
     } on DioException catch (e) {
       printRed("ERROR : $e");
@@ -328,22 +333,23 @@ class HttpRequest {
     }
   }
 
-  // Future<ApartmentType> bookingsLandlord() async {
-  //   final String? token = await AuthStorage().readData("token");
-  //   try {
-  //     Response response = await dio.get(
-  //       "/BookingsLandlord",
-  //       options: Options(headers: authrizationHeaders(token ?? "")),
-  //     );
-  //     return ApartmentType.fromJson(response.data);
-  //   } on DioException catch (e) {
-  //     printRed("ERROR : $e");
-  //     throw Exception([e]);
-  //   } catch (e) {
-  //     printRed("ERROR : $e");
-  //     throw Exception([e]);
-  //   }
-  // }
+  Future<void> bookingsLandlord() async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/BookingsLandlord",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      printRed(response.data['bookings'][29].toString());
+      // return ApartmentType.fromJsonWithoutFavorite(response.data);
+    } on DioException catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    } catch (e) {
+      printRed("ERROR : $e");
+      throw Exception([e]);
+    }
+  }
 
   // ************** for landlord **************
 
@@ -383,7 +389,7 @@ class HttpRequest {
       printGreen(data.toString());
       final List<ApartmentType> apartemnts = [];
       for (int i = 0; i < data.length; i++) {
-        apartemnts.add(ApartmentType.fromJsonWithoutFivorite(data[i]));
+        apartemnts.add(ApartmentType.fromJsonWithoutFavorite(data[i]));
       }
       return apartemnts;
     } on DioException catch (e) {
@@ -435,7 +441,8 @@ class HttpRequest {
         options: Options(headers: authrizationHeaders(token!)),
       );
 
-      if (response.data['message'] != null) {
+      printGreen(response.data.toString());
+      if ((response.data as Map<String, dynamic>)['message'] != null) {
         printRed(response.data['message']);
         throw Exception(response.data['message']);
       }
@@ -553,7 +560,7 @@ class HttpRequest {
       printGreen(data.toString());
       final List<ApartmentType> favorite = [];
       for (int i = 0; i < data.length; i++) {
-        favorite.add(ApartmentType.fromJsonWithoutFivorite(data[i]));
+        favorite.add(ApartmentType.fromJsonWithoutFavorite(data[i]));
       }
       return favorite;
     } catch (e) {
@@ -575,7 +582,7 @@ class HttpRequest {
       final List<dynamic> data = response.data['apartments'];
       final List<ApartmentType> apartments = [];
       for (int i = 0; i < data.length; i++) {
-        apartments.add(ApartmentType.fromJsonWithoutFivorite(data[i]));
+        apartments.add(ApartmentType.fromJsonWithoutFavorite(data[i]));
       }
       return apartments;
     } catch (e) {
@@ -629,9 +636,7 @@ class HttpRequest {
       throw Exception(e);
     }
   }
-  // Future<void> getAllBookingApartment(){
 
-  // }
   // ************** for tenant **************
 
   // ************** for any user **************

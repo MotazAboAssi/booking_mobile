@@ -1,24 +1,34 @@
 // import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-AppBar appbarLandLordDashboard() {
+AppBar appbarLandLordDashboard(BuildContext context) {
   return AppBar(
-    leading: Padding(
-      padding: const EdgeInsets.only(left: 10),
-      child: IconButton(onPressed: () => {}, icon: Icon(Icons.apps_sharp)),
-    ),
+    forceMaterialTransparency: true,
     title: Text("Dashboard", style: TextStyle(fontSize: rem(1))),
     centerTitle: true,
-    actionsPadding: const EdgeInsets.only(right: 10),
+    leading: Tooltip(
+      message: 'new apartment',
+      child: IconButton(
+        onPressed: () => Navigator.pushNamed(context, addApartment),
+        icon: Icon(Icons.add),
+      ),
+    ),
     actions: [
-      Stack(
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.account_circle_rounded, size: 30),
-          ),
-        ],
+      Tooltip(
+        message: 'refresh new requests',
+        child: IconButton(
+          onPressed: () {
+            final cubit = BlocProvider.of<DisplayBookingApartmentCubit>(
+              context,
+            );
+            cubit.displayBookingApartment();
+          },
+          icon: Icon(Icons.refresh),
+        ),
       ),
     ],
   );

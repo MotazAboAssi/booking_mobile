@@ -1,4 +1,3 @@
-import 'package:booking/presentation/widgets/Land%20Lord%20Dashboard/land_lord_dashboard_bottom_navigation_bar.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_landlord.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/presentation/widgets/Land Lord Dashboard/appbar_land_lord_dashboard.dart';
@@ -15,9 +14,10 @@ class _MyWidgetState extends State<LandLordDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarLandLordDashboard(),
+      appBar: appbarLandLordDashboard(context),
       body: LandlordDashboard(),
       bottomNavigationBar: CustomeBottomNavigationBarForLandlord(index: 0),
+
       // bottomNavigationBar: LandLordDashboardBottomNavigationBar(),
     );
   }

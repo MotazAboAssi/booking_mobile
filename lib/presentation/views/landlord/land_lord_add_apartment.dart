@@ -7,6 +7,9 @@ class LandLordAddApartment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: addApartmentAppBar(), body: AddApartmentBody());
+    return Scaffold(
+      appBar: addApartmentAppBar(context),
+      body: AddApartmentBody(),
+    );
   }
 }

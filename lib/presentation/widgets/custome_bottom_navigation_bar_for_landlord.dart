@@ -15,14 +15,13 @@ class CustomeBottomNavigationBarForLandlord extends StatelessWidget {
       backgroundColor: fourthly,
       items: [
         TabItem(icon: Icons.dashboard, title: 'Home'),
-        TabItem(icon: Icons.card_travel, title: 'Booking'),
+        // TabItem(icon: Icons.card_travel, title: 'Booking'),
         TabItem(icon: Icons.person, title: 'Account'),
       ],
       onTap: (index) {
         if (index == 0) navigateTo(context, landlordDashBoard);
-        // if (index == 1) navigateTo(context, favoriteApartments);
-        // if (index == 2) navigateTo(context, mybooking);
-        if (index == 3) navigateTo(context, profileView);
+        // if (index == 1) navigateTo(context, addApartment);
+        if (index == 1) navigateTo(context, profileViewLandLord);
       },
       initialActiveIndex: index,
     );

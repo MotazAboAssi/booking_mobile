@@ -1,109 +1,41 @@
-// import 'package:booking/data/sections/LandLordDashboard/appartment_state_dashboard.dart';
-// import 'package:fl_chart/fl_chart.dart';
-// import 'package:flutter/material.dart';
-
-// class BodyLandLordDashboard extends StatelessWidget {
-//   const BodyLandLordDashboard({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Container(
-//         padding: const EdgeInsets.all(16),
-//         child: ListView(
-//           children: [
-//             Container(
-//               padding: EdgeInsets.all(16),
-//               child: Column(
-//                 children: [
-//                   Row(children: [Text("This mounth incoming")]),
-//                   Row(
-//                     children: [
-//                       Text(
-//                         "7000 Dollar",
-//                         style: TextStyle(
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 25,
-//                           color: const Color.fromARGB(255, 14, 141, 130),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   Row(
-//                     children: [
-//                       Text(
-//                         "This mounth +8%",
-//                         style: TextStyle(color: Colors.blueGrey),
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Container(
-//               padding: EdgeInsets.all(20),
-//               height: 200,
-//               child: LineChart(
-//                 LineChartData(
-//                   minX: 0,
-//                   maxX: 4,
-//                   minY: 0,
-//                   maxY: 5,
-
-//                   borderData: FlBorderData(show: false),
-
-//                   titlesData: FlTitlesData(show: false),
-//                   gridData: FlGridData(show: true), // إخفاء الخطوط
-//                   // titlesData: FlTitlesData(
-//                   //   // إظهار النصوص تحت النقاط
-//                   //   bottomTitles: AxisTitles(
-//                   //     sideTitles: SideTitles(
-//                   //       showTitles: true,
-//                   //       reservedSize: 32,
-//                   //       getTitlesWidget: (value, meta) {
-//                   //         List labels = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-//                   //         return Text(labels[value.toInt()]);
-//                   //       },
-//                   //     ),
-//                   //   ),
-//                   //   leftTitles: AxisTitles(
-//                   //     sideTitles: SideTitles(showTitles: true),
-//                   //   ),
-//                   // ),
-//                   lineBarsData: [
-//                     LineChartBarData(
-//                       isCurved: false, // منحني
-//                       color: Colors.blue,
-//                       barWidth: 4,
-//                       dotData: FlDotData(show: true), // نقاط
-//                       spots: const [
-//                         FlSpot(0, 1),
-//                         FlSpot(1, 1.8),
-//                         FlSpot(2, 1.2),
-//                         FlSpot(3, 2.8),
-//                         FlSpot(4, 3.6),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 400, child: AppartmentStateDashboard()),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-import 'package:booking/services/auth_storage.dart';
+import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/fetch_image_from_db.dart';
+import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_states.dart';
+import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class LandlordDashboard extends StatelessWidget {
+class LandlordDashboard extends StatefulWidget {
+  const LandlordDashboard({super.key});
+
+  @override
+  State<LandlordDashboard> createState() => _LandlordDashboardState();
+}
+
+class _LandlordDashboardState extends State<LandlordDashboard> {
+  @override
+  void initState() {
+    super.initState();
+    final cubit = BlocProvider.of<DisplayBookingApartmentCubit>(context);
+    cubit.displayBookingApartment();
+  }
+
   final requests = [
     _Request('أحمد علي', 'شقة رقم 3'),
     _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
+    _Request('محمد حسن', 'شقة رقم 5'),
   ];
+
   final rentedApartments = [
     'شقة رقم 1',
     'شقة رقم 3',
@@ -153,20 +85,12 @@ class LandlordDashboard extends StatelessWidget {
     );
   }
 
-  // final stats = [
-  //   _Stat('Appartment count', '12', Icons.apartment),
-  //   _Stat('Rented', '8', Icons.check_circle),
-  //   _Stat('Not Rented', '4', Icons.cancel),
-  //   _Stat('Balance', '\$1200', Icons.account_balance_wallet),
-  // ];
-  late final List<_Stat> stats;
-
   @override
   Widget build(BuildContext context) {
-    stats = [
-      _Stat('Appartment count', '12', Icons.apartment),
+    final cards = [
+      _Card('Appartment count', '12', Icons.apartment, bloc: FetchAllApartmentForLandlordCubit(), loadingState: FetchAllApartmentForLandlordLoading(apartments: [], message: null)),
 
-      _Stat(
+      _Card(
         'Rented',
         '8',
         Icons.check_circle,
@@ -177,9 +101,10 @@ class LandlordDashboard extends StatelessWidget {
             apartments: rentedApartments,
           );
         },
+        
       ),
 
-      _Stat(
+      _Card(
         'Not Rented',
         '4',
         Icons.cancel,
@@ -192,110 +117,213 @@ class LandlordDashboard extends StatelessWidget {
         },
       ),
 
-      _Stat('Balance', '\$1200', Icons.account_balance_wallet),
+      _Card('Balance', '\$1200', Icons.account_balance_wallet),
     ];
 
-    return Scaffold(
-      backgroundColor: Color(0xfff5f7fb),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: stats.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 1.3,
-              ),
-              itemBuilder: (context, index) {
-                final stat = stats[index];
-                return InkWell(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: cards.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            childAspectRatio: 1.3,
+          ),
+          itemBuilder: (context, index) {
+            final card = cards[index];
+            return InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
+                print("object");
+              },
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: stat.onTap,
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(stat.icon, color: Colors.blue, size: 28),
-                          const Spacer(),
-                          Text(
-                            stat.title,
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            stat.value,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(card.icon, color: Colors.blue, size: 28),
+                      const Spacer(),
+                      Text(
+                        card.title,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(height: 4),
+                      BlocBuilder(
+                        bloc: FetchAllApartmentForLandlordCubit(),
+                        builder: (context, state) {
+                          if (state is FetchAllApartmentForLandlordLoading) {
+                            return Skeletonizer(
+                              child: Text(
+                                card.value,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            );
+                          }
+                          return Text(
+                            card.value,
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: Colors.blue,
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    ),
+                    ],
                   ),
-                );
-              },
-            ),
-            SizedBox(height: 24),
-            const Text(
-              'New Requests',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            Column(
-              children: requests.map((r) {
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ListTile(
-                    title: Text(r.name),
-                    subtitle: Text(r.apartment),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.check, color: Colors.green),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.close, color: Colors.red),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ],
+                ),
+              ),
+            );
+          },
         ),
-      ),
+        SizedBox(height: 24),
+        const Text(
+          'New Requests',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        Expanded(
+          child:
+              BlocBuilder<
+                DisplayBookingApartmentCubit,
+                DisplayBookingApartmentStates
+              >(
+                builder: (context, state) {
+                  if (state is DisplayBookingApartmentSuccessful) {
+                    return ListView.builder(
+                      itemCount: requests.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(rem(1)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  spacing: rem(1),
+                                  children: [
+                                    CircleAvatar(backgroundColor: fourthly),
+                                    Column(
+                                      children: [
+                                        Text(requests[index].name),
+                                        Text(requests[index].apartment),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return Skeletonizer(
+                    child: ListView.builder(
+                      itemCount: requests.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(rem(1)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(requests[index].name),
+                                    Text(requests[index].apartment),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+        ),
+      ],
     );
   }
 }
 
-class _Stat {
+class _Card {
   final String title;
   final String value;
   final IconData icon;
+  final StateStreamable<Object?>? bloc;
+  final Object? loadingState;
   final VoidCallback? onTap;
 
-  _Stat(this.title, this.value, this.icon, {this.onTap});
+  _Card(
+    this.title,
+    this.value,
+    this.icon, {
+    this.onTap,
+    this.bloc,
+    this.loadingState,
+  });
 }
 
 class _Request {
