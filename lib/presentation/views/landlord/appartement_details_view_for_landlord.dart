@@ -2,32 +2,33 @@ import 'package:booking/data/models/rate_your_stay_view/model_rating_bar.dart';
 import 'package:booking/data/sections/appartement_details_view/section_amentions.dart';
 import 'package:booking/data/sections/appartement_details_view/section_appartement_feature.dart';
 import 'package:booking/data/sections/appartement_details_view/section_description.dart';
-import 'package:booking/data/sections/appartement_details_view/section_header_and_appartement_images.dart';
-import 'package:booking/data/sections/appartement_details_view/section_land_lord_profile.dart';
 import 'package:booking/data/sections/appartement_details_view/section_location.dart';
-import 'package:booking/data/sections/appartement_details_view/section_request_to_book_and_price.dart';
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
+import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
-import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_states.dart';
+import 'package:booking/presentation/widgets/swiper_images.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class AppartementDetailsView extends StatefulWidget {
-  const AppartementDetailsView({super.key, required this.apartment});
+class AppartementDetailsViewForLandlord extends StatefulWidget {
+  const AppartementDetailsViewForLandlord({super.key, required this.apartment});
   final ApartmentType apartment;
 
   @override
-  State<AppartementDetailsView> createState() => _AppartementDetailsViewState();
+  State<AppartementDetailsViewForLandlord> createState() =>
+      _AppartementDetailsViewForLandlordState();
 }
 
-class _AppartementDetailsViewState extends State<AppartementDetailsView> {
+class _AppartementDetailsViewForLandlordState
+    extends State<AppartementDetailsViewForLandlord> {
   @override
   void initState() {
     super.initState();
@@ -66,16 +67,9 @@ class _AppartementDetailsViewState extends State<AppartementDetailsView> {
                       children: [
                         SectionTitleAndPosition(apartment: widget.apartment),
                         SectionAppartementFeature(apartment: widget.apartment),
-                        BlocProvider(
-                          create: (BuildContext context) => FetchUserCubit(),
-                          child: SectionLandLordProfile(
-                            apartment: widget.apartment,
-                          ),
-                        ),
                         SectionDescription(apartment: widget.apartment),
                         SectionAmentions(apartment: widget.apartment),
                         SectionLocation(apartment: widget.apartment),
-
                         Reviews(),
                       ],
                     ),
@@ -113,7 +107,7 @@ class Reviews extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Review",
+                      "Reviews",
                       style: TextStyle(
                         fontSize: rem(1.5),
                         fontWeight: FontWeight.bold,
@@ -173,7 +167,7 @@ class Reviews extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Text(
-                    "Review",
+                    "Reviews",
                     style: TextStyle(
                       fontSize: rem(1.5),
                       fontWeight: FontWeight.bold,
@@ -213,6 +207,95 @@ class Reviews extends StatelessWidget {
           );
         }
       },
+    );
+  }
+}
+
+class SectionHeaderAndAppartementImages extends StatelessWidget {
+  final ApartmentType? apartment;
+
+  const SectionHeaderAndAppartementImages({super.key, required this.apartment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        apartment!.images!.isEmpty
+            ? Container(
+                decoration: apartment != null
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(anonymousManAvatar),
+                        ),
+                      )
+                    : null,
+              )
+            : SwiperImage(images: apartment?.images),
+
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            backgroundColor: primary.withAlpha(127),
+            child: IconButton(
+              onPressed: () {
+                backTo(context);
+              },
+              icon: Icon(Icons.arrow_back, color: thirdly),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SectionRequestToBookAndPrice extends StatelessWidget {
+  final ApartmentType apartment;
+
+  const SectionRequestToBookAndPrice({super.key, required this.apartment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: thirdly,
+        boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Text(
+                "${apartment.priceForMonth}\$",
+                style: TextStyle(
+                  fontSize: rem(1.5),
+                  fontWeight: FontWeight.bold,
+                  color: fourthly,
+                ),
+              ),
+              Text(" /month"),
+            ],
+          ),
+          Row(
+            spacing: rem(1),
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit, color: Colors.green),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

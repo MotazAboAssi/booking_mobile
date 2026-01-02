@@ -15,8 +15,8 @@ class HttpRequest {
   static final Dio dio = Dio(
     BaseOptions(
       baseUrl: api,
-      // connectTimeout: const Duration(seconds: 10),
-      // receiveTimeout: const Duration(seconds: 10),
+      // connectTimeout: const Duration(seconds: 1),
+      // receiveTimeout: const Duration(seconds: 1),
       headers: {'Accept': 'application/json'},
     ),
   );
@@ -258,6 +258,29 @@ class HttpRequest {
 
   // ************** for landlord **************
 
+  Future<List<BookingApartmentType>> getAllConfirmedBookingsLandlord() async {
+    try {
+      final String? token = await AuthStorage().readData('token');
+      // printGreen(token!);
+      Response response = await dio.get(
+        '/ConfirmedBookingsLandlord',
+        options: Options(headers: authrizationHeaders(token!)),
+      );
+
+      final List<dynamic> data = response.data['bookings'];
+      final List<BookingApartmentType> confirmedBookingApartment = data
+          .map((e) => BookingApartmentType.fromJson(e))
+          .toList();
+      return confirmedBookingApartment;
+    } on DioException catch (e) {
+      printRed(e.toString());
+      throw Exception('${e.response?.data}');
+    } catch (e) {
+      printRed(e.toString());
+      throw Exception(e);
+    }
+  }
+
   Future<ApartmentType> displayBookingsApartmentByID(
     int idApartment,
     DateTime startDate,
@@ -319,14 +342,25 @@ class HttpRequest {
 
   Future<void> addApartmentForLandlord(ApartmentType apartment) async {
     final String? token = await AuthStorage().readData("token");
-    final formData = await createFormData(apartment.images!, {});
+    final formData = await createFormData(apartment.images!, {
+      'city': apartment.city,
+      'town': apartment.town,
+      'space': apartment.space,
+      'rooms': apartment.rooms,
+      'price_for_month': apartment.priceForMonth,
+      'description': apartment.description,
+      'features': apartment.features.toString(),
+    });
     try {
       Response response = await dio.post(
-        "$api/apartment?city=${apartment.city}&town=${apartment.town}&space=${apartment.space}&rooms=${apartment.rooms}&price_for_month=${apartment.priceForMonth}&description=${apartment.description}&features=${apartment.features.toString()}",
+        "$api/apartment",
         options: Options(headers: authrizationHeaders(token ?? "")),
         data: formData,
       );
-      printGreen(response.data);
+      printGreen(response.data.toString());
+    } on DioException catch (e) {
+      printRed(e.response!.data.toString());
+      throw Exception(e);
     } catch (e) {
       printRed(e.toString());
       throw Exception(e);
@@ -621,7 +655,7 @@ class HttpRequest {
     try {
       final String? token = await AuthStorage().readData("token");
       Response response = await dio.get(
-        '/apartments/reviews/$idApartment',
+        '/reviews/$idApartment',
         options: Options(headers: authrizationHeaders(token!)),
       );
       final List<dynamic> data = response.data['revewis'];
@@ -631,6 +665,9 @@ class HttpRequest {
         revewis.add(RateType.fromJson(data[i]));
       }
       return revewis;
+    } on DioException catch (e) {
+      printRed(e.requestOptions.data.toString());
+      throw Exception(e);
     } catch (e) {
       printRed(e.toString());
       throw Exception(e);

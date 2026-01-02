@@ -1,5 +1,8 @@
 const String tenantView = "TenantView";
-const String appartementDetailsView = "AppartementDetailsView";
+const String appartementDetailsViewForTenant =
+    "AppartementDetailsViewForTenant";
+const String appartementDetailsViewForLandlord =
+    "AppartementDetailsViewForLandlord";
 const String rateYourStayView = "RateYourStayView";
 const String favoriteApartments = "FavoriteApartments";
 const String loginView = "LoginView";
@@ -13,3 +16,4 @@ const String profileViewTenant = "ProfileView";
 const String profileViewLandLord = "ProfileViewLandlord";
 const String filterView = "FilterView";
 const String displayFilterView = "DisplayFilterView";
+const String dispalyResaultCategory = "DispalyResaultCategory";

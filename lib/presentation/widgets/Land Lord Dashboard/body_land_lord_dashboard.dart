@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
@@ -20,8 +21,12 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
   @override
   void initState() {
     super.initState();
-    final cubit = BlocProvider.of<DisplayBookingApartmentCubit>(context);
-    cubit.displayBookingApartment();
+    final displayBookingApartment =
+        BlocProvider.of<DisplayBookingApartmentCubit>(context);
+    displayBookingApartment.displayBookingApartment();
+    final fetchAllApartmentForLandlord =
+        BlocProvider.of<FetchAllApartmentForLandlordCubit>(context);
+    fetchAllApartmentForLandlord.fetchAllApartmentForLandlord();
   }
 
   final requests = [
@@ -88,7 +93,16 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
   @override
   Widget build(BuildContext context) {
     final cards = [
-      _Card('Appartment count', '12', Icons.apartment, bloc: FetchAllApartmentForLandlordCubit(), loadingState: FetchAllApartmentForLandlordLoading(apartments: [], message: null)),
+      _Card(
+        'Appartment count',
+        '12',
+        Icons.apartment,
+        bloc: FetchAllApartmentForLandlordCubit(),
+        loadingState: FetchAllApartmentForLandlordLoading(
+          apartments: [],
+          message: null,
+        ),
+      ),
 
       _Card(
         'Rented',
@@ -101,7 +115,6 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             apartments: rentedApartments,
           );
         },
-        
       ),
 
       _Card(
@@ -123,71 +136,95 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GridView.builder(
+        GridView(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: cards.length,
+          // itemCount: cards.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             childAspectRatio: 1.3,
           ),
-          itemBuilder: (context, index) {
-            final card = cards[index];
-            return InkWell(
-              borderRadius: BorderRadius.circular(12),
-              onTap: () {
-                print("object");
-              },
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(card.icon, color: Colors.blue, size: 28),
-                      const Spacer(),
-                      Text(
-                        card.title,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      const SizedBox(height: 4),
-                      BlocBuilder(
-                        bloc: FetchAllApartmentForLandlordCubit(),
-                        builder: (context, state) {
-                          if (state is FetchAllApartmentForLandlordLoading) {
-                            return Skeletonizer(
-                              child: Text(
-                                card.value,
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
+          children: [
+            ApartmentCard(card: cards[0]),
+            BlocBuilder<
+              FetchAllApartmentForLandlordCubit,
+              FetchAllApartmentForLandlordStates
+            >(
+              builder:
+                  (
+                    BuildContext context,
+                    FetchAllApartmentForLandlordStates state,
+                  ) {
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          dispalyResaultCategory,
+                          arguments: {'apartments': state.apartments},
+                        );
+                      },
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(cards[1].icon, color: Colors.blue, size: 28),
+                              const Spacer(),
+                              Text(
+                                cards[1].title,
+                                style: const TextStyle(color: Colors.grey),
                               ),
-                            );
-                          }
-                          return Text(
-                            card.value,
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            ),
-                          );
-                        },
+                              const SizedBox(height: 4),
+                              context.select<Null, Widget>((_) {
+                                if (state
+                                    is FetchAllApartmentForLandlordSuccessful) {
+                                  return Text(
+                                    '${state.apartments.length}',
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  );
+                                } else if (state
+                                    is FetchAllApartmentForLandlordFaild) {
+                                  return Text(
+                                    '-1',
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  );
+                                } else {
+                                  return Skeletonizer(
+                                    child: Text(
+                                      '0',
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
+                    );
+                  },
+            ),
+          ],
         ),
         SizedBox(height: 24),
         const Text(
@@ -304,6 +341,87 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
               ),
         ),
       ],
+    );
+  }
+}
+
+class ApartmentCard extends StatelessWidget {
+  const ApartmentCard({super.key, required this.card});
+
+  final _Card card;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<
+      FetchAllApartmentForLandlordCubit,
+      FetchAllApartmentForLandlordStates
+    >(
+      builder:
+          (BuildContext context, FetchAllApartmentForLandlordStates state) {
+            return InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  dispalyResaultCategory,
+                  arguments: {'apartments': state.apartments},
+                );
+              },
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(card.icon, color: Colors.blue, size: 28),
+                      const Spacer(),
+                      Text(
+                        card.title,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(height: 4),
+                      context.select<Null, Widget>((_) {
+                        if (state is FetchAllApartmentForLandlordSuccessful) {
+                          return Text(
+                            '${state.apartments.length}',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          );
+                        } else if (state is FetchAllApartmentForLandlordFaild) {
+                          return Text(
+                            '-1',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          );
+                        } else {
+                          return Skeletonizer(
+                            child: Text(
+                              '0',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
     );
   }
 }

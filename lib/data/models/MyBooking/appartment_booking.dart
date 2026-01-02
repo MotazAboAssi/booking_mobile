@@ -25,7 +25,7 @@ class Appartmentbooking extends StatelessWidget {
         );
         Navigator.pushNamed(
           context,
-          appartementDetailsView,
+          appartementDetailsViewForTenant,
           arguments: {"apartment": house},
         );
       },

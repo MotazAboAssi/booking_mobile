@@ -24,7 +24,7 @@ class AppartementCard extends StatelessWidget {
           return Card(
             color: thirdly,
             elevation: 0,
-          
+
             margin: EdgeInsets.symmetric(horizontal: 2),
             child: LayoutBuilder(
               builder: (context, card) {
@@ -37,7 +37,7 @@ class AppartementCard extends StatelessWidget {
                           //     .getApartmentByID(apartment!.);
                           Navigator.pushNamed(
                             context,
-                            appartementDetailsView,
+                            appartementDetailsViewForTenant,
                             arguments: {"apartment": apartment},
                           );
                         } catch (e) {
@@ -86,11 +86,13 @@ class AppartementCard extends StatelessWidget {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   SizedBox(
                                                     width:
-                                                        constraints.maxWidth * 0.5,
+                                                        constraints.maxWidth *
+                                                        0.5,
                                                     child: Text(
                                                       "${apartment?.description}",
                                                       maxLines: 1,
@@ -98,13 +100,15 @@ class AppartementCard extends StatelessWidget {
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                         fontSize: rem(1),
-                                                        fontWeight: FontWeight.w900,
+                                                        fontWeight:
+                                                            FontWeight.w900,
                                                       ),
                                                     ),
                                                   ),
                                                   Row(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
+                                                        CrossAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         "${apartment?.rating}",
@@ -184,7 +188,7 @@ class AppartementCard extends StatelessWidget {
               },
             ),
           );
-        }
+        },
       ),
     );
   }

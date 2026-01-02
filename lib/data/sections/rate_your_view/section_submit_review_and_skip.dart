@@ -68,7 +68,7 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
             printYallow(apartment.apartmentID.toString());
             Navigator.pushReplacementNamed(
               context,
-              appartementDetailsView,
+              appartementDetailsViewForTenant,
               arguments: {'apartment': house},
             );
           } else if (state is RateYourStayFaild) {

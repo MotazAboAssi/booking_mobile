@@ -17,7 +17,6 @@ class _MyWidgetState extends State<LandLordDashboard> {
       appBar: appbarLandLordDashboard(context),
       body: LandlordDashboard(),
       bottomNavigationBar: CustomeBottomNavigationBarForLandlord(index: 0),
-
       // bottomNavigationBar: LandLordDashboardBottomNavigationBar(),
     );
   }

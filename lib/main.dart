@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
@@ -8,10 +9,14 @@ import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_land
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
+import 'package:booking/presentation/views/landlord/appartement_details_view_for_landlord.dart';
+import 'package:booking/presentation/views/landlord/dispaly_resault_category.dart';
 import 'package:booking/presentation/views/profile_view_landlord.dart';
 import 'package:booking/presentation/views/tenant/display_filter_view.dart';
 import 'package:booking/presentation/views/tenant/filter_view.dart';
 import 'package:booking/presentation/views/profile_view_tenant.dart';
+import 'package:booking/services/auth_storage.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,7 +24,7 @@ import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_log
 import 'package:booking/presentation/views/tenant/booking_confirme.dart';
 import 'package:booking/presentation/views/auth/role_selection_view.dart';
 import 'package:booking/presentation/views/tenant/my_booking_view.dart';
-import 'package:booking/presentation/views/tenant/appartement_details_view.dart';
+import 'package:booking/presentation/views/tenant/appartement_details_view_for_tenant.dart';
 import 'package:booking/presentation/views/auth/login_view.dart';
 import 'package:booking/presentation/views/auth/register_view.dart';
 import 'package:booking/presentation/views/tenant/favorite_apartments_view.dart';
@@ -62,14 +67,16 @@ class MyApp extends StatelessWidget {
           create: (context) => TenantViewCubit(),
           child: TenantView(),
         ),
-        appartementDetailsView: (context) {
+        appartementDetailsViewForTenant: (context) {
           final args =
               ModalRoute.of(context)!.settings.arguments
                   as Map<String, dynamic>;
 
           return BlocProvider(
             create: (_) => GetAllRateYourStayCubit(),
-            child: AppartementDetailsView(apartment: args["apartment"]),
+            child: AppartementDetailsViewForTenant(
+              apartment: args["apartment"],
+            ),
           );
         },
 
@@ -118,20 +125,33 @@ class MyApp extends StatelessWidget {
           child: FilterView(),
         ),
         displayFilterView: (_) => DisplayFilterView(),
+        dispalyResaultCategory: (_) => DispalyResaultCategory(),
+        appartementDetailsViewForLandlord: (context) {
+          final args =
+              ModalRoute.of(context)!.settings.arguments
+                  as Map<String, dynamic>;
+
+          return BlocProvider(
+            create: (_) => GetAllRateYourStayCubit(),
+            child: AppartementDetailsViewForLandlord(
+              apartment: args["apartment"],
+            ),
+          );
+        }
       },
       // home: SettingView(),
-      initialRoute: loginView,
-      // home: Scaffold(
-      //   body: FutureBuilder(
-      //     future: HttpRequest().increaseUserBalanceByID(2, 1000),
-      //     builder: (context, snapshot) => ElevatedButton(
-      //       onPressed: () async {
-      //         await AuthStorage().deleteAllData();
-      //       },
-      //       child: Center(child: Text("data")),
-      //     ),
-      //   ),
-      // ),
+      // initialRoute: loginView,
+      home: Scaffold(
+        body: FutureBuilder(
+          future: HttpRequest().getAllConfirmedBookingsLandlord(),
+          builder: (context, snapshot) => ElevatedButton(
+            onPressed: () async {
+              // await AuthStorage().deleteAllData();
+            },
+            child: Center(child: Text("data")),
+          ),
+        ),
+      ),
     );
   }
 }

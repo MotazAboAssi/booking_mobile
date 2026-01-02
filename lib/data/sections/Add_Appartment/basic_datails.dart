@@ -5,6 +5,7 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_cubit.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,7 +75,10 @@ class _BasicDatailsState extends State<BasicDatails> {
                         .toList(),
                     onChanged: (String? value) {
                       if (value != null) {
-                        cityController.text = value;
+                        setState(() {
+                          countryController.text = value;
+                          // value = '';
+                        });
                       }
                     },
                   ),
@@ -87,6 +91,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   DropdownButtonFormField(
+                    // value: cityController.text ,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "City is required";
@@ -199,50 +204,6 @@ class _BasicDatailsState extends State<BasicDatails> {
                         v!.isEmpty ? "Description is required" : null,
                   ),
                   SizedBox(height: 10),
-
-                  // Row(
-                  //   children: [
-                  //     Text("Amenities", style: TextStyle(color: secondary)),
-                  //   ],
-                  // ),
-                  // <<<<<<< HEAD
-
-                  //                   // AspectRatio(
-                  //                   //   aspectRatio: 1,
-                  //                   //   child: ListView(
-                  //                   //     children: amentions.map((item) {
-                  //                   //       return CheckboxListTile(
-                  //                   //         value: selectedAmenities.contains(item.id),
-                  //                   //         title: AmentionCard(
-                  //                   //           icon: item.icon,
-                  //                   //           title: item.title,
-                  //                   //           fontSize: 1,
-                  //                   //           iconsSize: 2,
-                  //                   //         ),
-                  //                   //         onChanged: (bool? selected) {
-                  //                   //           setState(() {
-                  //                   //             if (selected == true) {
-                  //                   //               selectedAmenities.add(item.id);
-                  //                   //             } else {
-                  //                   //               selectedAmenities.remove(item.id);
-                  //                   //             }
-                  //                   //           });
-                  //                   //         },
-                  //                   //       );
-                  //                   //     }).toList(),
-                  //                   //   ),
-                  //                   // ),
-                  //                   Row(
-                  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                     children: [
-                  //                       Text(
-                  //                         "Amenities",
-                  //                         style: TextStyle(
-                  //                           color: secondary,
-                  //                           fontWeight: FontWeight.bold,
-                  //                         ),
-                  //                       ),
-                  //                     ],
                   Row(
                     children: [
                       Text(
@@ -355,13 +316,14 @@ class _BasicDatailsState extends State<BasicDatails> {
               SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       ApartmentType apartment =
                           BlocProvider.of<AddApartmentCubit>(
                             context,
                           ).state.apartment;
                       try {
+                        printGreen('start');
                         apartment.features = selectedAmenities;
                         apartment.city = countryController.text;
                         apartment.town = cityController.text;
@@ -371,10 +333,22 @@ class _BasicDatailsState extends State<BasicDatails> {
                         );
                         apartment.rooms = int.parse(roomsController.text);
                         apartment.space = int.parse(spaceController.text);
+
+                        await HttpRequest().addApartmentForLandlord(apartment);
+                        setState(() {
+                          selectedAmenities = [];
+                          countryController.text = '';
+                          cityController.text = '';
+                          descriptionController.clear();
+                          priceController.clear();
+                          roomsController.clear();
+                          spaceController.clear();
+
+                          ApartmentType.empty();
+                        });
                       } catch (e) {
                         printRed(e.toString());
                       }
-                      apartment = ApartmentType.empty();
                     }
                   },
                   style: ElevatedButton.styleFrom(

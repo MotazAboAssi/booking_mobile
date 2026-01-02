@@ -44,10 +44,10 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
             onTap: () async {
               try {
                 await pickImages();
-
                 ApartmentType apartment = BlocProvider.of<AddApartmentCubit>(
                   context,
                 ).state.apartment;
+                apartment.images = [];
                 for (int i = 0; i < selectedImages.length; i++) {
                   apartment.images!.add(
                     ImageFromApartment(

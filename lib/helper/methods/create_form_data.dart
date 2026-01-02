@@ -1,3 +1,4 @@
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/types/image_from_apartment.dart';
 import 'package:dio/dio.dart';
 
@@ -11,5 +12,6 @@ Future<FormData> createFormData(
     multipartFiles.add(await MultipartFile.fromFile(file.image));
   }
 
-  return FormData.fromMap({...otherFields, "images": multipartFiles});
+  printGrey('${multipartFiles.length}');
+  return FormData.fromMap({...otherFields, "images[]": multipartFiles});
 }
