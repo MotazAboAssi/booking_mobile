@@ -258,6 +258,21 @@ class HttpRequest {
   // ************** for admin **************
 
   // ************** for landlord **************
+   
+
+  Future<void> confirmBookingByID(int id, bool isAccept) async {
+    try {
+      final String? token = await AuthStorage().readData('token');
+      Response response = await dio.post(
+        '/confirmBooking/$id',
+        data: {'isAccept': isAccept},
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      printGreen(response.data.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
 
   Future<List<BookingApartmentType>> getAllConfirmedBookingsLandlord() async {
     try {
@@ -489,6 +504,41 @@ class HttpRequest {
       printRed(response.data.toString());
 
       final List<dynamic> data = response.data["apartments"];
+      printGreen(data.toString());
+      final List<ApartmentType> apartemnts = [];
+      for (int i = 0; i < data.length; i++) {
+        apartemnts.add(ApartmentType.fromJsonWithoutFavorite(data[i]));
+      }
+      return apartemnts;
+    } on DioException catch (e) {
+      printRed(e.type.name);
+      printRed(e.response!.data.toString());
+      // printRed(e.toString());
+      if (e.type.name == 'connectionError') {
+        throw Exception("No Internet 😢");
+      } else if (e.response?.statusCode == 401 &&
+          e.response?.data['message'] != null &&
+          e.response!.data['message'] == 'Unauthenticated') {
+        await AuthStorage().deleteAllData();
+      }
+      throw Exception(e.toString());
+    } catch (e) {
+      printYallow(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
+  Future<List<ApartmentType>> getAllApartementForMostPopular() async {
+    final String? token = await AuthStorage().readData("token");
+    try {
+      Response response = await dio.get(
+        "/apartments/latest",
+        options: Options(headers: authrizationHeaders(token ?? "")),
+      );
+      printRed(response.data[1].toString());
+
+      final List<dynamic> data = response.data;
       printGreen(data.toString());
       final List<ApartmentType> apartemnts = [];
       for (int i = 0; i < data.length; i++) {
@@ -746,6 +796,8 @@ class HttpRequest {
       throw Exception(e);
     }
   }
+
+
 
   // ************** for tenant **************
 
