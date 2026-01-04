@@ -7,7 +7,7 @@ import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_states.dart';
 import 'package:booking/types/filter_type.dart';
 import 'package:flutter/material.dart';
-import 'package:booking/helper/constant/cities.dart';
+import 'package:booking/helper/constant/cities_with_towns.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SectionSearchAndFilter extends StatelessWidget {
@@ -89,6 +89,8 @@ class _BodyFilterViewState extends State<BodyFilterView> {
 
   @override
   Widget build(BuildContext context) {
+    final city = (ModalRoute.of(context)?.settings.arguments as Map)['city'];
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -111,7 +113,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
             DropdownButtonFormField<String>(
               value: selectedTown,
               hint: const Text("Select city"),
-              items: cities
+              items: citiesByGovernorate[city]!
                   .map(
                     (city) => DropdownMenuItem(value: city, child: Text(city)),
                   )

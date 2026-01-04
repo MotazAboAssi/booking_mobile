@@ -99,4 +99,24 @@ class ApartmentType {
       isFavorite: false,
     );
   }
+
+  factory ApartmentType.copyFrom(ApartmentType apartment) {
+    return ApartmentType(
+      idApartment: apartment.idApartment,
+      idLandlord: apartment.idLandlord,
+      city: apartment.city,
+      town: apartment.town,
+      space: apartment.space,
+      rooms: apartment.rooms,
+      location: apartment.location,
+      priceForMonth: apartment.priceForMonth,
+      description: apartment.description,
+      features: List<int>.from(apartment.features),
+      images: apartment.images != null
+          ? List<ImageFromApartment>.from(apartment.images!)
+          : null,
+      rating: apartment.rating,
+      isFavorite: apartment.isFavorite,
+    );
+  }
 }

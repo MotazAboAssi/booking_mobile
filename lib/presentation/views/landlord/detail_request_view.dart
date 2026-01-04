@@ -245,10 +245,13 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                 borderRadius: BorderRadiusGeometry.circular(rem(1)),
               ),
             ),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-              landlordDashBoard,
-              (Route<dynamic> route) => false,
-            ),
+            onPressed: () {
+              
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                landlordDashBoard,
+                (Route<dynamic> route) => false,
+              );
+            },
             child: Text(
               'Accept',
               style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),

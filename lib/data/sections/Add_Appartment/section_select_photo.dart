@@ -51,10 +51,11 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
 
   @override
   Widget build(BuildContext context) {
-    ApartmentType? apartment = null;
+    ApartmentType? apartment;
     if (ModalRoute.of(context)?.settings.arguments != null) {
       apartment =
           (ModalRoute.of(context)?.settings.arguments as Map)['apartment'];
+          
     }
 
     printGreen(selectedImages.toString());

@@ -50,17 +50,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
-      // dark mode and light mode setting
-      theme: ThemeData(
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        textTheme: TextTheme()
-        ),
-      themeMode: ThemeMode.dark,
-    
+      // setting dark and light mode
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.light(
+      //     primary: Colors.red, 
+          
+      //   ),
+      // ),
+      // darkTheme: ThemeData(
+      //   colorScheme: ColorScheme.dark(
+      //     primary: Colors.blue, 
+      //   ),
+      // ),
+      // themeMode: ThemeMode.system, 
+      // setting dark and light mode
       debugShowCheckedModeBanner: false,
       navigatorObservers: [Observ()],
       routes: {

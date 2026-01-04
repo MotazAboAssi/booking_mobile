@@ -10,7 +10,7 @@ class TenantViewCubit extends Cubit<TenantViewStateCubit> {
     try {
       emit(TenantViewLoading());
       final List<ApartmentType> apartments = await HttpRequest()
-          .getAllApartementForTenant();
+          .getAllApartementForMostPopular();
       emit(TenantViewSucceeful(apartment: apartments));
     } catch (e) {
       printRed(e.toString());
