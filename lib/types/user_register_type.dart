@@ -49,8 +49,6 @@ class UserRegisterType {
   int? get id => _id;
 
   factory UserRegisterType.fromJson(Map<String, dynamic> json) {
-    // final json = data["data"]["0"];
-    // log(json.toString());
     return UserRegisterType(
       id: json['id'],
       phone: json['phone'],
@@ -62,6 +60,20 @@ class UserRegisterType {
       role: json['role'] == 'landlord' ? UserRole.landlord : UserRole.tenant,
       birthday: DateTime.parse(json['birthday']),
       balance: json[balanceKey],
+    );
+  }
+  factory UserRegisterType.empty() {
+    return UserRegisterType(
+      id: -1,
+      phone: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      profileImage: File(''),
+      idImage: File(''),
+      role: UserRole.tenant,
+      birthday: DateTime.parse('2005-11-13'),
+      balance: -1,
     );
   }
 }
