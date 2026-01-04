@@ -1,5 +1,5 @@
 import 'package:booking/data/models/MyBooking/appartment_booking.dart';
-import 'package:booking/types/apartment_type.dart';
+import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 
@@ -9,24 +9,29 @@ class BodyMyBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10, left: 10),
-      child: AspectRatio(
-        aspectRatio: 7 / 6,
-        child: ListView.builder(
-          itemCount: apartments.length,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return apartments.isEmpty
-                ? null
-                : AspectRatio(
+    return apartments.isEmpty
+        ? Center(
+            child: Text(
+              "No Booking 🧾 Apartments yet",
+              style: TextStyle(fontSize: rem(1), fontWeight: FontWeight.bold),
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.only(right: 10, left: 10),
+            child: AspectRatio(
+              aspectRatio: 7 / 6,
+              child: ListView.builder(
+                itemCount: apartments.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return AspectRatio(
                     aspectRatio: 1,
                     child: Appartmentbooking(apartment: apartments[index]),
                   );
-          },
-        ),
-      ),
-    );
+                },
+              ),
+            ),
+          );
     // return ListView.builder(
     //   padding: const EdgeInsets.all(16),
     //   itemCount: 10,
