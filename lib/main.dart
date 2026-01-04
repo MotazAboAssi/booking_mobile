@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
@@ -10,13 +11,12 @@ import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/views/landlord/appartement_details_view_for_landlord.dart';
+import 'package:booking/presentation/views/landlord/detail_request_view.dart';
 import 'package:booking/presentation/views/landlord/dispaly_resault_category.dart';
 import 'package:booking/presentation/views/profile_view_landlord.dart';
 import 'package:booking/presentation/views/tenant/display_filter_view.dart';
 import 'package:booking/presentation/views/tenant/filter_view.dart';
 import 'package:booking/presentation/views/profile_view_tenant.dart';
-import 'package:booking/services/auth_storage.dart';
-import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,16 +50,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      /*
+      
       // dark mode and light mode setting
       theme: ThemeData(
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        )
-      themeMode: ThemeMode.light,
-      */
+        textTheme: TextTheme()
+        ),
+      themeMode: ThemeMode.dark,
+    
       debugShowCheckedModeBanner: false,
       navigatorObservers: [Observ()],
       routes: {
@@ -126,6 +127,10 @@ class MyApp extends StatelessWidget {
         ),
         displayFilterView: (_) => DisplayFilterView(),
         dispalyResaultCategory: (_) => DispalyResaultCategory(),
+        detailRequestView: (_) => BlocProvider(
+          create: (context) => DetailsRequestViewCubit(),
+          child: DetailRequestView(),
+        ),
         appartementDetailsViewForLandlord: (context) {
           final args =
               ModalRoute.of(context)!.settings.arguments
@@ -137,21 +142,21 @@ class MyApp extends StatelessWidget {
               apartment: args["apartment"],
             ),
           );
-        }
+        },
       },
       // home: SettingView(),
-      // initialRoute: loginView,
-      home: Scaffold(
-        body: FutureBuilder(
-          future: HttpRequest().getAllConfirmedBookingsLandlord(),
-          builder: (context, snapshot) => ElevatedButton(
-            onPressed: () async {
-              // await AuthStorage().deleteAllData();
-            },
-            child: Center(child: Text("data")),
-          ),
-        ),
-      ),
+      initialRoute: loginView,
+      // home: Scaffold(
+      //   body: FutureBuilder(
+      //     future: HttpRequest().getAllConfirmedBookingsLandlord(),
+      //     builder: (context, snapshot) => ElevatedButton(
+      //       onPressed: () async {
+      //         // await AuthStorage().deleteAllData();
+      //       },
+      //       child: Center(child: Text("data")),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
