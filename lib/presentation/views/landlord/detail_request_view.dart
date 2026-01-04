@@ -213,15 +213,17 @@ class BodyDetailRequestView extends StatelessWidget {
             ),
           ],
         ),
-        BlocProvider(
-          create: (context) => ConfirmBookCubit(),
-          child: Align(
-            alignment: AlignmentGeometry.bottomCenter,
-            child: SectionAcceptAndRejectedRequest(
-              apartment: apatrment ?? ApartmentType.empty(),
-            ),
-          ),
-        ),
+        book.status != BookingStatus.pending
+            ? Container()
+            : BlocProvider(
+                create: (context) => ConfirmBookCubit(),
+                child: Align(
+                  alignment: AlignmentGeometry.bottomCenter,
+                  child: SectionAcceptAndRejectedRequest(
+                    apartment: apatrment ?? ApartmentType.empty(),
+                  ),
+                ),
+              ),
       ],
     );
   }
@@ -303,7 +305,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                           borderRadius: BorderRadiusGeometry.circular(rem(1)),
                         ),
                       ),
-                      onPressed: (isLoading && !isAccept)
+                      onPressed: isLoading
                           ? null
                           : () async {
                               final cubit = BlocProvider.of<ConfirmBookCubit>(
@@ -322,7 +324,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                                 (Route<dynamic> route) => false,
                               );
                             },
-                      child: isLoading
+                      child: (isLoading && !isAccept)
                           ? SizedBox(
                               width: rem(1),
                               height: rem(1),

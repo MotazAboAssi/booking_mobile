@@ -149,83 +149,9 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             childAspectRatio: 1.3,
           ),
           children: [
+            RentCard(cards: cards),
+            NotRentCard(cards: cards),
             ApartmentCard(card: cards[0]),
-            BlocBuilder<
-              FetchAllApartmentForLandlordCubit,
-              FetchAllApartmentForLandlordStates
-            >(
-              builder:
-                  (
-                    BuildContext context,
-                    FetchAllApartmentForLandlordStates state,
-                  ) {
-                    return InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          dispalyResaultCategory,
-                          arguments: {'apartments': state.apartments},
-                        );
-                      },
-                      child: Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(cards[1].icon, color: Colors.blue, size: 28),
-                              const Spacer(),
-                              Text(
-                                cards[1].title,
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              const SizedBox(height: 4),
-                              context.select<Null, Widget>((_) {
-                                if (state
-                                    is FetchAllApartmentForLandlordSuccessful) {
-                                  return Text(
-                                    '${state.apartments.length}',
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blue,
-                                    ),
-                                  );
-                                } else if (state
-                                    is FetchAllApartmentForLandlordFaild) {
-                                  return Text(
-                                    '-1',
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blue,
-                                    ),
-                                  );
-                                } else {
-                                  return Skeletonizer(
-                                    child: Text(
-                                      '0',
-                                      style: const TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-            ),
           ],
         ),
         SizedBox(height: 24),
@@ -282,6 +208,194 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
               ),
         ),
       ],
+    );
+  }
+}
+
+class NotRentCard extends StatelessWidget {
+  const NotRentCard({
+    super.key,
+    required this.cards,
+  });
+
+  final List<_Card> cards;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<
+      FetchAllApartmentForLandlordCubit,
+      FetchAllApartmentForLandlordStates
+    >(
+      builder:
+          (
+            BuildContext context,
+            FetchAllApartmentForLandlordStates cubit1,
+          ) {
+            return BlocBuilder<
+              DisplayBookingApartmentCubit,
+              DisplayBookingApartmentStates
+            >(
+              builder: (context, cubit2) {
+                final isSuccessful =
+                    cubit2 is DisplayBookingApartmentSuccessful;
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          cards[2].icon,
+                          color: Colors.blue,
+                          size: 28,
+                        ),
+                        const Spacer(),
+                        Text(
+                          cards[2].title,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        const SizedBox(height: 4),
+                        context.select<Null, Widget>((_) {
+                          if (cubit1
+                              is FetchAllApartmentForLandlordSuccessful) {
+                            return Text(
+                              isSuccessful
+                                  ? '${cubit1.apartments.length - cubit2.bookings.where((e) => e.status == BookingStatus.confirmed && e.startDate.isBefore(DateTime.now()) && e.endDate.isAfter(DateTime.now())).toList().length}'
+                                  : 'no internet',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            );
+                          } else if (cubit1
+                              is FetchAllApartmentForLandlordFaild) {
+                            return Text(
+                              '-1',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            );
+                          } else {
+                            return Skeletonizer(
+                              child: Text(
+                                '0',
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            );
+                          }
+                        }),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+    );
+  }
+}
+
+class RentCard extends StatelessWidget {
+  const RentCard({
+    super.key,
+    required this.cards,
+  });
+
+  final List<_Card> cards;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<
+      FetchAllApartmentForLandlordCubit,
+      FetchAllApartmentForLandlordStates
+    >(
+      builder:
+          (
+            BuildContext context,
+            FetchAllApartmentForLandlordStates cubit1,
+          ) {
+            return BlocBuilder<
+              DisplayBookingApartmentCubit,
+              DisplayBookingApartmentStates
+            >(
+              builder: (context, cubit2) {
+                final isSuccessful =
+                    cubit2 is DisplayBookingApartmentSuccessful;
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          cards[1].icon,
+                          color: Colors.blue,
+                          size: 28,
+                        ),
+                        const Spacer(),
+                        Text(
+                          cards[1].title,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        const SizedBox(height: 4),
+                        context.select<Null, Widget>((_) {
+                          if (cubit1
+                              is FetchAllApartmentForLandlordSuccessful) {
+                            return Text(
+                              isSuccessful
+                                  ? '${cubit2.bookings.where((e) => e.status == BookingStatus.confirmed && e.startDate.isBefore(DateTime.now()) && e.endDate.isAfter(DateTime.now())).toList().length}'
+                                  : 'no internet',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            );
+                          } else if (cubit1
+                              is FetchAllApartmentForLandlordFaild) {
+                            return Text(
+                              '-1',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            );
+                          } else {
+                            return Skeletonizer(
+                              child: Text(
+                                '0',
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            );
+                          }
+                        }),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
     );
   }
 }
