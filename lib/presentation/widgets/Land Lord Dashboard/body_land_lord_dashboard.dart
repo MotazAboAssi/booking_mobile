@@ -1,11 +1,13 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
-import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_states.dart';
 import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_states.dart';
+import 'package:booking/presentation/views/landlord/detail_request_view.dart';
+import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -240,100 +242,39 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
               >(
                 builder: (context, state) {
                   if (state is DisplayBookingApartmentSuccessful) {
-                    return ListView.builder(
-                      itemCount: requests.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.all(rem(1)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: rem(1),
-                                  children: [
-                                    CircleAvatar(backgroundColor: fourthly),
-                                    Column(
-                                      children: [
-                                        Text(requests[index].name),
-                                        Text(requests[index].apartment),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                  ],
-                                ),
-                              ],
+                    List<BookingApartmentType> bookings = state.bookings
+                        .where(
+                          (element) =>
+                              !(element.status == BookingStatus.canceled ||
+                                  (element.status == BookingStatus.confirmed &&
+                                      element.endDate.isBefore(
+                                        DateTime.now(),
+                                      ))),
+                        )
+                        .toList();
+                    return bookings.isEmpty
+                        ? Center(
+                            child: Text(
+                              "No Request Booking 🏠 Apartments yet",
+                              style: TextStyle(
+                                fontSize: rem(1),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
+                          )
+                        : ListView.builder(
+                            itemCount: bookings.length,
+                            itemBuilder: (context, index) {
+                              BookingApartmentType book = bookings[index];
+                              return RequestModel(book: book);
+                            },
+                          );
                   }
                   return Skeletonizer(
                     child: ListView.builder(
                       itemCount: requests.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.all(rem(1)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(requests[index].name),
-                                    Text(requests[index].apartment),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return RequestModel(book: null);
                       },
                     ),
                   );
@@ -341,6 +282,81 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
               ),
         ),
       ],
+    );
+  }
+}
+
+class RequestModel extends StatelessWidget {
+  const RequestModel({super.key, required this.book});
+
+  final BookingApartmentType? book;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          detailRequestView,
+          arguments: {'book': book},
+        );
+      },
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          padding: EdgeInsets.all(rem(1)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${book?.startDate.toIso8601String().split('T')[0]} - ${book?.endDate.toIso8601String().split('T')[0]}',
+                    style: TextStyle(
+                      fontSize: rem(1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'total cost : ${book?.totalCost} \$.',
+                    style: TextStyle(
+                      fontSize: rem(1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'id apartment : ${book?.apartmentID}',
+                    style: TextStyle(
+                      fontSize: rem(1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'status : ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '${book?.status.name}',
+                    style: TextStyle(
+                      color: book?.status == null
+                          ? null
+                          : book!.status == BookingStatus.pending
+                          ? Colors.blueGrey
+                          : Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

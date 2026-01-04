@@ -1,5 +1,4 @@
 import 'package:booking/helper/test/print.dart';
-import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/apartment_with_booking_type.dart';
 
 enum BookingStatus { pending, confirmed, canceled }
@@ -35,7 +34,9 @@ class BookingApartmentType {
       startDate: DateTime.parse(json['start_date']),
       endDate: DateTime.parse(json['end_date']),
       totalCost: json['total_cost'],
-      apartment: ApartmentWithBookingType.fromJsonWithoutFivorite(json['apartment']),
+      apartment: json['apartment'] == null
+          ? ApartmentWithBookingType.empty()
+          : ApartmentWithBookingType.fromJsonWithoutFivorite(json['apartment']),
       status: json['status'] == 'pending'
           ? BookingStatus.pending
           : json['status'] == 'confirmed'
@@ -57,5 +58,4 @@ class BookingApartmentType {
       apartment: ApartmentWithBookingType.empty(),
     );
   }
-  
 }
