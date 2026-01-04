@@ -90,20 +90,14 @@ class Appartmentbooking extends StatelessWidget {
                             ],
                           ),
 
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "${apartment?.apartment.description}",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: rem(1),
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            "${apartment?.apartment.description}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: rem(1),
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
 
                           Row(

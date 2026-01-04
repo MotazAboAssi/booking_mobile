@@ -1,3 +1,4 @@
+import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/data/sections/appartement_details_view/section_amentions.dart';
 import 'package:booking/data/sections/appartement_details_view/section_appartement_feature.dart';
 import 'package:booking/data/sections/appartement_details_view/section_description.dart';
@@ -13,6 +14,8 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_states.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/confirm_book/confirm_book_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/confirm_book/confirm_book_states.dart';
 import 'package:booking/presentation/widgets/swiper_images.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
@@ -39,6 +42,7 @@ class _DetailRequestViewState extends State<DetailRequestView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: BlocBuilder<DetailsRequestViewCubit, DetailsRequestViewStates>(
           builder: (context, state) {
@@ -209,10 +213,13 @@ class BodyDetailRequestView extends StatelessWidget {
             ),
           ],
         ),
-        Align(
-          alignment: AlignmentGeometry.bottomCenter,
-          child: SectionAcceptAndRejectedRequest(
-            apartment: apatrment ?? ApartmentType.empty(),
+        BlocProvider(
+          create: (context) => ConfirmBookCubit(),
+          child: Align(
+            alignment: AlignmentGeometry.bottomCenter,
+            child: SectionAcceptAndRejectedRequest(
+              apartment: apatrment ?? ApartmentType.empty(),
+            ),
           ),
         ),
       ],
@@ -227,57 +234,132 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: thirdly,
-        boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
-      ),
-      child: Row(
-        spacing: rem(0.5),
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(rem(1)),
-                ),
+    return Builder(
+      builder: (context) {
+        return BlocConsumer<ConfirmBookCubit, ConfirmBookStates>(
+          builder: (context, state) {
+            final bool isLoading = state is ConfirmBookLoading;
+            bool isAccept = false;
+
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: thirdly,
+                boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  landlordDashBoard,
-                  (Route<dynamic> route) => false,
-                );
-              },
-              child: Text(
-                'Accept',
-                style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),
+              child: Row(
+                spacing: rem(0.5),
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(rem(1)),
+                        ),
+                      ),
+                      onPressed: isLoading
+                          ? null
+                          : () async {
+                              isAccept = true;
+                              final cubit = BlocProvider.of<ConfirmBookCubit>(
+                                context,
+                              );
+                              final BookingApartmentType book =
+                                  await (ModalRoute.of(
+                                        context,
+                                      )?.settings.arguments
+                                      as Map)['book'];
+                              await cubit.confirm(book.bookingID, true);
+                              await Navigator.of(
+                                context,
+                              ).pushNamedAndRemoveUntil(
+                                landlordDashBoard,
+                                (Route<dynamic> route) => false,
+                              );
+                            },
+                      child: (isLoading && isAccept)
+                          ? SizedBox(
+                              width: rem(1),
+                              height: rem(1),
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text(
+                              'Accept',
+                              style: TextStyle(
+                                color: thirdly,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(rem(1)),
+                        ),
+                      ),
+                      onPressed: (isLoading && !isAccept)
+                          ? null
+                          : () async {
+                              final cubit = BlocProvider.of<ConfirmBookCubit>(
+                                context,
+                              );
+                              final BookingApartmentType book =
+                                  await (ModalRoute.of(
+                                        context,
+                                      )?.settings.arguments
+                                      as Map)['book'];
+                              await cubit.confirm(book.bookingID, false);
+                              await Navigator.of(
+                                context,
+                              ).pushNamedAndRemoveUntil(
+                                landlordDashBoard,
+                                (Route<dynamic> route) => false,
+                              );
+                            },
+                      child: isLoading
+                          ? SizedBox(
+                              width: rem(1),
+                              height: rem(1),
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text(
+                              'Rejected',
+                              style: TextStyle(
+                                color: thirdly,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ),
-          Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(rem(1)),
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                landlordDashBoard,
-                (Route<dynamic> route) => false,
-              ),
-              child: Text(
-                'Rejected',
-                style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ],
-      ),
+            );
+          },
+          listener: (BuildContext context, ConfirmBookStates state) {
+            if (state is ConfirmBookFaild) {
+              return customSnakBar(
+                margin: EdgeInsets.only(bottom: rem(4)),
+                context: context,
+                color: Colors.red,
+                message: '${state.message}',
+              );
+            } else if (state is ConfirmBookSuccessful) {
+              return customSnakBar(
+                margin: EdgeInsets.only(bottom: rem(4)),
+                context: context,
+                color: Colors.red,
+                message: '${state.message}',
+              );
+            }
+          },
+        );
+      },
     );
   }
 }

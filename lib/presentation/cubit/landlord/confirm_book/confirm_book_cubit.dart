@@ -7,8 +7,8 @@ class ConfirmBookCubit extends Cubit<ConfirmBookStates> {
   Future<void> confirm(int id, bool isAccept) async {
     try {
       emit(ConfirmBookLoading());
-      await HttpRequest().confirmBookingByID(id, isAccept);
-      emit(ConfirmBookSuccessful());
+      final Map<String, dynamic> response = await HttpRequest().confirmBookingByID(id, isAccept);
+      emit(ConfirmBookSuccessful(message: response['message']));
     } catch (e) {
       emit(ConfirmBookFaild(message: e.toString()));
     }

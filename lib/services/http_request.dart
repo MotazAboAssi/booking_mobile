@@ -258,9 +258,8 @@ class HttpRequest {
   // ************** for admin **************
 
   // ************** for landlord **************
-   
 
-  Future<void> confirmBookingByID(int id, bool isAccept) async {
+  Future<Map<String, dynamic>> confirmBookingByID(int id, bool isAccept) async {
     try {
       final String? token = await AuthStorage().readData('token');
       Response response = await dio.post(
@@ -269,8 +268,10 @@ class HttpRequest {
         options: Options(headers: authrizationHeaders(token ?? "")),
       );
       printGreen(response.data.toString());
+      return response.data as Map<String, dynamic>;
     } catch (e) {
       printRed(e.toString());
+      throw Exception(e.toString());
     }
   }
 
@@ -527,7 +528,6 @@ class HttpRequest {
       throw Exception(e.toString());
     }
   }
-
 
   Future<List<ApartmentType>> getAllApartementForMostPopular() async {
     final String? token = await AuthStorage().readData("token");
@@ -796,8 +796,6 @@ class HttpRequest {
       throw Exception(e);
     }
   }
-
-
 
   // ************** for tenant **************
 
