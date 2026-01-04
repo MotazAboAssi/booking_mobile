@@ -238,39 +238,42 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(rem(1)),
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(rem(1)),
+                ),
               ),
-            ),
-            onPressed: () {
-              
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                landlordDashBoard,
-                (Route<dynamic> route) => false,
-              );
-            },
-            child: Text(
-              'Accept',
-              style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  landlordDashBoard,
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: Text(
+                'Accept',
+                style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(rem(1)),
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(rem(1)),
+                ),
               ),
-            ),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-              landlordDashBoard,
-              (Route<dynamic> route) => false,
-            ),
-            child: Text(
-              'Rejected',
-              style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                landlordDashBoard,
+                (Route<dynamic> route) => false,
+              ),
+              child: Text(
+                'Rejected',
+                style: TextStyle(color: thirdly, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
