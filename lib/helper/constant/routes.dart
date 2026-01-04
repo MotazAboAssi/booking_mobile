@@ -17,3 +17,4 @@ const String profileViewLandLord = "ProfileViewLandlord";
 const String filterView = "FilterView";
 const String displayFilterView = "DisplayFilterView";
 const String dispalyResaultCategory = "DispalyResaultCategory";
+const String detailRequestView = "DetailRequestView";
