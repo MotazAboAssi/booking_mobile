@@ -1,11 +1,14 @@
+import 'dart:developer';
+
+import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/constant/cities.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
-import 'package:booking/presentation/cubit/add_apartment_view/add_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_states.dart';
 import 'package:booking/types/apartment_type.dart';
-import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +20,16 @@ class BasicDatails extends StatefulWidget {
 }
 
 class _BasicDatailsState extends State<BasicDatails> {
+  // String? selectedCity;
+  // String? selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    // selectedCity = cities.first;
+    // selectedCountry = cities.first;
+  }
+
   final _formKey = GlobalKey<FormState>();
   TextEditingController countryController = TextEditingController();
   TextEditingController cityController = TextEditingController();
@@ -24,24 +37,19 @@ class _BasicDatailsState extends State<BasicDatails> {
   TextEditingController priceController = TextEditingController();
   TextEditingController spaceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController fromDateController = TextEditingController();
-  TextEditingController toDateController = TextEditingController();
-
-  /// قائمة الميزات
-  // List<String> amenities = [
-  //   "Wifi",
-  //   "Parking",
-  //   "Air Conditioner",
-  //   "Heater",
-  //   "Balcony",
-  //   "Elevator",
-  // ];
-
   /// الميزات المختارة
-  List<int> selectedAmenities = [];
 
+  List<int> selectedAmenities = [];
+  // List<int> selectedAmenities = apartment?.features ?? [1];
   @override
   Widget build(BuildContext context) {
+    ApartmentType? apartment;
+    if (ModalRoute.of(context)?.settings.arguments != null) {
+      apartment =
+          (ModalRoute.of(context)?.settings.arguments as Map)['apartment'];
+      selectedAmenities = apartment!.features;
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Column(
@@ -60,6 +68,13 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   DropdownButtonFormField(
+                    initialValue: context.select<Null, String?>((value) {
+                      if (apartment?.city == null) {
+                        return null;
+                      } else {
+                        return apartment!.city;
+                      }
+                    }),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Country is required";
@@ -70,6 +85,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                       hintText: "eg. USA",
                       hintStyle: TextStyle(fontSize: rem(1)),
                     ),
+
                     items: cities
                         .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                         .toList(),
@@ -90,27 +106,37 @@ class _BasicDatailsState extends State<BasicDatails> {
                       Text("City", style: TextStyle(color: secondary)),
                     ],
                   ),
-                  DropdownButtonFormField(
-                    // value: cityController.text ,
+                  DropdownButtonFormField<String>(
+                    initialValue: context.select<Null, String?>((value) {
+                      if (apartment?.town == null) {
+                        return null;
+                      } else {
+                        return apartment!.town;
+                      }
+                    }),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "City is required";
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "eg. New York",
                       hintStyle: TextStyle(fontSize: 12),
                     ),
                     items: cities
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .map(
+                          (e) => DropdownMenuItem<String>(
+                            value: e,
+                            child: Text(e),
+                          ),
+                        )
                         .toList(),
                     onChanged: (String? value) {
-                      if (value != null) {
-                        setState(() {
-                          cityController.text = value;
-                        });
-                      }
+                      setState(() {
+                        // selectedCity = value;
+                        cityController.text = value ?? '';
+                      });
                     },
                   ),
                   SizedBox(height: 10),
@@ -122,7 +148,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   TextFormField(
-                    controller: roomsController,
+                    initialValue: '${apartment?.rooms ?? ''}',
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "eg. 3",
@@ -135,6 +161,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      roomsController.text = value;
+                    },
                   ),
                   SizedBox(height: 10),
 
@@ -145,7 +174,8 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   TextFormField(
-                    controller: spaceController,
+                    initialValue: '${apartment?.space ?? ''}',
+                    // controller: spaceController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "eg. 120",
@@ -157,6 +187,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                         return "Enter a valid number";
                       }
                       return null;
+                    },
+                    onChanged: (value) {
+                      spaceController.text = value;
                     },
                   ),
                   SizedBox(height: 10),
@@ -171,7 +204,8 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   TextFormField(
-                    controller: priceController,
+                    // controller: priceController,
+                    initialValue: '${apartment?.priceForMonth ?? ''}',
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "eg. 1000000",
@@ -184,6 +218,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      priceController.text = value;
+                    },
                   ),
                   SizedBox(height: 10),
 
@@ -194,7 +231,8 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   TextFormField(
-                    controller: descriptionController,
+                    // controller: descriptionController,
+                    initialValue: apartment?.description ?? '',
                     maxLines: 4,
                     decoration: InputDecoration(
                       hintText: "Describe your apartment",
@@ -202,6 +240,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ),
                     validator: (v) =>
                         v!.isEmpty ? "Description is required" : null,
+                    onChanged: (value) {
+                      descriptionController.text = value;
+                    },
                   ),
                   SizedBox(height: 10),
                   Row(
@@ -305,61 +346,96 @@ class _BasicDatailsState extends State<BasicDatails> {
           Row(
             children: [
               Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    print("Saved as draft");
-                    print(selectedAmenities);
-                  },
-                  child: Text("Save As Draft"),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      ApartmentType apartment =
-                          BlocProvider.of<AddApartmentCubit>(
-                            context,
-                          ).state.apartment;
-                      try {
-                        printGreen('start');
-                        apartment.features = selectedAmenities;
-                        apartment.city = countryController.text;
-                        apartment.town = cityController.text;
-                        apartment.description = descriptionController.text;
-                        apartment.priceForMonth = int.parse(
-                          priceController.text,
-                        );
-                        apartment.rooms = int.parse(roomsController.text);
-                        apartment.space = int.parse(spaceController.text);
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: context
+                        .select<ApiApartmentCubit, void Function()?>((cubit) {
+                          if (cubit.state is ApiApartmentLoading) {
+                            return null;
+                          }
+                          return () async {
+                            if (_formKey.currentState!.validate()) {
+                              ApartmentType apartment =
+                                  BlocProvider.of<ApiApartmentCubit>(
+                                    context,
+                                  ).state.apartment;
+                              try {
+                                apartment.features = selectedAmenities;
+                                apartment.city = countryController.text;
+                                apartment.town = cityController.text;
+                                apartment.description =
+                                    descriptionController.text;
+                                log(roomsController.text);
+                                apartment.priceForMonth = int.parse(
+                                  priceController.text,
+                                );
+                                apartment.rooms = int.parse(
+                                  roomsController.text,
+                                );
+                                apartment.space = int.parse(
+                                  spaceController.text,
+                                );
 
-                        await HttpRequest().addApartmentForLandlord(apartment);
-                        setState(() {
-                          selectedAmenities = [];
-                          countryController.text = '';
-                          cityController.text = '';
-                          descriptionController.clear();
-                          priceController.clear();
-                          roomsController.clear();
-                          spaceController.clear();
+                                final cubit =
+                                    BlocProvider.of<ApiApartmentCubit>(context);
+                                cubit.add(apartment);
+                              } catch (e) {
+                                printRed(e.toString());
+                              }
+                            }
+                          };
+                        }),
 
-                          ApartmentType.empty();
-                        });
-                      } catch (e) {
-                        printRed(e.toString());
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 1, 143, 36),
-                  ),
-                  child: Text(
-                    "Publish",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: rem(1),
-                      fontWeight: FontWeight.bold,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: fourthly,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(rem(0.5)),
+                      ),
+                    ),
+                    child: BlocConsumer<ApiApartmentCubit, ApiApartmentStates>(
+                      builder: (context, state) {
+                        if (state is ApiApartmentLoading) {
+                          return SizedBox(
+                            width: rem(1),
+                            height: rem(1),
+                            child: CircularProgressIndicator(color: thirdly),
+                          );
+                        } else if (state is ApiApartmentSuccefulAdd) {
+                          return Icon(
+                            Icons.check,
+                            size: rem(1.5),
+                            color: thirdly,
+                          );
+                        } else {
+                          return Text(
+                            "Publish",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: rem(1),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }
+                      },
+                      listener:
+                          (BuildContext context, ApiApartmentStates state) {
+                            if (state is ApiApartmentSuccefulAdd) {
+                              customSnakBar(
+                                context: context,
+                                color: Colors.green,
+                                message: 'Done, add new apartment',
+                              );
+                              Future.delayed(Duration(milliseconds: 500));
+                              Navigator.pop(context);
+                            } else if (state is ApiApartmentFaild) {
+                              customSnakBar(
+                                context: context,
+                                color: Colors.red,
+                                message: '${state.message}',
+                              );
+                            }
+                          },
                     ),
                   ),
                 ),

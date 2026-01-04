@@ -1,5 +1,6 @@
 import 'package:booking/helper/constant/theme.dart';
-import 'package:booking/helper/test/image_network.dart';
+import 'package:booking/helper/methods/fetch_image_from_db.dart';
+import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class ModelDisplayApartementRented extends StatelessWidget {
@@ -7,6 +8,8 @@ class ModelDisplayApartementRented extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BookingApartmentType apartment =
+        (ModalRoute.of(context)?.settings.arguments as Map)['house'];
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -15,14 +18,14 @@ class ModelDisplayApartementRented extends StatelessWidget {
       child: ListTile(
         visualDensity: VisualDensity(horizontal: 4, vertical: 4),
         title: Text(
-          "Bright & Modern DownTown Loft",
+          "${apartment.apartment.city} / ${apartment.apartment.town}",
           maxLines: 2,
-          style: TextStyle(fontWeight: FontWeight.bold,),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
-            "Stay: Aug 15 - Aug 20, 2023",
+            "Stay: ${apartment.startDate.toIso8601String().split('T')[0]} - ${apartment.endDate.toIso8601String().split('T')[0]}",
             style: TextStyle(color: Colors.grey),
           ),
         ),
@@ -31,7 +34,11 @@ class ModelDisplayApartementRented extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(image: networkImage),
+              image: DecorationImage(
+                image: fetchImageFromDB(
+                  apartment.apartment.images?[0].image ?? "",
+                ),
+              ),
             ),
           ),
         ),
