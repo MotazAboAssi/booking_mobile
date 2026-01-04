@@ -19,7 +19,7 @@ class SectionLogin extends StatelessWidget {
       child: ListView(
         children: [
           Text(
-            "Welcome To Back!",
+            "Welcome Back!",
             style: TextStyle(fontSize: rem(2.5), fontWeight: FontWeight.bold),
           ),
           Padding(

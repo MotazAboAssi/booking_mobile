@@ -83,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Don't have ana ccount?",
+                "Don't have an account?",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: rem(1)),
               ),
               TextButton(

@@ -4,6 +4,8 @@ import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
+import 'package:booking/services/http_request.dart';
+import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
 class DispalyResaultCategory extends StatelessWidget {
@@ -11,9 +13,10 @@ class DispalyResaultCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final apartments =
+    final List<ApartmentType> apartments =
         (ModalRoute.of(context)?.settings.arguments as Map)['apartments'];
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: apartments.isNotEmpty
             ? ListView.builder(
@@ -25,11 +28,15 @@ class DispalyResaultCategory extends StatelessWidget {
                     child: LayoutBuilder(
                       builder: (BuildContext context, BoxConstraints card) {
                         return GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
+                          onTap: () async {
+                            final ApartmentType house = await HttpRequest()
+                                .getApartmentByIDForLandlord(
+                                  apartments[index].idApartment,
+                                );
+                            await Navigator.pushNamed(
                               context,
                               appartementDetailsViewForLandlord,
-                              arguments: {'apartment': apartments[index]},
+                              arguments: {'apartment': house},
                             );
                           },
                           child: AspectRatio(
@@ -48,13 +55,17 @@ class DispalyResaultCategory extends StatelessWidget {
                                                   .image,
                                             ),
                                     ),
-                                    borderRadius: BorderRadius.circular(rem(1)),
+                                    borderRadius: BorderRadius.circular(
+                                      rem(1),
+                                    ),
                                   ),
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
                                     color: primary.withAlpha(127),
-                                    borderRadius: BorderRadius.circular(rem(1)),
+                                    borderRadius: BorderRadius.circular(
+                                      rem(1),
+                                    ),
                                   ),
                                 ),
                                 Padding(

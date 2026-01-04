@@ -5,6 +5,7 @@ import 'package:booking/data/sections/appartement_details_view/section_descripti
 import 'package:booking/data/sections/appartement_details_view/section_location.dart';
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/helper/constant/images.dart';
+import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
@@ -13,6 +14,7 @@ import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_c
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_states.dart';
 import 'package:booking/presentation/widgets/swiper_images.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,9 +83,7 @@ class _AppartementDetailsViewForLandlordState
               create: (BuildContext context) => BookingApartmentCubit(),
               child: Align(
                 alignment: AlignmentGeometry.bottomCenter,
-                child: SectionRequestToBookAndPrice(
-                  apartment: widget.apartment,
-                ),
+                child: SectionEditOrRemoveAndPrice(apartment: widget.apartment),
               ),
             ),
           ],
@@ -249,10 +249,10 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
   }
 }
 
-class SectionRequestToBookAndPrice extends StatelessWidget {
+class SectionEditOrRemoveAndPrice extends StatelessWidget {
   final ApartmentType apartment;
 
-  const SectionRequestToBookAndPrice({super.key, required this.apartment});
+  const SectionEditOrRemoveAndPrice({super.key, required this.apartment});
 
   @override
   Widget build(BuildContext context) {
@@ -284,12 +284,30 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
             children: [
               IconButton(
                 icon: Icon(Icons.edit, color: Colors.green),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    addApartment,
+                    arguments: {'apartment': apartment},
+                  );
+                },
               ),
               IconButton(
                 icon: Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  
+                onPressed: () async {
+                  await HttpRequest().deleteApartmentForLandlord(
+                    apartment.idApartment,
+                  );
+                  // final fetchAllApartmentForLandlord =
+                  //     BlocProvider.of<FetchAllApartmentForLandlordCubit>(
+                  //       context,
+                  //     );
+                  // fetchAllApartmentForLandlord.fetchAllApartmentForLandlord();
+                  // navigateTo(context, landlordDashBoard);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    landlordDashBoard,
+                    (Route<dynamic> route) => false,
+                  );
                 },
               ),
             ],

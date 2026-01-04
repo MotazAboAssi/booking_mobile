@@ -33,12 +33,14 @@ class AppartementCard extends StatelessWidget {
                     InkWell(
                       onTap: () async {
                         try {
-                          // final ApartmentType house = await HttpRequest()
-                          //     .getApartmentByID(apartment!.);
+                          final ApartmentType house = await HttpRequest()
+                              .getApartmentByIDForTenant(
+                                apartment!.idApartment,
+                              );
                           Navigator.pushNamed(
                             context,
                             appartementDetailsViewForTenant,
-                            arguments: {"apartment": apartment},
+                            arguments: {"apartment": house},
                           );
                         } catch (e) {
                           log(e.toString());

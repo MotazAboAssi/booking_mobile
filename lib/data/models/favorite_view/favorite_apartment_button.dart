@@ -33,8 +33,8 @@ class FavoriteApartmentButton extends StatelessWidget {
 
         return InkWell(
           onTap: () async {
-            final ToggleFavoriteApartmentButtonCubit cubit = context
-                .read<ToggleFavoriteApartmentButtonCubit>();
+            final ToggleFavoriteApartmentButtonCubit cubit =
+                BlocProvider.of<ToggleFavoriteApartmentButtonCubit>(context);
             await cubit.toggle(apartment!.idApartment);
             apartment!.isFavorite = !(apartment!.isFavorite ?? false);
           },

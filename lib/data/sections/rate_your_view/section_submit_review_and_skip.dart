@@ -62,9 +62,8 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
             final BookingApartmentType apartment =
                 (ModalRoute.of(context)?.settings.arguments as Map)['house'];
 
-            final ApartmentType house = await HttpRequest().getApartmentByID(
-              apartment.apartmentID,
-            );
+            final ApartmentType house = await HttpRequest()
+                .getApartmentByIDForTenant(apartment.apartmentID);
             printYallow(apartment.apartmentID.toString());
             Navigator.pushReplacementNamed(
               context,

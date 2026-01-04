@@ -21,7 +21,7 @@ class SectionAmentions extends StatelessWidget {
           ),
         ),
         AspectRatio(
-          aspectRatio: 20 / 9,
+          aspectRatio: apartment.features.length <= 2 ? 20 / 4 : 20 / 9,
           child: GridView(
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

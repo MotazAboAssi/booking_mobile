@@ -32,7 +32,7 @@ class _SectionShareDetailsState extends State<SectionShareDetails> {
 
           child: TextField(
             maxLines: 5,
-            maxLength: 500,
+            maxLength: 79,
             controller: comment,
             buildCounter:
                 (

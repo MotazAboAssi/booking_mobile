@@ -1,7 +1,6 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
-import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -54,9 +53,9 @@ class RequestBookButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<DateTime> disabledDates = [
-      // DateTime(2025, 1, 10),
-      DateTime(2026, 1, 6),
-      DateTime(2026, 1, 5),
+      // // DateTime(2025, 1, 10),
+      // DateTime(2026, 1, 6),
+      // DateTime(2026, 1, 5),
     ];
     return BlocConsumer<BookingApartmentCubit, BookingApartmentStates>(
       builder: (BuildContext context, state) {
@@ -134,7 +133,9 @@ class RequestBookButton extends StatelessWidget {
             message: state.response.toString(),
           );
           await Future.delayed(const Duration(seconds: 1));
-          navigateTo(context, mybooking);
+          Navigator.of(context)
+    .pushNamedAndRemoveUntil(mybooking, (Route<dynamic> route) => false);
+   
         } else if (state is BookingApartmentFaild) {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),

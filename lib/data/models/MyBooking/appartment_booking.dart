@@ -4,7 +4,6 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/image_network.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
@@ -20,9 +19,8 @@ class Appartmentbooking extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final ApartmentType house = await HttpRequest().getApartmentByID(
-          apartment!.apartmentID,
-        );
+        final ApartmentType house = await HttpRequest()
+            .getApartmentByIDForTenant(apartment!.apartmentID);
         Navigator.pushNamed(
           context,
           appartementDetailsViewForTenant,
@@ -112,7 +110,7 @@ class Appartmentbooking extends StatelessWidget {
                             children: [
                               Icon(Icons.location_on, color: Colors.grey),
                               Text(
-                                "${apartment?.apartment.city} ${apartment?.apartment.town}",
+                                "${apartment?.apartment.city} - ${apartment?.apartment.town}",
                                 style: TextStyle(
                                   fontSize: rem(1),
                                   color: secondary,
