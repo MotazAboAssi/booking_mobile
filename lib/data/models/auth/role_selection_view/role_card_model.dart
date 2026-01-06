@@ -1,5 +1,5 @@
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
 import 'package:flutter/material.dart';
@@ -26,22 +26,25 @@ class RoleCardModel extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(rem(1.5)),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.appTheme.thirdly,
           borderRadius: BorderRadius.circular(rem(1.4)),
-          border: Border.all(color: fourthly),
+          border: Border.all(color: context.appTheme.fourthly),
         ),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, size: rem(2), color: fourthly),
+            Icon(icon, size: rem(2), color: context.appTheme.fourthly),
             Text(
               "I'm a ${toCapitalize(role)}",
               style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
             ),
             Text(
               permissions,
-              style: TextStyle(fontSize: rem(1), color: fourthly.shade200),
+              style: TextStyle(
+                fontSize: rem(1),
+                color: context.appTheme.fourthly,
+              ),
             ),
           ],
         ),

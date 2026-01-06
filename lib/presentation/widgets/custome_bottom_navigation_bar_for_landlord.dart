@@ -1,5 +1,5 @@
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class CustomeBottomNavigationBarForLandlord extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConvexAppBar(
       disableDefaultTabController: true,
-      backgroundColor: fourthly,
+      backgroundColor: context.appTheme.fourthly,
       items: [
         TabItem(icon: Icons.dashboard, title: 'Home'),
         // TabItem(icon: Icons.card_travel, title: 'Booking'),

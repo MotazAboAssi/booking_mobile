@@ -8,7 +8,7 @@ import 'package:booking/data/sections/display_profile_user_view/section_group_of
 import 'package:booking/data/sections/display_profile_user_view/section_image_picker_profile.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
@@ -142,7 +142,7 @@ class BodyDetailRequestView extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: rem(2),
                                 fontWeight: FontWeight.bold,
-                                color: fourthly,
+                                color: context.appTheme.fourthly,
                               ),
                             ),
                             Text(" /month"),
@@ -246,7 +246,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: thirdly,
+                color: context.appTheme.thirdly,
                 boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
               ),
               child: Row(
@@ -291,7 +291,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                           : Text(
                               'Accept',
                               style: TextStyle(
-                                color: thirdly,
+                                color: context.appTheme.thirdly,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -333,7 +333,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                           : Text(
                               'Rejected',
                               style: TextStyle(
-                                color: thirdly,
+                                color: context.appTheme.thirdly,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -386,12 +386,12 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: primary.withAlpha(127),
+            backgroundColor: context.appTheme.primary.withAlpha(127),
             child: IconButton(
               onPressed: () {
                 backTo(context);
               },
-              icon: Icon(Icons.arrow_back, color: thirdly),
+              icon: Icon(Icons.arrow_back, color: context.appTheme.thirdly),
             ),
           ),
         ),

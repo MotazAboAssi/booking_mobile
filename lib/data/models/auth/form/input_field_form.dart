@@ -1,5 +1,5 @@
 import 'package:booking/data/models/auth/form/decoration_input_field.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -34,13 +34,13 @@ class InputFieldForm extends StatelessWidget {
       name: name,
       obscureText: suffixIcon != null && obscureText == true,
       obscuringCharacter: "*",
-      style: TextStyle(color: primary), // text color
-      cursorColor: primary, // cursor color
+      style: TextStyle(color: context.appTheme.primary), // text color
+      cursorColor: context.appTheme.primary, // cursor color
       keyboardType: textInputType ?? TextInputType.emailAddress,
       decoration: decorationInputFieldLogin(
         hintText: hintText,
         labelTeaxt: labelTeaxt,
-        suffixIcon: suffixIcon,
+        suffixIcon: suffixIcon, context: context,
       ),
       validator: FormBuilderValidators.compose(validators),
     );

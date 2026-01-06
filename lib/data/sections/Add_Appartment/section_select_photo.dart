@@ -1,6 +1,4 @@
-import 'dart:ui' as border_type;
-
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -135,7 +133,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
             child: DottedBorder(
               options: RoundedRectDottedBorderOptions(
                 radius: Radius.circular(rem(1.4)),
-                color: fourthly,
+                color: context.appTheme.fourthly,
                 strokeWidth: 2,
                 dashPattern: [6, 4],
                 padding: EdgeInsets.all(3),
@@ -144,7 +142,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                 aspectRatio: 2,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: fourthly.withAlpha(128),
+                    color: context.appTheme.fourthly.withAlpha(128),
                     borderRadius: BorderRadius.circular(rem(1.4)),
                   ),
                   child: Center(
@@ -154,10 +152,10 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                       children: [
                         CircleAvatar(
                           radius: rem(radiusCircul - 0.5),
-                          backgroundColor: fourthly.shade700,
+                          backgroundColor: context.appTheme.fourthly,
                           child: Icon(
                             Icons.add_photo_alternate,
-                            color: thirdly,
+                            color: context.appTheme.thirdly,
                             size: rem(radiusCircul),
                           ),
                         ),
@@ -172,23 +170,18 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
                           "Upload at more 5 photos of your apartment",
                           style: TextStyle(
                             fontSize: rem(0.9),
-                            color: const border_type.Color.fromARGB(
-                              255,
-                              92,
-                              92,
-                              92,
-                            ),
+                            color: context.appTheme.secondary,
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(rem(0.5)),
                           decoration: BoxDecoration(
-                            color: fourthly.shade700,
+                            color: context.appTheme.fourthly,
                             borderRadius: BorderRadius.circular(rem(0.4)),
                           ),
                           child: Text(
                             "Uplaod",
-                            style: TextStyle(color: thirdly),
+                            style: TextStyle(color: context.appTheme.thirdly),
                           ),
                         ),
                       ],
@@ -274,12 +267,12 @@ class _DisplayImagesState extends State<DisplayImages> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black54,
+                          color: context.appTheme.primary,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.close,
-                          color: Colors.white,
+                          color: context.appTheme.thirdly,
                           size: 20,
                         ),
                       ),
@@ -322,12 +315,12 @@ class _DisplayImagesState extends State<DisplayImages> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black54,
+                        color: context.appTheme.primary,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.close,
-                        color: Colors.white,
+                        color: context.appTheme.thirdly,
                         size: 20,
                       ),
                     ),

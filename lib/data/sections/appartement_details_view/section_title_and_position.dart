@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,10 @@ class SectionTitleAndPosition extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
             "${apartment.city}, ${apartment.town}",
-            style: TextStyle(color: secondary, fontSize: rem(1.5)),
+            style: TextStyle(
+              color: context.appTheme.secondary,
+              fontSize: rem(1.5),
+            ),
           ),
         ),
       ],

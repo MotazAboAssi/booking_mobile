@@ -71,7 +71,7 @@ class SectionGroupOfInputField extends StatelessWidget {
           format: DateFormat('dd-MM-yyyy'),
           decoration: decorationInputFieldLogin(
             hintText: "select your date of birth",
-            labelTeaxt: dateOfBirthKey,
+            labelTeaxt: dateOfBirthKey, context: context,
           ),
 
           validator: FormBuilderValidators.compose([

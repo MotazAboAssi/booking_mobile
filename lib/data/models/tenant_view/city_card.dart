@@ -1,5 +1,5 @@
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
 
@@ -33,14 +33,14 @@ class CityCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: primary.withAlpha(127),
+                  color: context.appTheme.primary.withAlpha(127),
                 ),
               ),
               Center(
                 child: Text(
                   city,
                   style: TextStyle(
-                    color: thirdly,
+                    color: context.appTheme.thirdly,
                     fontSize: rem(1.1),
                     fontWeight: FontWeight.bold,
                   ),

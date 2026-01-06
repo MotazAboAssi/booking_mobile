@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/pick_image_from_camera.dart';
 import 'package:booking/helper/constant/pick_image_from_gallery.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/alert_dialog.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/main.dart';
@@ -53,10 +53,10 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
               bottom: 0,
               right: widget.constraints.maxWidth * 0.3,
               child: CircleAvatar(
-                backgroundColor: thirdly,
+                backgroundColor: context.appTheme.thirdly,
                 radius: rem(radiusIcon + 0.1),
                 child: CircleAvatar(
-                  backgroundColor: fourthly,
+                  backgroundColor: context.appTheme.fourthly,
                   radius: rem(radiusIcon - 0.1),
                   child: InkWell(
                     onTap: () async {
@@ -82,7 +82,7 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
                     },
                     child: Icon(
                       Icons.add_a_photo,
-                      color: thirdly,
+                      color: context.appTheme.thirdly,
                       size: rem(radiusIcon * 1.1),
                     ),
                   ),

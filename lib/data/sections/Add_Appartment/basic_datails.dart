@@ -4,7 +4,7 @@ import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/constant/cities_with_towns.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_cubit.dart';
@@ -47,7 +47,7 @@ class _BasicDatailsState extends State<BasicDatails> {
       apartmentCopy.images = apartment.images;
       apartmentCopy.images = apartment.images;
       selectedAmenities = apartmentCopy.features;
-      
+
       selectedCity = apartmentCopy.town;
       selectedCountry = apartmentCopy.city;
     }
@@ -66,7 +66,10 @@ class _BasicDatailsState extends State<BasicDatails> {
                   /// COUNTRY
                   Row(
                     children: [
-                      Text("Country", style: TextStyle(color: secondary)),
+                      Text(
+                        "Country",
+                        style: TextStyle(color: context.appTheme.secondary),
+                      ),
                     ],
                   ),
                   apartmentCopy != null
@@ -111,7 +114,10 @@ class _BasicDatailsState extends State<BasicDatails> {
                   /// CITY
                   Row(
                     children: [
-                      Text("City", style: TextStyle(color: secondary)),
+                      Text(
+                        "City",
+                        style: TextStyle(color: context.appTheme.secondary),
+                      ),
                     ],
                   ),
                   apartmentCopy != null
@@ -148,7 +154,10 @@ class _BasicDatailsState extends State<BasicDatails> {
                   /// ROOMS NUMBER
                   Row(
                     children: [
-                      Text("Rooms number", style: TextStyle(color: secondary)),
+                      Text(
+                        "Rooms number",
+                        style: TextStyle(color: context.appTheme.secondary),
+                      ),
                     ],
                   ),
                   InputRoomNumver(
@@ -160,7 +169,10 @@ class _BasicDatailsState extends State<BasicDatails> {
                   /// ROOMS NUMBER
                   Row(
                     children: [
-                      Text("Space m\u00B2", style: TextStyle(color: secondary)),
+                      Text(
+                        "Space m\u00B2",
+                        style: TextStyle(color: context.appTheme.secondary),
+                      ),
                     ],
                   ),
                   TextFormField(
@@ -189,7 +201,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                     children: [
                       Text(
                         "Price per month in Lsy",
-                        style: TextStyle(color: secondary),
+                        style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
                   ),
@@ -217,7 +229,10 @@ class _BasicDatailsState extends State<BasicDatails> {
                   /// DESCRIPTION
                   Row(
                     children: [
-                      Text("Description", style: TextStyle(color: secondary)),
+                      Text(
+                        "Description",
+                        style: TextStyle(color: context.appTheme.secondary),
+                      ),
                     ],
                   ),
                   TextFormField(
@@ -240,7 +255,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                       Text(
                         "Amenities",
                         style: TextStyle(
-                          color: secondary,
+                          color: context.appTheme.secondary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -282,13 +297,15 @@ class _BasicDatailsState extends State<BasicDatails> {
                               ),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? fourthly.withAlpha(50)
-                                    : Colors.grey.withAlpha(13),
+                                    ? context.appTheme.fourthly.withAlpha(50)
+                                    : context.appTheme.secondary.withAlpha(13),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color: isSelected
-                                      ? Colors.blue
-                                      : Colors.grey.withAlpha(51),
+                                      ? context.appTheme.fourthly
+                                      : context.appTheme.secondary.withAlpha(
+                                          51,
+                                        ),
                                 ),
                               ),
                               child: Row(
@@ -296,8 +313,8 @@ class _BasicDatailsState extends State<BasicDatails> {
                                   Icon(
                                     item.icon,
                                     color: isSelected
-                                        ? Colors.blue
-                                        : Colors.grey,
+                                        ? context.appTheme.fourthly
+                                        : context.appTheme.secondary,
                                     size: 24,
                                   ),
                                   const SizedBox(width: 15),
@@ -310,15 +327,15 @@ class _BasicDatailsState extends State<BasicDatails> {
                                             ? FontWeight.bold
                                             : FontWeight.normal,
                                         color: isSelected
-                                            ? Colors.blue
-                                            : Colors.black87,
+                                            ? context.appTheme.fourthly
+                                            : context.appTheme.primary,
                                       ),
                                     ),
                                   ),
                                   if (isSelected)
                                     Icon(
                                       Icons.check_circle,
-                                      color: Colors.blue,
+                                      color: context.appTheme.fourthly,
                                       size: 20,
                                     ),
                                 ],
@@ -353,7 +370,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                     child: Text(
                       "Discard",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: context.appTheme.thirdly,
                         fontSize: rem(1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -408,7 +425,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                         }),
 
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: fourthly,
+                      backgroundColor: context.appTheme.fourthly,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(rem(0.5)),
                       ),
@@ -419,19 +436,21 @@ class _BasicDatailsState extends State<BasicDatails> {
                           return SizedBox(
                             width: rem(1),
                             height: rem(1),
-                            child: CircularProgressIndicator(color: thirdly),
+                            child: CircularProgressIndicator(
+                              color: context.appTheme.thirdly,
+                            ),
                           );
                         } else if (state is ApiApartmentSuccefulAdd) {
                           return Icon(
                             Icons.check,
                             size: rem(1.5),
-                            color: thirdly,
+                            color: context.appTheme.thirdly,
                           );
                         } else {
                           return Text(
                             apartmentCopy != null ? "Save" : "Publish",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: context.appTheme.thirdly,
                               fontSize: rem(1),
                               fontWeight: FontWeight.bold,
                             ),

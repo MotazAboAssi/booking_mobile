@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
@@ -54,7 +54,7 @@ class ButtonSignIn extends StatelessWidget {
           if (state is LoginSuccessfuly) {
             return Colors.green;
           } else if (state is UnderRegistrationLogIn) {
-            return Colors.grey;
+            return context.appTheme.secondary;
           } else {
             return null;
           }
@@ -77,17 +77,24 @@ class ButtonSignIn extends StatelessWidget {
           if (state is LoginFailed || state is InitialLogIn) {
             return Text(
               "Sign in",
-              style: TextStyle(color: thirdly, fontSize: rem(1.5)),
+              style: TextStyle(
+                color: context.appTheme.thirdly,
+                fontSize: rem(1.5),
+              ),
             );
           } else if ((state is LoginSuccessfuly)) {
             return Center(
-              child: Icon(Icons.check_rounded, color: Colors.white, size: 25),
+              child: Icon(
+                Icons.check_rounded,
+                color: context.appTheme.thirdly,
+                size: 25,
+              ),
             );
           }
           return SizedBox(
             height: 20,
             width: 20,
-            child: CircularProgressIndicator(color: Colors.white),
+            child: CircularProgressIndicator(color: context.appTheme.thirdly),
           );
         },
         listener: (context, state) {

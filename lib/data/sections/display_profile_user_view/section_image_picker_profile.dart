@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
@@ -15,7 +16,7 @@ class SectionImagePickerProfile extends StatelessWidget {
     const double radiusProfile = 4;
     return CircleAvatar(
       radius: rem(radiusProfile),
-      backgroundColor: Colors.black,
+      backgroundColor: context.appTheme.primary,
       child: CircleAvatar(
         radius: rem(radiusProfile - 0.1),
         backgroundImage: image == null

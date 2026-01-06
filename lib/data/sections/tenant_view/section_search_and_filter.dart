@@ -1,6 +1,6 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
@@ -21,7 +21,7 @@ class SectionSearchAndFilter extends StatelessWidget {
         child: ListTile(
           trailing: Container(
             decoration: BoxDecoration(
-              color: fourthly,
+              color: context.appTheme.fourthly,
               borderRadius: BorderRadius.circular(10),
             ),
             padding: EdgeInsets.all(10),
@@ -31,7 +31,7 @@ class SectionSearchAndFilter extends StatelessWidget {
                 minimumSize: MaterialStateProperty.all(Size.zero),
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 overlayColor: MaterialStateProperty.all(
-                  thirdly.withOpacity(0.1),
+                  context.appTheme.thirdly.withOpacity(0.1),
                 ),
               ),
               onPressed: () {
@@ -50,7 +50,11 @@ class SectionSearchAndFilter extends StatelessWidget {
                 );
               },
 
-              icon: Icon(Icons.filter_alt_rounded, color: thirdly, size: 25),
+              icon: Icon(
+                Icons.filter_alt_rounded,
+                color: context.appTheme.thirdly,
+                size: 25,
+              ),
             ),
           ),
           title: TextFormField(
@@ -124,19 +128,24 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 });
               },
               decoration: InputDecoration(
-                focusColor: Colors.blue,
-                suffixIconColor: Colors.blue,
+                focusColor: context.appTheme.fourthly,
+                suffixIconColor: context.appTheme.fourthly,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.blue),
+                  borderSide: BorderSide(
+                    color: context.appTheme.fourthly,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.blue, width: 2),
+                  borderSide: BorderSide(
+                    color: context.appTheme.fourthly,
+                    width: 2,
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.blue),
+                  borderSide: BorderSide(color: context.appTheme.fourthly),
                 ),
               ),
             ),
@@ -155,7 +164,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                   max: 10000,
                   divisions: 80,
                   values: priceRange,
-                  activeColor: Colors.blue,
+                  activeColor: context.appTheme.fourthly,
                   labels: RangeLabels(
                     "\$${priceRange.start.round()}",
                     "\$${priceRange.end.round()}",
@@ -182,7 +191,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                   max: 500,
                   divisions: 25,
                   values: areaRange,
-                  activeColor: Colors.blue,
+                  activeColor: context.appTheme.fourthly,
                   labels: RangeLabels(
                     "${areaRange.start.round()}m",
                     "${areaRange.end.round()}m",
@@ -209,7 +218,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                   max: 8,
                   divisions: 7,
                   values: roomsRange,
-                  activeColor: Colors.blue,
+                  activeColor: context.appTheme.fourthly,
                   labels: RangeLabels(
                     "${roomsRange.start.round()}",
                     "${roomsRange.end.round()}",
@@ -222,7 +231,6 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 ),
               ],
             ),
-
 
             // const SizedBox(height: 16),
             SizedBox(
@@ -248,7 +256,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 builder: (context, state) {
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: fourthly,
+                      backgroundColor: context.appTheme.fourthly,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(rem(0.5)),
                       ),
@@ -278,11 +286,13 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                         ? SizedBox(
                             width: rem(1),
                             height: rem(1),
-                            child: CircularProgressIndicator(color: thirdly),
+                            child: CircularProgressIndicator(
+                              color: context.appTheme.thirdly,
+                            ),
                           )
                         : Text(
                             "Apply Filter",
-                            style: TextStyle(color: thirdly),
+                            style: TextStyle(color: context.appTheme.thirdly),
                           ),
                   );
                 },

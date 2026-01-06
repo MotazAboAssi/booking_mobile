@@ -1,7 +1,7 @@
 import 'package:booking/data/sections/appartement_details_view/section_request_to_book_and_price.dart';
 import 'package:booking/helper/constant/my_booking_keys.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
@@ -28,7 +28,7 @@ class Appartmentbooking extends StatelessWidget {
         );
       },
       child: Card(
-        color: thirdly,
+        color: context.appTheme.thirdly,
         elevation: 0,
 
         margin: EdgeInsets.symmetric(horizontal: 2, vertical: rem(0.5)),
@@ -76,7 +76,7 @@ class Appartmentbooking extends StatelessWidget {
                                 style: TextStyle(
                                   color: context.select<Null, Color?>((_) {
                                     if (apartment?.status.name == pendingKey) {
-                                      return Colors.grey;
+                                      return context.appTheme.secondary;
                                     } else if (apartment?.status.name ==
                                         confirmedKey) {
                                       return Colors.green;
@@ -102,12 +102,15 @@ class Appartmentbooking extends StatelessWidget {
 
                           Row(
                             children: [
-                              Icon(Icons.location_on, color: Colors.grey),
+                              Icon(
+                                Icons.location_on,
+                                color: context.appTheme.secondary,
+                              ),
                               Text(
                                 "${apartment?.apartment.city} - ${apartment?.apartment.town}",
                                 style: TextStyle(
                                   fontSize: rem(1),
-                                  color: secondary,
+                                  color: context.appTheme.secondary,
                                 ),
                               ),
                             ],
@@ -117,10 +120,13 @@ class Appartmentbooking extends StatelessWidget {
 
                       Row(
                         children: [
-                          Icon(Icons.date_range, color: Colors.grey),
+                          Icon(
+                            Icons.date_range,
+                            color: context.appTheme.secondary,
+                          ),
                           Text(
                             "${apartment?.startDate.toIso8601String().split("T")[0]} / ${apartment?.endDate.toIso8601String().split("T")[0]}",
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: context.appTheme.secondary),
                           ),
                         ],
                       ),
@@ -196,7 +202,10 @@ class ConfirmedPastButton extends StatelessWidget {
                 arguments: {'house': apartment},
               );
             },
-            child: Text('Rate', style: TextStyle(color: primary)),
+            child: Text(
+              'Rate',
+              style: TextStyle(color: context.appTheme.primary),
+            ),
           ),
         ),
       ],
@@ -253,7 +262,10 @@ class ConfirmedButton extends StatelessWidget {
               final cubit = context.read<MyBookingViewCubit>();
               cubit.getAllApartmentsBooking();
             },
-            child: Text('Cancele', style: TextStyle(color: Colors.white)),
+            child: Text(
+              'Cancele',
+              style: TextStyle(color: context.appTheme.thirdly),
+            ),
           ),
         ),
       ],
@@ -280,7 +292,7 @@ class PendingButton extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: fourthly, // لون الخلفية
+              backgroundColor: context.appTheme.fourthly, // لون الخلفية
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8), // بدون انحناءات
               ),
@@ -315,7 +327,10 @@ class PendingButton extends StatelessWidget {
                 cubit.getAllApartmentsBooking();
               }
             },
-            child: Text('Edit', style: TextStyle(color: thirdly)),
+            child: Text(
+              'Edit',
+              style: TextStyle(color: context.appTheme.thirdly),
+            ),
           ),
         ),
 
@@ -338,7 +353,10 @@ class PendingButton extends StatelessWidget {
               final cubit = context.read<MyBookingViewCubit>();
               cubit.getAllApartmentsBooking();
             },
-            child: Text('Cancele', style: TextStyle(color: thirdly)),
+            child: Text(
+              'Cancele',
+              style: TextStyle(color: context.appTheme.thirdly),
+            ),
           ),
         ),
       ],

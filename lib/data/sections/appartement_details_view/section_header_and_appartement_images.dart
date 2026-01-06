@@ -1,6 +1,6 @@
 import 'package:booking/data/models/favorite_view/favorite_apartment_button.dart';
 import 'package:booking/helper/constant/images.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/presentation/cubit/toggle_favorite_apartment_button/toggle_favorite_apartment_button_cubit.dart';
 import 'package:booking/presentation/widgets/swiper_images.dart';
@@ -33,7 +33,7 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
-              backgroundColor: primary.withAlpha(127),
+              backgroundColor: context.appTheme.primary.withAlpha(127),
               child: BlocProvider(
                 create: (BuildContext context) =>
                     ToggleFavoriteApartmentButtonCubit(),
@@ -45,12 +45,12 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: primary.withAlpha(127),
+            backgroundColor: context.appTheme.primary.withAlpha(127),
             child: IconButton(
               onPressed: () {
                 backTo(context);
               },
-              icon: Icon(Icons.arrow_back, color: thirdly),
+              icon: Icon(Icons.arrow_back, color: context.appTheme.thirdly),
             ),
           ),
         ),

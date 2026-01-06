@@ -20,7 +20,7 @@ class TenantView extends StatelessWidget {
         },
       ),
 
-      appBar: appBarTenantView(),
+      appBar: appBarTenantView(context),
       body: BodyTenantView(),
     );
   }

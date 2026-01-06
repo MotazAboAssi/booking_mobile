@@ -1,6 +1,6 @@
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
@@ -55,17 +55,15 @@ class DispalyResaultCategory extends StatelessWidget {
                                                   .image,
                                             ),
                                     ),
-                                    borderRadius: BorderRadius.circular(
-                                      rem(1),
-                                    ),
+                                    borderRadius: BorderRadius.circular(rem(1)),
                                   ),
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: primary.withAlpha(127),
-                                    borderRadius: BorderRadius.circular(
-                                      rem(1),
+                                    color: context.appTheme.primary.withAlpha(
+                                      127,
                                     ),
+                                    borderRadius: BorderRadius.circular(rem(1)),
                                   ),
                                 ),
                                 Padding(
@@ -82,7 +80,7 @@ class DispalyResaultCategory extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: rem(1.5),
                                           fontWeight: FontWeight.bold,
-                                          color: thirdly,
+                                          color: context.appTheme.thirdly,
                                         ),
                                       ),
                                       Row(
@@ -90,7 +88,7 @@ class DispalyResaultCategory extends StatelessWidget {
                                           Text(
                                             '${apartments[index].rating}',
                                             style: TextStyle(
-                                              color: thirdly,
+                                              color: context.appTheme.thirdly,
                                               fontWeight: FontWeight.bold,
                                               fontSize: rem(1.5),
                                             ),
@@ -117,7 +115,7 @@ class DispalyResaultCategory extends StatelessWidget {
             : Container(
                 margin: EdgeInsets.all(rem(0.5)),
                 decoration: BoxDecoration(
-                  color: secondary,
+                  color: context.appTheme.secondary,
                   borderRadius: BorderRadius.circular(rem(1.4)),
                 ),
                 child: Center(
@@ -126,7 +124,7 @@ class DispalyResaultCategory extends StatelessWidget {
                     style: TextStyle(
                       fontSize: rem(1.5),
                       fontWeight: FontWeight.bold,
-                      color: thirdly,
+                      color: context.appTheme.thirdly,
                     ),
                   ),
                 ),

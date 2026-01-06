@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class SectionLocation extends StatelessWidget {
           aspectRatio: 6 / 5,
           child: Container(
             decoration: BoxDecoration(
-              color: secondary.shade300,
+              color: context.appTheme.secondary,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(

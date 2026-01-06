@@ -1,6 +1,6 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
@@ -29,7 +29,7 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
       },
 
       style: ElevatedButton.styleFrom(
-        backgroundColor: fourthly,
+        backgroundColor: context.appTheme.fourthly,
 
         fixedSize: Size(parent.maxHeight * 0.9, 0),
         shape: RoundedRectangleBorder(
@@ -42,15 +42,19 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
             return SizedBox(
               width: rem(1.5),
               height: rem(1.5),
-              child: CircularProgressIndicator(backgroundColor: thirdly),
+              child: CircularProgressIndicator(
+                backgroundColor: context.appTheme.thirdly,
+              ),
             );
           } else if (state is RateYourStaySuccessful) {
-            return SizedBox(child: Icon(Icons.check, color: thirdly));
+            return SizedBox(
+              child: Icon(Icons.check, color: context.appTheme.thirdly),
+            );
           }
           return Text(
             "Submit Review",
             style: TextStyle(
-              color: thirdly,
+              color: context.appTheme.thirdly,
               fontWeight: FontWeight.bold,
               fontSize: rem(1),
             ),

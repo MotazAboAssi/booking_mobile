@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class ModelDisplayApartementRented extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: thirdly,
+        color: context.appTheme.thirdly,
       ),
       child: ListTile(
         visualDensity: VisualDensity(horizontal: 4, vertical: 4),
@@ -26,7 +26,7 @@ class ModelDisplayApartementRented extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8),
           child: Text(
             "Stay: ${apartment.startDate.toIso8601String().split('T')[0]} - ${apartment.endDate.toIso8601String().split('T')[0]}",
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: context.appTheme.secondary),
           ),
         ),
         trailing: AspectRatio(

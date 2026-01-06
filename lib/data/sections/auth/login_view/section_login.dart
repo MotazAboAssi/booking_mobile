@@ -1,4 +1,5 @@
 import 'package:booking/data/models/auth/login/login_form.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class SectionLogin extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(rem(1)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.appTheme.thirdly,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(rem(1)),
           topRight: Radius.circular(rem(1)),

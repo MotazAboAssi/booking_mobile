@@ -1,6 +1,5 @@
-
 import 'package:booking/helper/constant/images.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -85,7 +84,10 @@ class LandLordProfileCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Owner", style: TextStyle(color: secondary)),
+                    Text(
+                      "Owner",
+                      style: TextStyle(color: context.appTheme.secondary),
+                    ),
                     Text(
                       "${user?.firstName} ${user?.lastName}",
                       style: TextStyle(fontWeight: FontWeight.w500),

@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/types/image_from_apartment.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -35,8 +35,8 @@ class SwiperImage extends StatelessWidget {
       },
       pagination: SwiperPagination(
         builder: DotSwiperPaginationBuilder(
-          color: thirdly,
-          activeColor: fourthly,
+          color: context.appTheme.thirdly,
+          activeColor: context.appTheme.fourthly,
         ),
       ),
     );

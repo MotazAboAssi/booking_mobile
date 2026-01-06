@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:booking/data/models/tenant_view/appartement_card.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_state_cubit.dart';
@@ -84,7 +84,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                           : Container(
                               margin: EdgeInsets.all(rem(0.5)),
                               decoration: BoxDecoration(
-                                color: secondary,
+                                color: context.appTheme.secondary,
                                 borderRadius: BorderRadius.circular(rem(1.4)),
                               ),
                               child: Center(
@@ -93,7 +93,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                                   style: TextStyle(
                                     fontSize: rem(1.5),
                                     fontWeight: FontWeight.bold,
-                                    color: thirdly,
+                                    color: context.appTheme.thirdly,
                                   ),
                                 ),
                               ),
@@ -103,7 +103,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                         padding: EdgeInsets.all(rem(1)),
                         margin: EdgeInsets.all(rem(0.5)),
                         decoration: BoxDecoration(
-                          color: secondary,
+                          color: context.appTheme.secondary,
                           borderRadius: BorderRadius.circular(rem(1.4)),
                         ),
                         child: Center(
@@ -112,7 +112,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                             style: TextStyle(
                               fontSize: rem(1.5),
                               fontWeight: FontWeight.bold,
-                              color: thirdly,
+                              color: context.appTheme.thirdly,
                             ),
                           ),
                         ),

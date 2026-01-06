@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _LandLordDashboardBottomNavigationBarState
           currentIndex = index;
         });
       },
-      fixedColor: Colors.blue,
+      fixedColor: context.appTheme.fourthly,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.dashboard),

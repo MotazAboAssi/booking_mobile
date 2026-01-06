@@ -1,6 +1,6 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -19,7 +19,7 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: thirdly,
+        color: context.appTheme.thirdly,
         boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
       ),
       child: Row(
@@ -33,7 +33,7 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
                 style: TextStyle(
                   fontSize: rem(1.5),
                   fontWeight: FontWeight.bold,
-                  color: fourthly,
+                  color: context.appTheme.fourthly,
                 ),
               ),
               Text(" /month"),
@@ -65,12 +65,12 @@ class RequestBookButton extends StatelessWidget {
               if (state is BookingApartmentSuccessful) {
                 return Colors.green;
               } else if (state is BookingApartmentLoading) {
-                return Colors.grey;
+                return context.appTheme.secondary;
               } else {
                 return null;
               }
             }),
-            backgroundColor: fourthly,
+            backgroundColor: context.appTheme.fourthly,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(10),
             ),
@@ -114,12 +114,17 @@ class RequestBookButton extends StatelessWidget {
               return SizedBox(
                 width: rem(1),
                 height: rem(1),
-                child: CircularProgressIndicator(color: thirdly),
+                child: CircularProgressIndicator(
+                  color: context.appTheme.thirdly,
+                ),
               );
             } else if (state is BookingApartmentSuccessful) {
-              return Icon(Icons.check, color: thirdly);
+              return Icon(Icons.check, color: context.appTheme.thirdly);
             } else {
-              return Text("Request to Book", style: TextStyle(color: thirdly));
+              return Text(
+                "Request to Book",
+                style: TextStyle(color: context.appTheme.thirdly),
+              );
             }
           }),
         );
@@ -133,9 +138,9 @@ class RequestBookButton extends StatelessWidget {
             message: state.response.toString(),
           );
           await Future.delayed(const Duration(seconds: 1));
-          Navigator.of(context)
-    .pushNamedAndRemoveUntil(mybooking, (Route<dynamic> route) => false);
-   
+          Navigator.of(
+            context,
+          ).pushNamedAndRemoveUntil(mybooking, (Route<dynamic> route) => false);
         } else if (state is BookingApartmentFaild) {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
@@ -51,20 +52,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // setting dark and light mode
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.light(
-      //     primary: Colors.red,
-
-      //   ),
-      // ),
-      // darkTheme: ThemeData(
-      //   colorScheme: ColorScheme.dark(
-      //     primary: Colors.blue,
-      //   ),
-      // ),
-      // themeMode: ThemeMode.system,
-      // setting dark and light mode
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       navigatorObservers: [Observ()],
       routes: {

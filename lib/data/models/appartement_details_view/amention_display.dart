@@ -1,7 +1,7 @@
 import 'package:booking/data/models/appartement_details_view/amention_card.dart';
 import 'package:booking/data/models/appartement_details_view/amention_display_dialog.dart';
 import 'package:booking/helper/constant/amentions.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:flutter/material.dart';
 
 List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
@@ -27,7 +27,7 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
           );
         },
         child: CircleAvatar(
-          foregroundColor: primary,
+          foregroundColor: context.appTheme.primary,
           child: Text("+${amention.length - 3}"),
         ),
       ),

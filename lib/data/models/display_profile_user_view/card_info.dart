@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class CardInfo extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(rem(1.4)),
-        border: BoxBorder.all(),
+        border: BoxBorder.all(color: context.appTheme.primary),
       ),
       width: MediaQuery.of(context).size.width * 0.8,
       // height: rem(2),

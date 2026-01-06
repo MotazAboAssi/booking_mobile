@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
 
@@ -19,11 +19,11 @@ class AmentionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: primary),
+        border: Border.all(color: context.appTheme.primary),
         borderRadius: BorderRadiusGeometry.circular(10),
       ),
       child: ListTile(
-        leading: Icon(icon, size: rem(iconsSize), color: fourthly),
+        leading: Icon(icon, size: rem(iconsSize), color: context.appTheme.fourthly),
         trailing: LayoutBuilder(
           builder: (context, constraints) {
             return SizedBox(

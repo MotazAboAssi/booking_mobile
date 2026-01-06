@@ -1,11 +1,11 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:flutter/material.dart';
 
-AppBar appBarTenantView() {
+AppBar appBarTenantView(BuildContext context) {
   return AppBar(
     leading: Padding(
       padding: const EdgeInsets.only(left: 10),
-      child: CircleAvatar(backgroundColor: Colors.black),
+      child: CircleAvatar(backgroundColor: context.appTheme.primary),
     ),
     title: Text("title app"),
     actionsPadding: const EdgeInsets.only(right: 10),
@@ -20,10 +20,13 @@ AppBar appBarTenantView() {
             right: 7,
             top: 7,
             child: CircleAvatar(
-              backgroundColor: Colors.black,
+              backgroundColor: context.appTheme.primary,
               minRadius: 5,
               maxRadius: 8,
-              child: Text("99+", style: TextStyle(color: thirdly, fontSize: 8)),
+              child: Text(
+                "99+",
+                style: TextStyle(color: context.appTheme.thirdly, fontSize: 8),
+              ),
             ),
           ),
         ],

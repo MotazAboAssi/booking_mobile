@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +18,14 @@ class SectionAppartementFeature extends StatelessWidget {
             Row(
               spacing: 5,
               children: [
-                Icon(Icons.square, color: fourthly),
+                Icon(Icons.square, color: context.appTheme.fourthly),
                 Text("${apartment.rooms} rooms"),
               ],
             ),
             Row(
               spacing: 5,
               children: [
-                Icon(Icons.square_foot_sharp, color: fourthly),
+                Icon(Icons.square_foot_sharp, color: context.appTheme.fourthly),
                 Text("${apartment.space} m\u00B2"),
               ],
             ),

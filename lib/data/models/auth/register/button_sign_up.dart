@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
@@ -71,7 +71,7 @@ class ButtonSignUp extends StatelessWidget {
           if (state is RegisterSuccessfuly) {
             return Colors.green;
           } else if (state is UnderRegistrationInRegister) {
-            return Colors.grey;
+            return context.appTheme.secondary;
           } else {
             return null;
           }
@@ -92,16 +92,23 @@ class ButtonSignUp extends StatelessWidget {
       child: BlocConsumer<RegisterCubit, RegisterStateCubit>(
         builder: (context, state) {
           if (state is RegisterFailed || state is InitialRegister) {
-            return Text("Sign up", style: TextStyle(color: thirdly));
+            return Text(
+              "Sign up",
+              style: TextStyle(color: context.appTheme.thirdly),
+            );
           } else if ((state is RegisterSuccessfuly)) {
             return Center(
-              child: Icon(Icons.check_rounded, color: Colors.white, size: 25),
+              child: Icon(
+                Icons.check_rounded,
+                color: context.appTheme.thirdly,
+                size: 25,
+              ),
             );
           }
           return SizedBox(
             height: 20,
             width: 20,
-            child: CircularProgressIndicator(color: Colors.white),
+            child: CircularProgressIndicator(color: context.appTheme.thirdly),
           );
         },
         listener: (c, state) async {

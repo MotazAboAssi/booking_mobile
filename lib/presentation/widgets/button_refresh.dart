@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +13,8 @@ class ButtonRefresh extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: rem(0.5)),
         child: CircleAvatar(
-          backgroundColor: fourthly,
-          child: Icon(Icons.refresh, color: thirdly),
+          backgroundColor: context.appTheme.fourthly,
+          child: Icon(Icons.refresh, color: context.appTheme.thirdly),
         ),
       ),
     );

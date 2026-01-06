@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -50,20 +51,20 @@ class _BookingConfirmationPageState extends State<BookingConfirme> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Wallet Balance',
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: context.appTheme.thirdly,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     '\$4,200.00',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: context.appTheme.thirdly,
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                     ),
@@ -96,27 +97,33 @@ class _BookingConfirmationPageState extends State<BookingConfirme> {
             SizedBox(height: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Your trip',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     'Dates',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Oct 5 - Oct 30, 2024'),
-                  trailing: Text('Edit', style: TextStyle(color: Colors.blue)),
+                  subtitle: const Text('Oct 5 - Oct 30, 2024'),
+                  trailing: Text(
+                    'Edit',
+                    style: TextStyle(color: context.appTheme.fourthly),
+                  ),
                 ),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     'Guests',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('2 guests'),
-                  trailing: Text('Edit', style: TextStyle(color: Colors.blue)),
+                  subtitle: const Text('2 guests'),
+                  trailing: Text(
+                    'Edit',
+                    style: TextStyle(color: context.appTheme.fourthly),
+                  ),
                 ),
               ],
             ),
@@ -233,9 +240,9 @@ class _BookingConfirmationPageState extends State<BookingConfirme> {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: const Text(
+          child: Text(
             'Confirm and Pay',
-            style: TextStyle(fontSize: 18, color: Colors.white),
+            style: TextStyle(fontSize: 18, color: context.appTheme.thirdly),
           ),
         ),
       ),

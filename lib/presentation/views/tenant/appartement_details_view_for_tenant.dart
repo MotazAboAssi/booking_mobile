@@ -7,7 +7,7 @@ import 'package:booking/data/sections/appartement_details_view/section_land_lord
 import 'package:booking/data/sections/appartement_details_view/section_location.dart';
 import 'package:booking/data/sections/appartement_details_view/section_request_to_book_and_price.dart';
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -185,7 +185,7 @@ class Reviews extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(rem(1)),
                   decoration: BoxDecoration(
-                    color: secondary.shade300,
+                    color: context.appTheme.secondary,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(

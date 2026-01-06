@@ -1,4 +1,4 @@
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class SectionDescription extends StatelessWidget {
         ),
         Text(
           apartment.description,
-          style: TextStyle(color: secondary, fontSize: rem(1)),
+          style: TextStyle(color: context.appTheme.secondary, fontSize: rem(1)),
         ),
       ],
     );

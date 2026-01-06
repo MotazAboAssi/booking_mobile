@@ -1,6 +1,6 @@
 import 'package:booking/data/sections/auth/login_view/section_login.dart';
 import 'package:booking/data/sections/auth/login_view/section_logo.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
@@ -17,7 +17,6 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
-    
     final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
     cubit.routeFromLogin(context);
 
@@ -30,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
         if (state is NavigateInitial) {
           return Scaffold(
             body: Container(
-              color: Colors.blue,
+              color: context.appTheme.fourthly,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -45,13 +44,18 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
           );
-        } else{// if (state is NavigateTo) {
+        } else {
+          // if (state is NavigateTo) {
           return Scaffold(
             body: Center(
               child: CircleAvatar(
-                backgroundColor: fourthly,
+                backgroundColor: context.appTheme.fourthly,
                 radius: rem(5),
-                child: Icon(Icons.apartment, size: rem(5), color: thirdly),
+                child: Icon(
+                  Icons.apartment,
+                  size: rem(5),
+                  color: context.appTheme.thirdly,
+                ),
               ),
             ),
           );

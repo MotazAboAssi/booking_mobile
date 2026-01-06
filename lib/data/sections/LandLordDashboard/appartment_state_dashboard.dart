@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppartmentStateDashboard extends StatefulWidget {
@@ -22,7 +23,7 @@ class _AppartmentStateDashboardState extends State<AppartmentStateDashboard> {
             child: Container(
               padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: context.appTheme.secondary,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -54,14 +55,16 @@ class _AppartmentStateDashboardState extends State<AppartmentStateDashboard> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.blue : Colors.transparent,
+            color: isSelected ? context.appTheme.fourthly : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
           ),
           alignment: Alignment.center,
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black87,
+              color: isSelected
+                  ? context.appTheme.thirdly
+                  : context.appTheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),

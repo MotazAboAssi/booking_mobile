@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
@@ -22,7 +22,7 @@ class AppartementCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Card(
-            color: thirdly,
+            color: context.appTheme.thirdly,
             elevation: 0,
 
             margin: EdgeInsets.symmetric(horizontal: 2),
@@ -134,7 +134,7 @@ class AppartementCard extends StatelessWidget {
                                       "${apartment?.city}, ${apartment?.town}",
                                       style: TextStyle(
                                         fontSize: rem(1),
-                                        color: secondary,
+                                        color: context.appTheme.secondary,
                                       ),
                                     ),
                                   ],
@@ -145,10 +145,15 @@ class AppartementCard extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.square, color: secondary),
+                                        Icon(
+                                          Icons.square,
+                                          color: context.appTheme.secondary,
+                                        ),
                                         Text(
                                           "${apartment?.rooms} rooms",
-                                          style: TextStyle(color: secondary),
+                                          style: TextStyle(
+                                            color: context.appTheme.secondary,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -156,11 +161,13 @@ class AppartementCard extends StatelessWidget {
                                       children: [
                                         Icon(
                                           Icons.square_foot_sharp,
-                                          color: secondary,
+                                          color: context.appTheme.secondary,
                                         ),
                                         Text(
                                           "${apartment?.space} m\u00B2",
-                                          style: TextStyle(color: secondary),
+                                          style: TextStyle(
+                                            color: context.appTheme.secondary,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -173,7 +180,7 @@ class AppartementCard extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: rem(1.5),
                                         fontWeight: FontWeight.bold,
-                                        color: fourthly,
+                                        color: context.appTheme.fourthly,
                                       ),
                                     ),
                                     Text(" / month"),

@@ -6,7 +6,7 @@ import 'package:booking/data/sections/appartement_details_view/section_location.
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
-import 'package:booking/helper/constant/theme.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -177,7 +177,7 @@ class Reviews extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(rem(1)),
                   decoration: BoxDecoration(
-                    color: secondary.shade300,
+                    color: context.appTheme.secondary,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -235,12 +235,12 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: primary.withAlpha(127),
+            backgroundColor: context.appTheme.primary.withAlpha(127),
             child: IconButton(
               onPressed: () {
                 backTo(context);
               },
-              icon: Icon(Icons.arrow_back, color: thirdly),
+              icon: Icon(Icons.arrow_back, color: context.appTheme.thirdly),
             ),
           ),
         ),
@@ -259,7 +259,7 @@ class SectionEditOrRemoveAndPrice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: thirdly,
+        color: context.appTheme.thirdly,
         boxShadow: [BoxShadow(blurRadius: 15, spreadRadius: 5)],
       ),
       child: Row(
@@ -273,7 +273,7 @@ class SectionEditOrRemoveAndPrice extends StatelessWidget {
                 style: TextStyle(
                   fontSize: rem(1.5),
                   fontWeight: FontWeight.bold,
-                  color: fourthly,
+                  color: context.appTheme.fourthly,
                 ),
               ),
               Text(" /month"),
