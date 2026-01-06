@@ -11,34 +11,31 @@ class AddApartmentBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (BuildContext context) => ApiApartmentCubit(),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "Photos",
-                style: TextStyle(
-                  fontSize: rem(1.4),
-                  fontWeight: FontWeight.bold,
-                ),
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              "Photos",
+              style: TextStyle(
+                fontSize: rem(1.4),
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SectionSelectPhoto(),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                "Basic Details",
-                style: TextStyle(
-                  fontSize: rem(1.4),
-                  fontWeight: FontWeight.bold,
-                ),
+          ),
+          SectionSelectPhoto(),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              "Basic Details",
+              style: TextStyle(
+                fontSize: rem(1.4),
+                fontWeight: FontWeight.bold,
               ),
             ),
-            BasicDatails(),
-          ],
-        ),
+          ),
+          BasicDatails(),
+        ],
       ),
     );
   }

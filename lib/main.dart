@@ -5,6 +5,7 @@ import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_cubit.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
@@ -53,16 +54,16 @@ class MyApp extends StatelessWidget {
       // setting dark and light mode
       // theme: ThemeData(
       //   colorScheme: ColorScheme.light(
-      //     primary: Colors.red, 
-          
+      //     primary: Colors.red,
+
       //   ),
       // ),
       // darkTheme: ThemeData(
       //   colorScheme: ColorScheme.dark(
-      //     primary: Colors.blue, 
+      //     primary: Colors.blue,
       //   ),
       // ),
-      // themeMode: ThemeMode.system, 
+      // themeMode: ThemeMode.system,
       // setting dark and light mode
       debugShowCheckedModeBanner: false,
       navigatorObservers: [Observ()],
@@ -92,7 +93,10 @@ class MyApp extends StatelessWidget {
           create: (context) => FavoriteApartmentViewCubit(),
           child: FavoriteApartments(),
         ),
-        addApartment: (context) => LandLordAddApartment(),
+        addApartment: (context) => BlocProvider(
+          create: (context) => ApiApartmentCubit(),
+          child: LandLordAddApartment(),
+        ),
         landlordDashBoard: (context) => MultiBlocProvider(
           providers: [
             BlocProvider<DisplayBookingApartmentCubit>(

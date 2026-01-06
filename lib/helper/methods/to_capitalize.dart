@@ -12,4 +12,3 @@ String toCapitalize(String? input) {
     return "";
   }
 }
-

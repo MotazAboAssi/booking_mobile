@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:booking/helper/constant/form_keys/registers_keys.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/types/user_role.dart';
 
 class UserRegisterType {
@@ -49,6 +50,7 @@ class UserRegisterType {
   int? get id => _id;
 
   factory UserRegisterType.fromJson(Map<String, dynamic> json) {
+    printGreen(json.toString());
     return UserRegisterType(
       id: json['id'],
       phone: json['phone'],
@@ -59,7 +61,7 @@ class UserRegisterType {
       idImage: File(json['id_image']),
       role: json['role'] == 'landlord' ? UserRole.landlord : UserRole.tenant,
       birthday: DateTime.parse(json['birthday']),
-      balance: json[balanceKey],
+      balance: json[balanceKey] ?? 0,
     );
   }
   factory UserRegisterType.empty() {

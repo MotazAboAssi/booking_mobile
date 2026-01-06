@@ -269,6 +269,11 @@ class HttpRequest {
       );
       printGreen(response.data.toString());
       return response.data as Map<String, dynamic>;
+    } on DioException catch (e) {
+      printRed('${e.response?.data}');
+      printRed('${e.requestOptions.data}');
+      printRed(e.type.name);
+      throw Exception(e.toString());
     } catch (e) {
       printRed(e.toString());
       throw Exception(e.toString());
@@ -377,6 +382,7 @@ class HttpRequest {
 
   Future<void> addApartmentForLandlord(ApartmentType apartment) async {
     final String? token = await AuthStorage().readData("token");
+    printRed('${apartment.images?.length}');
     final formData = await createFormData(apartment.images!, {
       'city': apartment.city,
       'town': apartment.town,
@@ -536,7 +542,6 @@ class HttpRequest {
         "/apartments/latest",
         options: Options(headers: authrizationHeaders(token ?? "")),
       );
-      printRed(response.data[1].toString());
 
       final List<dynamic> data = response.data;
       printGreen(data.toString());

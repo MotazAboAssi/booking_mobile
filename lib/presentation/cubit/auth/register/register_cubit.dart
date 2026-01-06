@@ -1,3 +1,4 @@
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/auth/register/register_state_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/user_register_type.dart';
@@ -9,8 +10,11 @@ class RegisterCubit extends Cubit<RegisterStateCubit> {
     emit(UnderRegistrationInRegister());
     try {
       final Map<String, dynamic> response = await HttpRequest().register(user);
+      printGreen(response.toString());
       emit(
-        RegisterSuccessfuly(user: UserRegisterType.fromJson(response["data"]['0'])),
+        RegisterSuccessfuly(
+          user: UserRegisterType.fromJson(response["data"]['0']),
+        ),
       );
     } catch (error) {
       emit(RegisterFailed(errorMessage: error.toString().split(":")[1]));

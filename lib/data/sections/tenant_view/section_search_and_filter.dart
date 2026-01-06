@@ -141,180 +141,88 @@ class _BodyFilterViewState extends State<BodyFilterView> {
               ),
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: rem(6),
                   child: Text(
                     "Price For Month : ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Expanded(
-                  child: RangeSlider(
-                    min: 0,
-                    max: 10000,
-                    divisions: 80,
-                    values: priceRange,
-                    activeColor: Colors.blue,
-                    labels: RangeLabels(
-                      "\$${priceRange.start.round()}",
-                      "\$${priceRange.end.round()}",
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        priceRange = value;
-                      });
-                    },
+                RangeSlider(
+                  min: 0,
+                  max: 10000,
+                  divisions: 80,
+                  values: priceRange,
+                  activeColor: Colors.blue,
+                  labels: RangeLabels(
+                    "\$${priceRange.start.round()}",
+                    "\$${priceRange.end.round()}",
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      priceRange = value;
+                    });
+                  },
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: rem(6),
                   child: Text(
                     "Space Apartment",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Expanded(
-                  child: RangeSlider(
-                    min: 40,
-                    max: 500,
-                    divisions: 25,
-                    values: areaRange,
-                    activeColor: Colors.blue,
-                    labels: RangeLabels(
-                      "${areaRange.start.round()}m",
-                      "${areaRange.end.round()}m",
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        areaRange = value;
-                      });
-                    },
+                RangeSlider(
+                  min: 40,
+                  max: 500,
+                  divisions: 25,
+                  values: areaRange,
+                  activeColor: Colors.blue,
+                  labels: RangeLabels(
+                    "${areaRange.start.round()}m",
+                    "${areaRange.end.round()}m",
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      areaRange = value;
+                    });
+                  },
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: rem(6),
                   child: Text(
                     "Rooms",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Expanded(
-                  child: RangeSlider(
-                    min: 1,
-                    max: 8,
-                    divisions: 7,
-                    values: roomsRange,
-                    activeColor: Colors.blue,
-                    labels: RangeLabels(
-                      "${roomsRange.start.round()}",
-                      "${roomsRange.end.round()}",
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        roomsRange = value;
-                      });
-                    },
+                RangeSlider(
+                  min: 1,
+                  max: 8,
+                  divisions: 7,
+                  values: roomsRange,
+                  activeColor: Colors.blue,
+                  labels: RangeLabels(
+                    "${roomsRange.start.round()}",
+                    "${roomsRange.end.round()}",
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      roomsRange = value;
+                    });
+                  },
                 ),
               ],
             ),
 
-            // const SizedBox(height: 16),
-            const Text(
-              "Features",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-
-            Container(
-              padding: EdgeInsets.all(5),
-              height: rem(20),
-              child: ListView.builder(
-                shrinkWrap: true,
-                // physics: NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-
-                itemCount: amentions.length,
-                itemBuilder: (context, index) {
-                  final item = amentions[index];
-                  final bool isSelected = selectedAmenities.contains(item.id);
-
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (isSelected) {
-                            selectedAmenities.remove(item.id);
-                          } else {
-                            selectedAmenities.add(item.id);
-                          }
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 16,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? fourthly.withAlpha(50)
-                              : Colors.grey.withAlpha(13),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: isSelected
-                                ? Colors.blue
-                                : Colors.grey.withAlpha(51),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              item.icon,
-                              color: isSelected ? Colors.blue : Colors.grey,
-                              size: 24,
-                            ),
-                            // const SizedBox(width: 15),
-                            Expanded(
-                              child: Text(
-                                item.title,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: isSelected
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                  color: isSelected
-                                      ? Colors.blue
-                                      : Colors.black87,
-                                ),
-                              ),
-                            ),
-                            if (isSelected)
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.blue,
-                                size: 20,
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
 
             // const SizedBox(height: 16),
             SizedBox(

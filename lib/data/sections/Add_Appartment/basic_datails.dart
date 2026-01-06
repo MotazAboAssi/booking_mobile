@@ -40,17 +40,17 @@ class _BasicDatailsState extends State<BasicDatails> {
   @override
   Widget build(BuildContext context) {
     ApartmentType? apartmentCopy;
-    ApartmentType? apartmentCopy2;
     if (ModalRoute.of(context)?.settings.arguments != null) {
       ApartmentType apartment =
           (ModalRoute.of(context)?.settings.arguments as Map)['apartment'];
-      apartmentCopy = apartment;
-      apartmentCopy2 = ApartmentType.copyFrom(apartment);
+      apartmentCopy = ApartmentType.copyFrom(apartment);
+      apartmentCopy.images = apartment.images;
+      apartmentCopy.images = apartment.images;
       selectedAmenities = apartmentCopy.features;
+      
       selectedCity = apartmentCopy.town;
       selectedCountry = apartmentCopy.city;
     }
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Column(
@@ -95,6 +95,7 @@ class _BasicDatailsState extends State<BasicDatails> {
 
                             setState(() {
                               selectedCountry = value;
+                              countryController.text = value;
 
                               // update cities list based on country
                               cities = citiesByGovernorate[value]!;
@@ -150,23 +151,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                       Text("Rooms number", style: TextStyle(color: secondary)),
                     ],
                   ),
-                  TextFormField(
-                    initialValue: '${apartmentCopy?.rooms ?? ''}',
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "eg. 3",
-                      hintStyle: TextStyle(fontSize: 12),
-                    ),
-                    validator: (v) {
-                      if (v!.isEmpty) return "R3ooms number is required";
-                      if (int.tryParse(v) == null) {
-                        return "Enter a valid number";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      roomsController.text = value;
-                    },
+                  InputRoomNumver(
+                    apartmentCopy: apartmentCopy,
+                    roomsController: roomsController,
                   ),
                   SizedBox(height: 10),
 
@@ -270,6 +257,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                       itemCount: amentions.length,
                       itemBuilder: (context, index) {
                         final item = amentions[index];
+
                         final bool isSelected = selectedAmenities.contains(
                           item.id,
                         );
@@ -285,6 +273,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                                   selectedAmenities.add(item.id);
                                 }
                               });
+                              printRed('Selected : $isSelected');
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(
@@ -359,9 +348,6 @@ class _BasicDatailsState extends State<BasicDatails> {
                       ),
                     ),
                     onPressed: () {
-                      if (apartmentCopy != null) {
-                        apartmentCopy = apartmentCopy2;
-                      }
                       Navigator.pop(context);
                     },
                     child: Text(
@@ -386,30 +372,34 @@ class _BasicDatailsState extends State<BasicDatails> {
                           }
                           return () async {
                             if (_formKey.currentState!.validate()) {
-                              ApartmentType apartment =
-                                  BlocProvider.of<ApiApartmentCubit>(
-                                    context,
-                                  ).state.apartment;
+                              // ApartmentType apartment =
+                              //     BlocProvider.of<ApiApartmentCubit>(
+                              //       context,
+                              //     ).state.apartment;
                               try {
-                                apartment.features = selectedAmenities;
-                                apartment.city = countryController.text;
-                                apartment.town = cityController.text;
-                                apartment.description =
+                                apartmentCopy = ApartmentType.empty();
+                                apartmentCopy?.features = selectedAmenities;
+                                apartmentCopy?.city = countryController.text;
+                                apartmentCopy?.town = cityController.text;
+                                apartmentCopy?.description =
                                     descriptionController.text;
-                                log(roomsController.text);
-                                apartment.priceForMonth = int.parse(
+                                log(countryController.text);
+                                apartmentCopy?.priceForMonth = int.parse(
                                   priceController.text,
                                 );
-                                apartment.rooms = int.parse(
+                                apartmentCopy?.rooms = int.parse(
                                   roomsController.text,
                                 );
-                                apartment.space = int.parse(
+                                apartmentCopy?.space = int.parse(
                                   spaceController.text,
                                 );
 
                                 final cubit =
                                     BlocProvider.of<ApiApartmentCubit>(context);
-                                cubit.add(apartment);
+
+                                apartmentCopy == null
+                                    ? print('object')
+                                    : cubit.add(apartmentCopy!);
                               } catch (e) {
                                 printRed(e.toString());
                               }
@@ -477,6 +467,39 @@ class _BasicDatailsState extends State<BasicDatails> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class InputRoomNumver extends StatelessWidget {
+  const InputRoomNumver({
+    super.key,
+    required this.apartmentCopy,
+    required this.roomsController,
+  });
+
+  final ApartmentType? apartmentCopy;
+  final TextEditingController roomsController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: '${apartmentCopy?.rooms ?? ''}',
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: "eg. 3",
+        hintStyle: TextStyle(fontSize: 12),
+      ),
+      validator: (v) {
+        if (v!.isEmpty) return "R3ooms number is required";
+        if (int.tryParse(v) == null) {
+          return "Enter a valid number";
+        }
+        return null;
+      },
+      onChanged: (value) {
+        roomsController.text = value;
+      },
     );
   }
 }
