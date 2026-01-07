@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/my_booking_keys.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
@@ -42,11 +43,11 @@ class _LandLordDashboardState extends State<MyBookingView> {
               style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
-            bottom: const TabBar(
+            bottom:  TabBar(
               labelStyle: TextStyle(fontSize: 16),
-              labelColor: Color.fromARGB(255, 0, 0, 0),
-              unselectedLabelColor: Color.fromARGB(179, 124, 124, 124),
-              indicatorColor: Color.fromARGB(255, 12, 75, 194),
+              labelColor: context.appTheme.primary,
+              unselectedLabelColor: context.appTheme.secondary,
+              indicatorColor: context.appTheme.fourthly,
               tabs: [
                 Tab(text: 'Current'),
                 Tab(text: 'Past'),

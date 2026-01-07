@@ -27,20 +27,20 @@ class CityCard extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: AssetImage("assets/freedom.jpg"),
-                  ), // TODO add to pubspec.ymal
+                  ), 
                 ),
               ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: context.appTheme.primary.withAlpha(127),
+                  color: Colors.black.withAlpha(127),
                 ),
               ),
               Center(
                 child: Text(
                   city,
                   style: TextStyle(
-                    color: context.appTheme.thirdly,
+                    color: Colors.white,
                     fontSize: rem(1.1),
                     fontWeight: FontWeight.bold,
                   ),

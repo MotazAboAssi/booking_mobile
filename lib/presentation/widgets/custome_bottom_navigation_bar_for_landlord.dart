@@ -13,6 +13,9 @@ class CustomeBottomNavigationBarForLandlord extends StatelessWidget {
     return ConvexAppBar(
       disableDefaultTabController: true,
       backgroundColor: context.appTheme.fourthly,
+      activeColor: context.appTheme.thirdly,
+      color: context.appTheme.thirdly,
+
       items: [
         TabItem(icon: Icons.dashboard, title: 'Home'),
         // TabItem(icon: Icons.card_travel, title: 'Booking'),

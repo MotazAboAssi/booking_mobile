@@ -1,6 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/methods/determine_mode_by_index.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
@@ -12,6 +15,8 @@ import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_land
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
+import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
+import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
 import 'package:booking/presentation/views/landlord/appartement_details_view_for_landlord.dart';
 import 'package:booking/presentation/views/landlord/detail_request_view.dart';
 import 'package:booking/presentation/views/landlord/dispaly_resault_category.dart';
@@ -41,119 +46,140 @@ typedef VoidCallBackFile = void Function(File?);
 typedef FileCallBackvoid = File? Function();
 typedef BoolFunString = bool Function(String);
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  runApp(
+    BlocProvider(create: (context) => ToggleColorCubit(), child: const MyApp()),
+  );
 }
 
 typedef StringFunVoid = String Function();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    final cubit = BlocProvider.of<ToggleColorCubit>(context);
+    cubit.fromScratch();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
-      navigatorObservers: [Observ()],
-      routes: {
-        tenantView: (context) => BlocProvider(
-          create: (context) => TenantViewCubit(),
-          child: TenantView(),
-        ),
-        appartementDetailsViewForTenant: (context) {
-          final args =
-              ModalRoute.of(context)!.settings.arguments
-                  as Map<String, dynamic>;
-
-          return BlocProvider(
-            create: (_) => GetAllRateYourStayCubit(),
-            child: AppartementDetailsViewForTenant(
-              apartment: args["apartment"],
+    log(ThemeMode.values.toString());
+    return BlocBuilder<ToggleColorCubit, ToggleColorStates>(
+      builder: (context, state) {
+        printWhite('${state.mode?.name}');
+        return MaterialApp(
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: state.mode ?? ThemeMode.system,
+          debugShowCheckedModeBanner: false,
+          navigatorObservers: [Observ()],
+          routes: {
+            tenantView: (context) => BlocProvider(
+              create: (context) => TenantViewCubit(),
+              child: TenantView(),
             ),
-          );
-        },
-
-        rateYourStayView: (context) => BlocProvider(
-          create: (BuildContext context) => RateYourStayCubit(),
-          child: RateYourStayView(),
-        ),
-        favoriteApartments: (context) => BlocProvider(
-          create: (context) => FavoriteApartmentViewCubit(),
-          child: FavoriteApartments(),
-        ),
-        addApartment: (context) => BlocProvider(
-          create: (context) => ApiApartmentCubit(),
-          child: LandLordAddApartment(),
-        ),
-        landlordDashBoard: (context) => MultiBlocProvider(
-          providers: [
-            BlocProvider<DisplayBookingApartmentCubit>(
-              create: (_) => DisplayBookingApartmentCubit(),
+            appartementDetailsViewForTenant: (context) {
+              final args =
+                  ModalRoute.of(context)!.settings.arguments
+                      as Map<String, dynamic>;
+    
+              return BlocProvider(
+                create: (_) => GetAllRateYourStayCubit(),
+                child: AppartementDetailsViewForTenant(
+                  apartment: args["apartment"],
+                ),
+              );
+            },
+    
+            rateYourStayView: (context) => BlocProvider(
+              create: (BuildContext context) => RateYourStayCubit(),
+              child: RateYourStayView(),
             ),
-            BlocProvider<FetchAllApartmentForLandlordCubit>(
-              create: (_) => FetchAllApartmentForLandlordCubit(),
+            favoriteApartments: (context) => BlocProvider(
+              create: (context) => FavoriteApartmentViewCubit(),
+              child: FavoriteApartments(),
             ),
-          ],
-          child: const LandLordDashboard(),
-        ),
-
-        mybooking: (context) => BlocProvider(
-          create: (context) => MyBookingViewCubit(),
-          child: MyBookingView(),
-        ),
-        loginView: (context) => BlocProvider(
-          create: (_) => NavigateFromLoginCubit(),
-          child: LoginView(),
-        ),
-        registerView: (context) => RegisterView(),
-        bookingconfirme: (context) => BookingConfirme(),
-        roleSelectionView: (context) => RoleSelectionView(),
-        profileViewTenant: (context) => BlocProvider<FetchUserCubit>(
-          create: (_) => FetchUserCubit(),
-          child: ProfileViewTenant(),
-        ),
-        profileViewLandLord: (context) => BlocProvider<FetchUserCubit>(
-          create: (_) => FetchUserCubit(),
-          child: ProfileViewLandlord(),
-        ),
-        filterView: (_) => BlocProvider(
-          create: (BuildContext context) => FilterViewCubit(),
-          child: FilterView(),
-        ),
-        displayFilterView: (_) => DisplayFilterView(),
-        dispalyResaultCategory: (_) => DispalyResaultCategory(),
-        detailRequestView: (_) => BlocProvider(
-          create: (context) => DetailsRequestViewCubit(),
-          child: DetailRequestView(),
-        ),
-        appartementDetailsViewForLandlord: (context) {
-          final args =
-              ModalRoute.of(context)!.settings.arguments
-                  as Map<String, dynamic>;
-
-          return BlocProvider(
-            create: (_) => GetAllRateYourStayCubit(),
-            child: AppartementDetailsViewForLandlord(
-              apartment: args["apartment"],
+            addApartment: (context) => BlocProvider(
+              create: (context) => ApiApartmentCubit(),
+              child: LandLordAddApartment(),
             ),
-          );
-        },
+            landlordDashBoard: (context) => MultiBlocProvider(
+              providers: [
+                BlocProvider<DisplayBookingApartmentCubit>(
+                  create: (_) => DisplayBookingApartmentCubit(),
+                ),
+                BlocProvider<FetchAllApartmentForLandlordCubit>(
+                  create: (_) => FetchAllApartmentForLandlordCubit(),
+                ),
+              ],
+              child: const LandLordDashboard(),
+            ),
+    
+            mybooking: (context) => BlocProvider(
+              create: (context) => MyBookingViewCubit(),
+              child: MyBookingView(),
+            ),
+            loginView: (context) => BlocProvider(
+              create: (_) => NavigateFromLoginCubit(),
+              child: LoginView(),
+            ),
+            registerView: (context) => RegisterView(),
+            bookingconfirme: (context) => BookingConfirme(),
+            roleSelectionView: (context) => RoleSelectionView(),
+            profileViewTenant: (context) => BlocProvider<FetchUserCubit>(
+              create: (_) => FetchUserCubit(),
+              child: ProfileViewTenant(),
+            ),
+            profileViewLandLord: (context) => BlocProvider<FetchUserCubit>(
+              create: (_) => FetchUserCubit(),
+              child: ProfileViewLandlord(),
+            ),
+            filterView: (_) => BlocProvider(
+              create: (BuildContext context) => FilterViewCubit(),
+              child: FilterView(),
+            ),
+            displayFilterView: (_) => DisplayFilterView(),
+            dispalyResaultCategory: (_) => DispalyResaultCategory(),
+            detailRequestView: (_) => BlocProvider(
+              create: (context) => DetailsRequestViewCubit(),
+              child: DetailRequestView(),
+            ),
+            appartementDetailsViewForLandlord: (context) {
+              final args =
+                  ModalRoute.of(context)!.settings.arguments
+                      as Map<String, dynamic>;
+    
+              return BlocProvider(
+                create: (_) => GetAllRateYourStayCubit(),
+                child: AppartementDetailsViewForLandlord(
+                  apartment: args["apartment"],
+                ),
+              );
+            },
+          },
+          // home: SettingView(),
+          initialRoute: loginView,
+          // home: Scaffold(
+          //   body: FutureBuilder(
+          //     future: HttpRequest().getAllConfirmedBookingsLandlord(),
+          //     builder: (context, snapshot) => ElevatedButton(
+          //       onPressed: () async {
+          //         // await AuthStorage().deleteAllData();
+          //       },
+          //       child: Center(child: Text("data")),
+          //     ),
+          //   ),
+          // ),
+        );
       },
-      // home: SettingView(),
-      initialRoute: loginView,
-      // home: Scaffold(
-      //   body: FutureBuilder(
-      //     future: HttpRequest().getAllConfirmedBookingsLandlord(),
-      //     builder: (context, snapshot) => ElevatedButton(
-      //       onPressed: () async {
-      //         // await AuthStorage().deleteAllData();
-      //       },
-      //       child: Center(child: Text("data")),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
