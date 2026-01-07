@@ -22,9 +22,12 @@ class AppartementCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(rem(1)),
+              side: BorderSide(color: context.appTheme.primarye),
+            ),
             color: context.appTheme.thirdly,
             elevation: 0,
-
             margin: EdgeInsets.symmetric(horizontal: 2),
             child: LayoutBuilder(
               builder: (context, card) {
@@ -63,13 +66,12 @@ class AppartementCard extends StatelessWidget {
                                     )
                                   : null,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(rem(1)),
+                                topRight: Radius.circular(rem(1)),
                               ),
                             ),
                           ),
                           Container(
-                            // color: Th,
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               spacing: 5,

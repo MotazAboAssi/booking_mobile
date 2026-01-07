@@ -24,7 +24,7 @@ class SectionLocation extends StatelessWidget {
           aspectRatio: 6 / 5,
           child: Container(
             decoration: BoxDecoration(
-              color: context.appTheme.secondary,
+              color: context.appTheme.secondary.withAlpha(127),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(

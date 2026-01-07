@@ -1,3 +1,4 @@
+import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_cubit.dart';
 import 'package:booking/presentation/views/waiting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,8 +58,13 @@ const String detailRequestView = "DetailRequestView";
 const String waitingView = "WaitingView";
 
 final Map<String, WidgetBuilder> appRoutes = {
-  tenantView: (context) =>
-      BlocProvider(create: (context) => TenantViewCubit(), child: TenantView()),
+  tenantView: (context) => MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => TenantViewCubit()),
+      BlocProvider(create: (context) => GetAllNotificationsCubit()),
+    ],
+    child: TenantView(),
+  ),
   appartementDetailsViewForTenant: (context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
@@ -116,10 +122,15 @@ final Map<String, WidgetBuilder> appRoutes = {
   ),
   displayFilterView: (_) => DisplayFilterView(),
   dispalyResaultCategory: (_) => DispalyResaultCategory(),
-  detailRequestView: (_) => BlocProvider(
-    create: (context) => DetailsRequestViewCubit(),
-    child: DetailRequestView(),
-  ),
+  detailRequestView: (context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    return BlocProvider(
+      create: (context) => DetailsRequestViewCubit(),
+      child: DetailRequestView(book: args['book']),
+    );
+  },
   appartementDetailsViewForLandlord: (context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
@@ -129,5 +140,5 @@ final Map<String, WidgetBuilder> appRoutes = {
       child: AppartementDetailsViewForLandlord(apartment: args["apartment"]),
     );
   },
-  waitingView : (_) => WaitingView()
+  waitingView: (_) => WaitingView(),
 };

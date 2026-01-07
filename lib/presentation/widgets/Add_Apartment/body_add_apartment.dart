@@ -1,9 +1,7 @@
 import 'package:booking/data/sections/Add_Appartment/basic_datails.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/data/sections/Add_Appartment/section_select_photo.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddApartmentBody extends StatelessWidget {
   const AddApartmentBody({super.key});

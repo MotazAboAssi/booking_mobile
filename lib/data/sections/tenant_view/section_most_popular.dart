@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:booking/data/models/tenant_view/appartement_card.dart';
+import 'package:booking/data/models/tenant_view/apartement_card.dart';
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
@@ -59,7 +59,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                             itemCount: 2,
                             itemBuilder: (context, index) {
                               return AspectRatio(
-                                aspectRatio: 1,
+                                aspectRatio:1,
                                 child: AppartementCard(apartment: null),
                               );
                             },

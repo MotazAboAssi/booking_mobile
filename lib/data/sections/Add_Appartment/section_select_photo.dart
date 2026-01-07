@@ -21,58 +21,21 @@ class SectionSelectPhoto extends StatefulWidget {
 class _SectionSelectPhotoState extends State<SectionSelectPhoto>
     with AutomaticKeepAliveClientMixin {
   List<File> selectedImages = [];
+
   Future pickImages(BuildContext context) async {
     final picker = ImagePicker();
     final picked = await picker.pickMultiImage(imageQuality: 80);
-    // printBlueWithBold(' imaged: ${(apartment?.images?.length)}');
     if (picked.isEmpty) return;
-    // if (apartment?.images != null &&
-    //     selectedImages.length != apartment!.images!.length) {
-    //   setState(() {
-    //     selectedImages = picked
-    //         .map((image) => fetchImageFromDB(image.path))
-    //         .cast<File>()
-    //         .toList();
-    //   });
-    //   return;
-    // }
-
     setState(() {
-      printRed(picked[0].path);
       selectedImages.addAll(picked.map((e) => File(e.path)));
     });
   }
 
   List<int> deleteImage = [];
+  ApartmentType? apartmentCopy;
 
   @override
   Widget build(BuildContext context) {
-    ApartmentType? apartmentCopy;
-    printGreen('${deleteImage.isEmpty}');
-    if (ModalRoute.of(context)?.settings.arguments != null &&
-        BlocProvider.of<ApiApartmentCubit>(context).state.deleteImage.isEmpty) {
-      printWhite('copy');
-      ApartmentType apartment =
-          (ModalRoute.of(context)?.settings.arguments as Map)['apartment'];
-      apartmentCopy = ApartmentType.copyFrom(apartment);
-    }
-    if (ModalRoute.of(context)?.settings.arguments != null &&
-        BlocProvider.of<ApiApartmentCubit>(
-          context,
-        ).state.deleteImage.isNotEmpty) {
-      ApartmentType apart = BlocProvider.of<ApiApartmentCubit>(
-        context,
-      ).state.apartment;
-      List<ImageFromApartment>? imgs = [];
-      for (int i = 0; i < apart.images!.length; i++) {
-        if (!deleteImage.contains(apart.images![i].id)) {
-          imgs.add(apart.images![i]);
-        }
-      }
-      apartmentCopy?.images?.addAll(imgs);
-    }
-
-    printGreen(selectedImages.toString());
     final double radiusCircul = 2;
     return Column(
       children: [
@@ -83,113 +46,22 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
               try {
                 await pickImages(context);
 
-                // ApartmentType? apartmentCopy;
-                // if (ModalRoute.of(context)?.settings.arguments != null) {
-                //   printWhite('copy');
-                //   ApartmentType apartment =
-                //       (ModalRoute.of(context)?.settings.arguments
-                //           as Map)['apartment'];
-                //   apartmentCopy = ApartmentType.copyFrom(apartment);
-                // } else {
-                //   printWhite('orginal');
-                //   apartmentCopy =
-                //       (ModalRoute.of(context)?.settings.arguments
-                //           as Map)['apartment'];
-                // }
-
-                // ApartmentType apartment = BlocProvider.of<ApiApartmentCubit>(
-                //   context,
-                // ).state.apartment;
-                // apartment.images = [];
-                // if (apartment.images != null) {
-                //   for (int i = 0; i < apartment.images!.length; i++) {
-                //     apartment.images!.add(
-                //       ImageFromApartment(
-                //         id: apartment.images![i].id,
-                //         idApartment: apartment.images![i].idApartment,
-                //         image: apartment.images![i].image,
-                //       ),
-                //     );
-                //   }
-                // }
-
-                for (int i = 0; i < selectedImages.length; i++) {
-                  apartmentCopy?.images!.add(
-                    ImageFromApartment(
+                BlocProvider.of<ApiApartmentCubit>(
+                  context,
+                ).state.apartment.images!.addAll(
+                  selectedImages.map(
+                    (e) => ImageFromApartment(
                       id: -1,
                       idApartment: -1,
-                      image: selectedImages[i].path,
+                      image: e.path,
                     ),
-                  );
-                }
-                // ApartmentType apartment = BlocProvider.of<ApiApartmentCubit>(
-                //   context,
-                // ).state.apartment;
-                // apartment = ApartmentType.copyFrom(apartmentCopy!);
+                  ),
+                );
               } catch (e) {
                 printRed(e.toString());
               }
             },
-            child: DottedBorder(
-              options: RoundedRectDottedBorderOptions(
-                radius: Radius.circular(rem(1.4)),
-                color: context.appTheme.fourthly,
-                strokeWidth: 2,
-                dashPattern: [6, 4],
-                padding: EdgeInsets.all(3),
-              ),
-              child: AspectRatio(
-                aspectRatio: 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: context.appTheme.fourthly.withAlpha(128),
-                    borderRadius: BorderRadius.circular(rem(1.4)),
-                  ),
-                  child: Center(
-                    child: Column(
-                      spacing: 6,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: rem(radiusCircul - 0.5),
-                          backgroundColor: context.appTheme.fourthly,
-                          child: Icon(
-                            Icons.add_photo_alternate,
-                            color: context.appTheme.thirdly,
-                            size: rem(radiusCircul),
-                          ),
-                        ),
-                        Text(
-                          "Add Photos",
-                          style: TextStyle(
-                            fontSize: rem(1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Upload at more 5 photos of your apartment",
-                          style: TextStyle(
-                            fontSize: rem(0.9),
-                            color: context.appTheme.secondary,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(rem(0.5)),
-                          decoration: BoxDecoration(
-                            color: context.appTheme.fourthly,
-                            borderRadius: BorderRadius.circular(rem(0.4)),
-                          ),
-                          child: Text(
-                            "Uplaod",
-                            style: TextStyle(color: context.appTheme.thirdly),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            child: UIAddPictures(radiusCircul: radiusCircul),
           ),
         ),
         const SizedBox(height: 20),
@@ -207,6 +79,76 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class UIAddPictures extends StatelessWidget {
+  const UIAddPictures({super.key, required this.radiusCircul});
+
+  final double radiusCircul;
+
+  @override
+  Widget build(BuildContext context) {
+    return DottedBorder(
+      options: RoundedRectDottedBorderOptions(
+        radius: Radius.circular(rem(1.4)),
+        color: context.appTheme.fourthly,
+        strokeWidth: 2,
+        dashPattern: [6, 4],
+        padding: EdgeInsets.all(3),
+      ),
+      child: AspectRatio(
+        aspectRatio: 2,
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.appTheme.fourthly.withAlpha(128),
+            borderRadius: BorderRadius.circular(rem(1.4)),
+          ),
+          child: Center(
+            child: Column(
+              spacing: 6,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: rem(radiusCircul - 0.5),
+                  backgroundColor: context.appTheme.fourthly,
+                  child: Icon(
+                    Icons.add_photo_alternate,
+                    color: context.appTheme.thirdly,
+                    size: rem(radiusCircul),
+                  ),
+                ),
+                Text(
+                  "Add Photos",
+                  style: TextStyle(
+                    fontSize: rem(1),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Upload at more 5 photos of your apartment",
+                  style: TextStyle(
+                    fontSize: rem(0.9),
+                    color: context.appTheme.secondary,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(rem(0.5)),
+                  decoration: BoxDecoration(
+                    color: context.appTheme.fourthly,
+                    borderRadius: BorderRadius.circular(rem(0.4)),
+                  ),
+                  child: Text(
+                    "Uplaod",
+                    style: TextStyle(color: context.appTheme.thirdly),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class DisplayImages extends StatefulWidget {
@@ -228,60 +170,6 @@ class _DisplayImagesState extends State<DisplayImages> {
     return ListView(
       scrollDirection: Axis.horizontal,
       children: [
-        if (widget.apartmentCopy?.images != null)
-          ...widget.apartmentCopy!.images!.asMap().entries.map((entry) {
-            int index = entry.key;
-            // File file = entry.value;
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Stack(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: fetchImageFromDB(entry.value.image),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          final List<int> deleteImage =
-                              BlocProvider.of<ApiApartmentCubit>(
-                                context,
-                              ).state.deleteImage;
-
-                          final ImageFromApartment? image = widget
-                              .apartmentCopy
-                              ?.images
-                              ?.removeAt(index);
-
-                          deleteImage.add(image!.id);
-                          printGreen(deleteImage.toString());
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: context.appTheme.primarye,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.close,
-                          color: context.appTheme.thirdly,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
         ...widget.selectedImages.asMap().entries.map((entry) {
           int index = entry.key;
           File file = entry.value;
@@ -305,12 +193,9 @@ class _DisplayImagesState extends State<DisplayImages> {
                     onTap: () {
                       setState(() {
                         widget.selectedImages.removeAt(index);
-
-                        ApartmentType apartment =
-                            BlocProvider.of<ApiApartmentCubit>(
-                              context,
-                            ).state.apartment;
-                        apartment.images!.removeAt(index);
+                        BlocProvider.of<ApiApartmentCubit>(
+                          context,
+                        ).state.apartment.images?.removeAt(index);
                       });
                     },
                     child: Container(
@@ -334,3 +219,43 @@ class _DisplayImagesState extends State<DisplayImages> {
     );
   }
 }
+
+
+
+    // printGreen('${deleteImage.isEmpty}');
+    // if (ModalRoute.of(context)?.settings.arguments != null &&
+    //     BlocProvider.of<ApiApartmentCubit>(context).state.deleteImage.isEmpty) {
+    //   printWhite('copy');
+    //   ApartmentType apartment =
+    //       (ModalRoute.of(context)?.settings.arguments as Map)['apartment'];
+    //   apartmentCopy = ApartmentType.copyFrom(apartment);
+    // }
+    // if (ModalRoute.of(context)?.settings.arguments != null &&
+    //     BlocProvider.of<ApiApartmentCubit>(
+    //       context,
+    //     ).state.deleteImage.isNotEmpty) {
+    //   ApartmentType apart = BlocProvider.of<ApiApartmentCubit>(
+    //     context,
+    //   ).state.apartment;
+    //   List<ImageFromApartment>? imgs = [];
+    //   for (int i = 0; i < apart.images!.length; i++) {
+    //     if (!deleteImage.contains(apart.images![i].id)) {
+    //       imgs.add(apart.images![i]);
+    //     }
+    //   }
+    //   apartmentCopy?.images?.addAll(imgs);
+    // }
+
+
+
+
+                // for (int i = 0; i < selectedImages.length; i++) {
+                //   apartmentCopy?.images!.add(
+                //     ImageFromApartment(
+                //       id: -1,
+                //       idApartment: -1,
+                //       image: selectedImages[i].path,
+                //     ),
+                //   );
+                // }
+                

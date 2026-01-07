@@ -1,4 +1,4 @@
-import 'package:booking/data/models/tenant_view/appartement_card.dart';
+import 'package:booking/data/models/tenant_view/apartement_card.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';

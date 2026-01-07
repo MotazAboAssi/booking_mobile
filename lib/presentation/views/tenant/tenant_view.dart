@@ -1,11 +1,17 @@
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_cubit.dart';
+import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_states.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/widgets/button_refresh.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
 import 'package:booking/presentation/widgets/tenant_view/app_bar_tenant_view.dart';
 import 'package:booking/presentation/widgets/tenant_view/body_tenant_view.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class TenantView extends StatelessWidget {
   const TenantView({super.key});
@@ -22,18 +28,101 @@ class TenantView extends StatelessWidget {
       ),
 
       appBar: appBarTenantView(context),
-      
-      
-       endDrawer: Drawer(        
-        child: Column(
-          children:  [
-            DrawerHeader(
-              decoration: BoxDecoration(color: context.appTheme.fourthly),
-              child: Text('Menu'),
-            ),
-            ListTile(title: Text('Item 1')),
-            ListTile(title: Text('Item 2')),
-          ],
+
+      onEndDrawerChanged: (isOpened) async {
+        if (!isOpened) {
+          await HttpRequest().clearAllNotification();
+          printWhite('Done clear');
+        } else {
+          final cubit = BlocProvider.of<GetAllNotificationsCubit>(context);
+          await cubit.fetch();
+        }
+      },
+
+      endDrawer: Drawer(
+        backgroundColor: context.appTheme.thirdly,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Text(
+                'Notifications',
+                style: TextStyle(
+                  fontSize: rem(1.5),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Expanded(
+                child:
+                    BlocBuilder<
+                      GetAllNotificationsCubit,
+                      GetAllNotificationsStates
+                    >(
+                      builder: (context, state) {
+                        if (state is GetAllNotificationsSucceful) {
+                          return state.notifications.isEmpty
+                              ? Center(child: Text('No Notification 🔔 yet'))
+                              : ListView.builder(
+                                  itemCount: state.notifications.length,
+                                  padding: EdgeInsets.all(rem(1)),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                        String message =
+                                            state.notifications[index].message;
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: rem(1),
+                                          ),
+                                          child: ListTile(
+                                            tileColor:
+                                                context.appTheme.secondary,
+                                            iconColor: context.appTheme.thirdly,
+                                            textColor: context.appTheme.thirdly,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadiusGeometry.circular(
+                                                    rem(1),
+                                                  ),
+                                              side: BorderSide(
+                                                color: context.appTheme.thirdly,
+                                              ),
+                                            ),
+                                            leading: Icon(Icons.apartment),
+                                            title: Text(message),
+                                          ),
+                                        );
+                                      },
+                                );
+                        }
+                        return Skeletonizer(
+                          child: ListView.builder(
+                            padding: EdgeInsets.all(rem(1)),
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.only(bottom: rem(1)),
+                                child: ListTile(
+                                  tileColor: context.appTheme.secondary,
+                                  iconColor: context.appTheme.thirdly,
+                                  textColor: context.appTheme.thirdly,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadiusGeometry.circular(
+                                      rem(1),
+                                    ),
+                                    side: BorderSide(
+                                      color: context.appTheme.thirdly,
+                                    ),
+                                  ),
+                                  leading: Icon(Icons.apartment),
+                                  title: Text('data'),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
       body: BodyTenantView(),

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:booking/data/models/tenant_view/appartement_card.dart';
+import 'package:booking/data/models/tenant_view/apartement_card.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_states.dart';

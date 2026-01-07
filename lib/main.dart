@@ -6,6 +6,7 @@ import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_log
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:booking/helper/constant/routes.dart';
@@ -61,29 +62,19 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           navigatorObservers: [Observ()],
           routes: appRoutes,
-          initialRoute: waitingView,
+          // initialRoute: waitingView,
+          home: Scaffold(
+            body: FutureBuilder(
+              future: HttpRequest().displayAvailableDateForParticularApartment(
+                3,
+              ),
+              builder: (context, snapshot) {
+                return Text('data');
+              },
+            ),
+          ),
         );
       },
     );
   }
 }
-
-// BlocBuilder<ToggleColorCubit, ToggleColorStates>(
-//   builder: (context, state) {
-//     if (state is ToggleColorInitial) {
-//       return MaterialApp(
-//         theme: lightTheme,
-//         darkTheme: darkTheme,
-//         themeMode: state.mode,
-//         home: const HomePage(),
-//       );
-//     }
-
-//     // loading / splash
-//     return const MaterialApp(
-//       home: Scaffold(
-//         body: Center(child: CircularProgressIndicator()),
-//       ),
-//     );
-//   },
-// );

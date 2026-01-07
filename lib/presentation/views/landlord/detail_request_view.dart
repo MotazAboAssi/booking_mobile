@@ -11,6 +11,7 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_cubit.dart';
 import 'package:booking/presentation/cubit/details_request_view/details_request_view_states.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
@@ -25,7 +26,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DetailRequestView extends StatefulWidget {
-  const DetailRequestView({super.key});
+  const DetailRequestView({super.key, required this.book});
+  final BookingApartmentType book;
 
   @override
   State<DetailRequestView> createState() => _DetailRequestViewState();
@@ -36,7 +38,9 @@ class _DetailRequestViewState extends State<DetailRequestView> {
   void initState() {
     super.initState();
     final cubit = BlocProvider.of<DetailsRequestViewCubit>(context);
-    cubit.fetch(4, 2);
+    printRed('${widget.book.apartmentID}');
+    printRed('${widget.book.userID}');
+    cubit.fetch(widget.book.apartmentID, widget.book.userID);
   }
 
   @override
@@ -50,6 +54,7 @@ class _DetailRequestViewState extends State<DetailRequestView> {
               return BodyDetailRequestView(
                 apatrment: state.apartment,
                 user: state.user,
+                book: widget.book,
               );
             } else if (state is DetailsRequestViewFaild) {
               return Center(
@@ -72,16 +77,18 @@ class _DetailRequestViewState extends State<DetailRequestView> {
 }
 
 class BodyDetailRequestView extends StatelessWidget {
-  const BodyDetailRequestView({super.key, this.apatrment, this.user});
+  const BodyDetailRequestView({
+    super.key,
+    this.apatrment,
+    this.user,
+    this.book,
+  });
   final ApartmentType? apatrment;
   final UserRegisterType? user;
+  final BookingApartmentType? book;
 
   @override
   Widget build(BuildContext context) {
-    BookingApartmentType book = BookingApartmentType.empty();
-    if (ModalRoute.of(context)?.settings.arguments != null) {
-      book = (ModalRoute.of(context)?.settings.arguments as Map)['book'];
-    }
     return Stack(
       children: [
         CustomScrollView(
@@ -191,14 +198,14 @@ class BodyDetailRequestView extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Stay : ${book.startDate.toIso8601String().split('T')[0]} - ${book.endDate.toIso8601String().split('T')[0]}',
+                            'Stay : ${book?.startDate.toIso8601String().split('T')[0]} - ${book?.endDate.toIso8601String().split('T')[0]}',
                             style: TextStyle(
                               fontSize: rem(1),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'total Cost : ${book.totalCost} \$',
+                            'total Cost : ${book?.totalCost} \$',
                             style: TextStyle(
                               fontSize: rem(1),
                               fontWeight: FontWeight.bold,
@@ -213,7 +220,7 @@ class BodyDetailRequestView extends StatelessWidget {
             ),
           ],
         ),
-        book.status != BookingStatus.pending
+        book?.status != BookingStatus.pending
             ? Container()
             : BlocProvider(
                 create: (context) => ConfirmBookCubit(),
@@ -221,6 +228,7 @@ class BodyDetailRequestView extends StatelessWidget {
                   alignment: AlignmentGeometry.bottomCenter,
                   child: SectionAcceptAndRejectedRequest(
                     apartment: apatrment ?? ApartmentType.empty(),
+                    book: book!,
                   ),
                 ),
               ),
@@ -231,8 +239,12 @@ class BodyDetailRequestView extends StatelessWidget {
 
 class SectionAcceptAndRejectedRequest extends StatelessWidget {
   final ApartmentType apartment;
-
-  const SectionAcceptAndRejectedRequest({super.key, required this.apartment});
+  final BookingApartmentType book;
+  const SectionAcceptAndRejectedRequest({
+    super.key,
+    required this.apartment,
+    required this.book,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -269,11 +281,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                               final cubit = BlocProvider.of<ConfirmBookCubit>(
                                 context,
                               );
-                              final BookingApartmentType book =
-                                  await (ModalRoute.of(
-                                        context,
-                                      )?.settings.arguments
-                                      as Map)['book'];
+
                               await cubit.confirm(book.bookingID, true);
                               await Navigator.of(
                                 context,
@@ -311,11 +319,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                               final cubit = BlocProvider.of<ConfirmBookCubit>(
                                 context,
                               );
-                              final BookingApartmentType book =
-                                  await (ModalRoute.of(
-                                        context,
-                                      )?.settings.arguments
-                                      as Map)['book'];
+
                               await cubit.confirm(book.bookingID, false);
                               await Navigator.of(
                                 context,

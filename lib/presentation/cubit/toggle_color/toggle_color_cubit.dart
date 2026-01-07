@@ -14,17 +14,11 @@ class ToggleColorCubit extends Cubit<ToggleColorStates> {
 
       if (await storage.isKeyExistence('mode')) {
         final String? mode = await storage.readData('mode');
-        printWhite('$mode');
-
-        // if (mode != null && mode.isNotEmpty) {
-        await AuthStorage().writeData('mode', '$mode');
         emit(ToggleColorSuccessful(mode: appMode('$mode')));
         return;
-        // }
       }
 
-      // fallback ONLY if no saved value exists
-      await AuthStorage().writeData('mode', 'system');
+      await storage.writeData('mode', 'system');
       emit(ToggleColorSuccessful(mode: appMode('system')));
     } catch (e) {
       emit(ToggleColorFailed(mode: appMode('system'), message: e.toString()));
