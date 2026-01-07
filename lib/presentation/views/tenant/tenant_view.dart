@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/widgets/button_refresh.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
@@ -21,11 +22,13 @@ class TenantView extends StatelessWidget {
       ),
 
       appBar: appBarTenantView(context),
-       endDrawer: Drawer(
+      
+      
+       endDrawer: Drawer(        
         child: Column(
-          children: const [
+          children:  [
             DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: context.appTheme.fourthly),
               child: Text('Menu'),
             ),
             ListTile(title: Text('Item 1')),

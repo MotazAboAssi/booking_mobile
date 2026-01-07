@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
+import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
 import 'package:flutter/material.dart';
@@ -39,16 +40,22 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
+  void initState() {
+    super.initState();
+    final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
+    cubit.routeFromLogin(context, navigatorKey);
+  }
+
+  @override
   Widget build(BuildContext context) {
     log(ThemeMode.values.toString());
-    return BlocConsumer<ToggleColorCubit, ToggleColorStates>(
+    return BlocBuilder<ToggleColorCubit, ToggleColorStates>(
       builder: (context, state) {
         return MaterialApp(
           navigatorKey: navigatorKey,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode:
-           state is ToggleColorSuccessful
+          themeMode: state is ToggleColorSuccessful
               ? state.mode
               : ThemeMode.system,
           debugShowCheckedModeBanner: false,
@@ -56,15 +63,6 @@ class _MyAppState extends State<MyApp> {
           routes: appRoutes,
           initialRoute: waitingView,
         );
-      },
-      listener: (context, state) async {
-        if (state is ToggleColorSuccessful) {
-          final cubit =  BlocProvider.of<NavigateFromLoginCubit>(context);
-          await Future.delayed(const Duration(seconds: 3));
-          cubit.routeFromLogin(context, navigatorKey);
-
-          // navigatorKey.currentState!.pushReplacementNamed(loginView);
-        }
       },
     );
   }
