@@ -21,10 +21,12 @@ class CustomeBottomNavigationBarForLandlord extends StatelessWidget {
         // TabItem(icon: Icons.card_travel, title: 'Booking'),
         TabItem(icon: Icons.person, title: 'Account'),
       ],
-      onTap: (index) {
-        if (index == 0) navigateTo(context, landlordDashBoard);
-        // if (index == 1) navigateTo(context, addApartment);
-        if (index == 1) navigateTo(context, profileViewLandLord);
+      onTap: (index) async {
+        if (index == 0) {
+          await Navigator.pushReplacementNamed(context, landlordDashBoard);
+        } else if (index == 1) {
+          await Navigator.pushReplacementNamed(context, profileViewLandLord);
+        }
       },
       initialActiveIndex: index,
     );

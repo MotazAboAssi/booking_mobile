@@ -23,11 +23,16 @@ class CustomeBottomNavigationBarForTenant extends StatelessWidget {
         TabItem(icon: Icons.card_travel, title: 'Booking'),
         TabItem(icon: Icons.person, title: 'Account'),
       ],
-      onTap: (index) {
-        if (index == 0) navigateTo(context, tenantView);
-        if (index == 1) navigateTo(context, favoriteApartments);
-        if (index == 2) navigateTo(context, mybooking);
-        if (index == 3) navigateTo(context, profileViewTenant);
+      onTap: (index) async {
+        if (index == 0) {
+          await Navigator.pushReplacementNamed(context, tenantView);
+        } else if (index == 1) {
+          await Navigator.pushReplacementNamed(context, favoriteApartments);
+        } else if (index == 2) {
+          await Navigator.pushReplacementNamed(context, mybooking);
+        } else if (index == 3) {
+          await Navigator.pushReplacementNamed(context, profileViewTenant);
+        }
       },
       initialActiveIndex: index,
     );
