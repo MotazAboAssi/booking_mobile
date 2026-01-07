@@ -585,7 +585,7 @@ class HttpRequest {
       List<RangeUnavailableDate> dates = [];
       for (final e in data) {
         final ApartmentUnavailableDate t = ApartmentUnavailableDate.fromJson(e);
-        data.add(
+        dates.add(
           RangeUnavailableDate(
             startNonAvailableDate: t.startNonAvailableDate,
             endNonAvailableDate: t.endNonAvailableDate,
@@ -598,11 +598,11 @@ class HttpRequest {
     } on DioException catch (e) {
       printRed(e.response?.data.toString() ?? 'null');
       printRed(e.requestOptions.data.toString());
-      throw Exception(e);
+      throw Exception(e.toString());
       // printRed(e.);
     } catch (e) {
       printRed(e.toString());
-      throw Exception(e);
+      throw Exception(e.toString());
     }
   }
 
