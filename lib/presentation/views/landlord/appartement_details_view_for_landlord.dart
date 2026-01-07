@@ -283,7 +283,7 @@ class SectionEditOrRemoveAndPrice extends StatelessWidget {
             spacing: rem(1),
             children: [
               IconButton(
-                icon: Icon(Icons.edit, color: Colors.green),
+                icon: Icon(Icons.edit, color: context.appTheme.success),
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
@@ -293,7 +293,7 @@ class SectionEditOrRemoveAndPrice extends StatelessWidget {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
+                icon: Icon(Icons.delete, color: context.appTheme.error),
                 onPressed: () async {
                   await HttpRequest().deleteApartmentForLandlord(
                     apartment.idApartment,

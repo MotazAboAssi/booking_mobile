@@ -132,9 +132,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                 suffixIconColor: context.appTheme.fourthly,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: context.appTheme.fourthly,
-                  ),
+                  borderSide: BorderSide(color: context.appTheme.fourthly),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -248,7 +246,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                   if (state is FilterViewFaild) {
                     customSnakBar(
                       context: context,
-                      color: Colors.red,
+                      color: context.appTheme.error,
                       message: state.message!,
                     );
                   }

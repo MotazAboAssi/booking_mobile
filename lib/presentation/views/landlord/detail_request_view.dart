@@ -257,7 +257,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: context.appTheme.success,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusGeometry.circular(rem(1)),
                         ),
@@ -300,7 +300,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor: context.appTheme.error,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusGeometry.circular(rem(1)),
                         ),
@@ -348,14 +348,14 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
               return customSnakBar(
                 margin: EdgeInsets.only(bottom: rem(4)),
                 context: context,
-                color: Colors.red,
+                color: context.appTheme.error,
                 message: '${state.message}',
               );
             } else if (state is ConfirmBookSuccessful) {
               return customSnakBar(
                 margin: EdgeInsets.only(bottom: rem(4)),
                 context: context,
-                color: Colors.red,
+                color: context.appTheme.error,
                 message: '${state.message}',
               );
             }

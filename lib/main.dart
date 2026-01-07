@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:booking/helper/constant/app_theme.dart';
-import 'package:booking/helper/test/print.dart';
+import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,13 @@ typedef BoolFunString = bool Function(String);
 
 void main() async {
   runApp(
-    BlocProvider(create: (context) => ToggleColorCubit(), child: const MyApp()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ToggleColorCubit()..init()),
+        BlocProvider(create: (context) => NavigateFromLoginCubit()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -30,29 +36,56 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    final cubit = BlocProvider.of<ToggleColorCubit>(context);
-    cubit.fromScratch();
-  }
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     log(ThemeMode.values.toString());
-    return BlocBuilder<ToggleColorCubit, ToggleColorStates>(
+    return BlocConsumer<ToggleColorCubit, ToggleColorStates>(
       builder: (context, state) {
-        printWhite('${state.mode?.name}');
         return MaterialApp(
+          navigatorKey: navigatorKey,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: state.mode ?? ThemeMode.system,
+          themeMode:
+           state is ToggleColorSuccessful
+              ? state.mode
+              : ThemeMode.system,
           debugShowCheckedModeBanner: false,
           navigatorObservers: [Observ()],
           routes: appRoutes,
-          initialRoute: loginView,
+          initialRoute: waitingView,
         );
+      },
+      listener: (context, state) async {
+        if (state is ToggleColorSuccessful) {
+          final cubit =  BlocProvider.of<NavigateFromLoginCubit>(context);
+          await Future.delayed(const Duration(seconds: 3));
+          cubit.routeFromLogin(context, navigatorKey);
+
+          // navigatorKey.currentState!.pushReplacementNamed(loginView);
+        }
       },
     );
   }
 }
+
+// BlocBuilder<ToggleColorCubit, ToggleColorStates>(
+//   builder: (context, state) {
+//     if (state is ToggleColorInitial) {
+//       return MaterialApp(
+//         theme: lightTheme,
+//         darkTheme: darkTheme,
+//         themeMode: state.mode,
+//         home: const HomePage(),
+//       );
+//     }
+
+//     // loading / splash
+//     return const MaterialApp(
+//       home: Scaffold(
+//         body: Center(child: CircularProgressIndicator()),
+//       ),
+//     );
+//   },
+// );

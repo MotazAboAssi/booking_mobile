@@ -22,12 +22,12 @@ InputDecoration decorationInputFieldLogin({
     // Error border
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5),
-      borderSide: BorderSide(color: Colors.red, width: 1.5),
+      borderSide: BorderSide(color: context.appTheme.error, width: 1.5),
     ),
     // Focused error border
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5),
-      borderSide: BorderSide(color: Colors.red, width: 2),
+      borderSide: BorderSide(color: context.appTheme.error, width: 2),
     ),
 
     suffixIconColor: context.appTheme.fourthly,
@@ -37,7 +37,7 @@ InputDecoration decorationInputFieldLogin({
     hintStyle: TextStyle(color: context.appTheme.fourthly),
 
     // Error label
-    errorStyle: TextStyle(color: Colors.red),
+    errorStyle: TextStyle(color: context.appTheme.error),
 
     // props
     labelText: labelTeaxt,

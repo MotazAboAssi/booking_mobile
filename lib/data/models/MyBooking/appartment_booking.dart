@@ -79,9 +79,9 @@ class Appartmentbooking extends StatelessWidget {
                                       return context.appTheme.secondary;
                                     } else if (apartment?.status.name ==
                                         confirmedKey) {
-                                      return Colors.green;
+                                      return context.appTheme.success;
                                     } else {
-                                      return Colors.red;
+                                      return context.appTheme.error;
                                     }
                                   }),
                                   fontWeight: FontWeight.bold,
@@ -246,7 +246,7 @@ class ConfirmedButton extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red, // لون الخلفية
+              backgroundColor: context.appTheme.error, // لون الخلفية
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8), // بدون انحناءات
               ),
@@ -337,7 +337,7 @@ class PendingButton extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red, // لون الخلفية
+              backgroundColor: context.appTheme.error, // لون الخلفية
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8), // بدون انحناءات
               ),

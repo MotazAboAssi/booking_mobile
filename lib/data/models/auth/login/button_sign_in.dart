@@ -52,7 +52,7 @@ class ButtonSignIn extends StatelessWidget {
         disabledBackgroundColor: context.select<LoginCubit, Color?>((value) {
           final state = value.state;
           if (state is LoginSuccessfuly) {
-            return Colors.green;
+            return context.appTheme.success;
           } else if (state is UnderRegistrationLogIn) {
             return context.appTheme.secondary;
           } else {
@@ -101,14 +101,14 @@ class ButtonSignIn extends StatelessWidget {
           if ((state is LoginSuccessfuly)) {
             customSnakBar(
               context: context,
-              color: Colors.green,
+              color: context.appTheme.success,
               message:
                   "Welcome to back ${state.user.firstName} ${state.user.lastName}",
             );
           } else if (state is LoginFailed) {
             customSnakBar(
               context: context,
-              color: Colors.red,
+              color: context.appTheme.error,
               message: state.errorMessage,
             );
           }

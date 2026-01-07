@@ -9,17 +9,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
   NavigateFromLoginCubit() : super(NavigateInitial(role: ''));
-  void routeFromLogin(BuildContext context) async {
+  void routeFromLogin(
+    BuildContext context,
+    GlobalKey<NavigatorState> navigatorKey,
+  ) async {
     // await AuthStorage().deleteAllData();
     final String? role = await AuthStorage().readData("role");
     emit(NavigateLoading());
     if (role != null && role.isNotEmpty) {
       emit(NavigateTo(role: role));
       if (state.role == UserRole.tenant.name) {
-        navigateTo(context, tenantView);
-      } else {
-        navigateTo(context, landlordDashBoard);
+        await navigatorKey.currentState!.pushReplacementNamed(tenantView);
+      } else if (state.role == UserRole.landlord.name) {
+        await navigatorKey.currentState!.pushReplacementNamed(
+          landlordDashBoard,
+        );
       }
+    } else {
+      await navigatorKey.currentState!.pushReplacementNamed(loginView);
     }
     printRed("text");
   }

@@ -69,7 +69,7 @@ class ButtonSignUp extends StatelessWidget {
         disabledBackgroundColor: context.select<RegisterCubit, Color?>((value) {
           final state = value.state;
           if (state is RegisterSuccessfuly) {
-            return Colors.green;
+            return context.appTheme.success;
           } else if (state is UnderRegistrationInRegister) {
             return context.appTheme.secondary;
           } else {
@@ -115,7 +115,7 @@ class ButtonSignUp extends StatelessWidget {
           if ((state is RegisterSuccessfuly)) {
             customSnakBar(
               context: c,
-              color: Colors.green,
+              color: context.appTheme.success,
               message: "✅ DONE ,Requist to Join",
             );
             await Future.delayed(Duration(seconds: 3));
@@ -123,7 +123,7 @@ class ButtonSignUp extends StatelessWidget {
           } else if (state is RegisterFailed) {
             customSnakBar(
               context: c,
-              color: Colors.red,
+              color: context.appTheme.error,
               message: state.errorMessage,
             );
           }

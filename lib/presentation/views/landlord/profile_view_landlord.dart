@@ -1,6 +1,7 @@
 import 'package:booking/data/models/display_profile_user_view/card_info.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_group_of_input_field.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_image_picker_profile.dart';
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
@@ -9,19 +10,19 @@ import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
-import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
+import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_landlord.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ProfileViewTenant extends StatefulWidget {
-  const ProfileViewTenant({super.key});
+class ProfileViewLandlord extends StatefulWidget {
+  const ProfileViewLandlord({super.key});
   @override
-  State<ProfileViewTenant> createState() => _ProfileViewTenantState();
+  State<ProfileViewLandlord> createState() => _ProfileViewLandlordState();
 }
 
-class _ProfileViewTenantState extends State<ProfileViewTenant> {
+class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 3),
+      bottomNavigationBar: CustomeBottomNavigationBarForLandlord(index: 1),
       appBar: AppBar(
         leading: BlocBuilder<ToggleColorCubit, ToggleColorStates>(
           builder: (context, state) {
@@ -51,7 +52,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
         ),
         actions: [
           IconButton(
-            style: ElevatedButton.styleFrom(iconColor: Colors.red),
+            style: ElevatedButton.styleFrom(iconColor: context.appTheme.error),
             onPressed: () async {
               await showDialog(
                 context: context,

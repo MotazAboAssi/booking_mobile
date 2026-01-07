@@ -443,7 +443,7 @@ class RequestModel extends StatelessWidget {
                           ? null
                           : book!.status == BookingStatus.pending
                           ? Colors.blueGrey
-                          : Colors.green,
+                          : context.appTheme.success,
                     ),
                   ),
                 ],

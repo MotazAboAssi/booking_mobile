@@ -1,3 +1,4 @@
+import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _SectionShareDetailsState extends State<SectionShareDetails> {
                     if (currentLength == maxLength) {
                       return Text(
                         "$currentLength = $maxLength",
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: context.appTheme.error),
                       );
                     } else {
                       return Text("$currentLength < $maxLength");

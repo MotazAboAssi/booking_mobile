@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ToggleColorStates {
-  final ThemeMode? mode;
+abstract class ToggleColorStates {}
 
-  ToggleColorStates({required this.mode});
-}
-
-class ToggleColorLoading extends ToggleColorStates {
-  ToggleColorLoading({required super.mode});
-}
+class ToggleColorLoading extends ToggleColorStates {}
 
 class ToggleColorInitial extends ToggleColorStates {
-  ToggleColorInitial({required super.mode});
+  final ThemeMode mode;
+  ToggleColorInitial({required this.mode});
 }
 
 class ToggleColorSuccessful extends ToggleColorStates {
-  ToggleColorSuccessful({required super.mode});
+  final ThemeMode mode;
+  ToggleColorSuccessful({required this.mode});
 }
 
 class ToggleColorFailed extends ToggleColorStates {
-  final String? message;
-  ToggleColorFailed({required super.mode, this.message});
+  final ThemeMode mode;
+  final String message;
+
+  ToggleColorFailed({required this.mode, required this.message});
 }

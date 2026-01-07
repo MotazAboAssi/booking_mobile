@@ -78,7 +78,7 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
             customSnakBar(
               margin: EdgeInsets.only(bottom: rem(4)),
               context: context,
-              color: Colors.red,
+              color: context.appTheme.error,
               message: state.message!,
             );
           }

@@ -1,3 +1,4 @@
+import 'package:booking/presentation/views/waiting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,21 +18,21 @@ import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_log
 import 'package:booking/presentation/views/landlord/appartement_details_view_for_landlord.dart';
 import 'package:booking/presentation/views/landlord/detail_request_view.dart';
 import 'package:booking/presentation/views/landlord/dispaly_resault_category.dart';
-import 'package:booking/presentation/views/profile_view_landlord.dart';
-import 'package:booking/presentation/views/profile_view_tenant.dart';
+import 'package:booking/presentation/views/landlord/profile_view_landlord.dart';
+import 'package:booking/presentation/views/landlord/land_lord_add_apartment.dart';
+import 'package:booking/presentation/views/landlord/land_lord_dashboard.dart';
+import 'package:booking/presentation/views/tenant/profile_view_tenant.dart';
 import 'package:booking/presentation/views/tenant/appartement_details_view_for_tenant.dart';
 import 'package:booking/presentation/views/tenant/display_filter_view.dart';
 import 'package:booking/presentation/views/tenant/filter_view.dart';
 import 'package:booking/presentation/views/tenant/tenant_view.dart';
 import 'package:booking/presentation/views/tenant/booking_confirme.dart';
-import 'package:booking/presentation/views/auth/role_selection_view.dart';
 import 'package:booking/presentation/views/tenant/my_booking_view.dart';
-import 'package:booking/presentation/views/auth/login_view.dart';
-import 'package:booking/presentation/views/auth/register_view.dart';
 import 'package:booking/presentation/views/tenant/favorite_apartments_view.dart';
 import 'package:booking/presentation/views/tenant/rate_your_stay_view.dart';
-import 'package:booking/presentation/views/landlord/land_lord_add_apartment.dart';
-import 'package:booking/presentation/views/landlord/land_lord_dashboard.dart';
+import 'package:booking/presentation/views/auth/role_selection_view.dart';
+import 'package:booking/presentation/views/auth/login_view.dart';
+import 'package:booking/presentation/views/auth/register_view.dart';
 
 const String tenantView = "TenantView";
 const String appartementDetailsViewForTenant =
@@ -53,6 +54,7 @@ const String filterView = "FilterView";
 const String displayFilterView = "DisplayFilterView";
 const String dispalyResaultCategory = "DispalyResaultCategory";
 const String detailRequestView = "DetailRequestView";
+const String waitingView = "WaitingView";
 
 final Map<String, WidgetBuilder> appRoutes = {
   tenantView: (context) =>
@@ -127,4 +129,5 @@ final Map<String, WidgetBuilder> appRoutes = {
       child: AppartementDetailsViewForLandlord(apartment: args["apartment"]),
     );
   },
+  waitingView : (_) => WaitingView()
 };

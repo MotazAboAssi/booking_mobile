@@ -21,6 +21,18 @@ class TenantView extends StatelessWidget {
       ),
 
       appBar: appBarTenantView(context),
+       endDrawer: Drawer(
+        child: Column(
+          children: const [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text('Menu'),
+            ),
+            ListTile(title: Text('Item 1')),
+            ListTile(title: Text('Item 2')),
+          ],
+        ),
+      ),
       body: BodyTenantView(),
     );
   }

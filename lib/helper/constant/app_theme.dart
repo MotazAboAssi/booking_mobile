@@ -52,18 +52,35 @@ class AppTheme extends ThemeExtension<AppTheme> {
 }
 
 extension AppThemeGetter on BuildContext {
-  AppTheme get appTheme => Theme.of(this).extension<AppTheme>()!;
+  // Safe getter: Returns a default if the theme isn't found
+  AppTheme get appTheme {
+    final theme = Theme.of(this).extension<AppTheme>();
+    if (theme == null) {
+      // LOG THE ERROR instead of crashing
+      debugPrint("WARNING: AppTheme not found in this context!");
+      return const AppTheme(
+        primary: Color(0x00000000), // Near black
+        secondary: Color(0xFF757575), // Medium Grey
+        thirdly: Color(0xFFF5F5F5), // Off-white
+        fourthly: Color(0xFF2196F3), // Blue Accent
+        error: Color(0xFFD32F2F), // Material Red 700
+        success: Color(0xFF388E3C), // Material Green 700
+      );
+    }
+    return theme;
+  }
 }
+
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   extensions: const [
     AppTheme(
       primary: Color(0x00000000), // Near black
-      secondary: Color(0xFF757575),    // Medium Grey
-      thirdly: Color(0xFFF5F5F5),     // Off-white
-      fourthly: Color(0xFF2196F3),   // Blue Accent
-      error: Color(0xFFD32F2F),       // Material Red 700
-      success: Color(0xFF388E3C),     // Material Green 700
+      secondary: Color(0xFF757575), // Medium Grey
+      thirdly: Color(0xFFF5F5F5), // Off-white
+      fourthly: Color(0xFF2196F3), // Blue Accent
+      error: Color(0xFFD32F2F), // Material Red 700
+      success: Color(0xFF388E3C), // Material Green 700
     ),
   ],
 );
@@ -73,12 +90,11 @@ ThemeData darkTheme = ThemeData(
   extensions: const [
     AppTheme(
       primary: Colors.white,
-      secondary: Color(0xFFBDBDBD),    // Light Grey
-      thirdly: Color(0xFF121212),     // Dark Surface
-      fourthly: Color(0xFF90CAF9),   // Light Blue Accent
-      error: Color(0xFFEF9A9A),       // Material Red 200
-      success: Color(0xFFA5D6A7),     // Material Green 200
+      secondary: Color(0xFFBDBDBD), // Light Grey
+      thirdly: Color(0xFF121212), // Dark Surface
+      fourthly: Color(0xFF90CAF9), // Light Blue Accent
+      error: Color(0xFFEF9A9A), // Material Red 200
+      success: Color(0xFFA5D6A7), // Material Green 200
     ),
   ],
 );
-

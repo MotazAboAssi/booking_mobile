@@ -359,7 +359,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: context.appTheme.error,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(rem(0.5)),
                       ),
@@ -462,7 +462,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                             if (state is ApiApartmentSuccefulAdd) {
                               customSnakBar(
                                 context: context,
-                                color: Colors.green,
+                                color: context.appTheme.success,
                                 message: 'Done, add new apartment',
                               );
                               Future.delayed(Duration(milliseconds: 500));
@@ -473,7 +473,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                             } else if (state is ApiApartmentFaild) {
                               customSnakBar(
                                 context: context,
-                                color: Colors.red,
+                                color: context.appTheme.error,
                                 message: '${state.message}',
                               );
                             }

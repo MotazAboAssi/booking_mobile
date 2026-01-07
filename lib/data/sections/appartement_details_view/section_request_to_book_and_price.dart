@@ -63,7 +63,7 @@ class RequestBookButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             disabledBackgroundColor: context.select<Null, Color?>((_) {
               if (state is BookingApartmentSuccessful) {
-                return Colors.green;
+                return context.appTheme.success;
               } else if (state is BookingApartmentLoading) {
                 return context.appTheme.secondary;
               } else {
@@ -134,7 +134,7 @@ class RequestBookButton extends StatelessWidget {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
             context: context,
-            color: Colors.green,
+            color: context.appTheme.success,
             message: state.response.toString(),
           );
           await Future.delayed(const Duration(seconds: 1));
@@ -145,7 +145,7 @@ class RequestBookButton extends StatelessWidget {
           customSnakBar(
             margin: EdgeInsets.only(bottom: rem(4)),
             context: context,
-            color: Colors.red,
+            color: context.appTheme.error,
             message: state.errorMessage,
           );
         }
