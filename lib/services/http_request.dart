@@ -6,8 +6,11 @@ import 'package:booking/helper/methods/create_form_data.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/services/auth_storage.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:booking/types/apartment_unavailable_date.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:booking/types/filter_type.dart';
+import 'package:booking/types/notificate_type.dart';
+import 'package:booking/types/range_unavailable_date.dart';
 import 'package:booking/types/rate_type.dart';
 import 'package:booking/types/user_register_type.dart';
 import 'package:dio/dio.dart';
@@ -570,16 +573,36 @@ class HttpRequest {
     }
   }
 
-  Future<void> displayAvailableDateForParticularApartment(int id) async {
+  Future<List<RangeUnavailableDate>>
+  displayUnavailableDateForParticularApartment(int id) async {
     final String? token = await AuthStorage().readData("token");
     try {
       Response response = await dio.get(
         "/apartments/$id",
         options: Options(headers: authrizationHeaders(token!)),
       );
+      List<dynamic> data = response.data;
+      List<RangeUnavailableDate> dates = [];
+      for (final e in data) {
+        final ApartmentUnavailableDate t = ApartmentUnavailableDate.fromJson(e);
+        data.add(
+          RangeUnavailableDate(
+            startNonAvailableDate: t.startNonAvailableDate,
+            endNonAvailableDate: t.endNonAvailableDate,
+          ),
+        );
+      }
+
       printGreen(response.data.toString());
+      return dates;
+    } on DioException catch (e) {
+      printRed(e.response?.data.toString() ?? 'null');
+      printRed(e.requestOptions.data.toString());
+      throw Exception(e);
+      // printRed(e.);
     } catch (e) {
       printRed(e.toString());
+      throw Exception(e);
     }
   }
 
@@ -803,16 +826,22 @@ class HttpRequest {
     }
   }
 
-  Future<void> getAllNotification() async {
+  Future<List<NotificateType>> getAllNotification() async {
     try {
       final String? token = await AuthStorage().readData('token');
       Response response = await dio.get(
         '/apartments/notifications',
         options: Options(headers: authrizationHeaders(token ?? '')),
       );
-      printGreen(response.data.toString());
+      List<dynamic> data = response.data['notifications'];
+      List<NotificateType> notifications = [];
+      for (final e in data) {
+        notifications.add(NotificateType.fromJson(e));
+      }
+      return notifications;
     } catch (e) {
       printRed(e.toString());
+      throw Exception(e.toString());
     }
   }
 
