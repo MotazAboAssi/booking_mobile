@@ -328,7 +328,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                                             : FontWeight.normal,
                                         color: isSelected
                                             ? context.appTheme.fourthly
-                                            : context.appTheme.primary,
+                                            : context.appTheme.primarye,
                                       ),
                                     ),
                                   ),

@@ -16,7 +16,7 @@ class SectionImagePickerProfile extends StatelessWidget {
     const double radiusProfile = 4;
     return CircleAvatar(
       radius: rem(radiusProfile),
-      backgroundColor: context.appTheme.primary,
+      backgroundColor: context.appTheme.primarye,
       child: CircleAvatar(
         radius: rem(radiusProfile - 0.1),
         backgroundImage: image == null

@@ -34,13 +34,14 @@ class InputFieldForm extends StatelessWidget {
       name: name,
       obscureText: suffixIcon != null && obscureText == true,
       obscuringCharacter: "*",
-      style: TextStyle(color: context.appTheme.primary), // text color
-      cursorColor: context.appTheme.primary, // cursor color
+      style: TextStyle(color: context.appTheme.primarye), // text color
+      cursorColor: context.appTheme.primarye, // cursor color
       keyboardType: textInputType ?? TextInputType.emailAddress,
       decoration: decorationInputFieldLogin(
         hintText: hintText,
         labelTeaxt: labelTeaxt,
-        suffixIcon: suffixIcon, context: context,
+        suffixIcon: suffixIcon,
+        context: context,
       ),
       validator: FormBuilderValidators.compose(validators),
     );

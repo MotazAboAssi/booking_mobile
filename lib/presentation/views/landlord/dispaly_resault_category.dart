@@ -60,7 +60,7 @@ class DispalyResaultCategory extends StatelessWidget {
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: context.appTheme.primary.withAlpha(
+                                    color: context.appTheme.primarye.withAlpha(
                                       127,
                                     ),
                                     borderRadius: BorderRadius.circular(rem(1)),

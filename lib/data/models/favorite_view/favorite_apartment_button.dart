@@ -20,7 +20,7 @@ class FavoriteApartmentButton extends StatelessWidget {
       builder: (BuildContext context, state) {
         if (state is ToggleFavoriteApartmentButtonLoading) {
           return CircleAvatar(
-            backgroundColor: context.appTheme.primary.withAlpha(125),
+            backgroundColor: context.appTheme.primarye.withAlpha(125),
             child: Center(
               child: SizedBox(
                 width: rem(1),
@@ -41,7 +41,7 @@ class FavoriteApartmentButton extends StatelessWidget {
             apartment!.isFavorite = !(apartment!.isFavorite ?? false);
           },
           child: CircleAvatar(
-            backgroundColor: context.appTheme.primary.withAlpha(125),
+            backgroundColor: context.appTheme.primarye.withAlpha(125),
             child: Center(
               child: Icon(
                 Icons.favorite,

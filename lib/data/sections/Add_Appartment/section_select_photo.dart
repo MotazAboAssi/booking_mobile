@@ -267,7 +267,7 @@ class _DisplayImagesState extends State<DisplayImages> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: context.appTheme.primary,
+                          color: context.appTheme.primarye,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -315,7 +315,7 @@ class _DisplayImagesState extends State<DisplayImages> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: context.appTheme.primary,
+                        color: context.appTheme.primarye,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(

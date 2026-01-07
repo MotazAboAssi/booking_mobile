@@ -12,7 +12,7 @@ class CardInfo extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(rem(1.4)),
-        border: BoxBorder.all(color: context.appTheme.primary),
+        border: BoxBorder.all(color: context.appTheme.primarye),
       ),
       width: MediaQuery.of(context).size.width * 0.8,
       // height: rem(2),

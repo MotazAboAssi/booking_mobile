@@ -28,9 +28,9 @@ class WaitingView extends StatelessWidget {
                 width: rem(2),
                 height: rem(2),
                 child: CircularProgressIndicator(
-                  
-                  color: context.appTheme.primary,),
-              )
+                  color: context.appTheme.primarye,
+                ),
+              ),
             ],
           ),
         ),

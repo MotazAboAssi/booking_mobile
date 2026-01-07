@@ -204,7 +204,7 @@ class ConfirmedPastButton extends StatelessWidget {
             },
             child: Text(
               'Rate',
-              style: TextStyle(color: context.appTheme.primary),
+              style: TextStyle(color: context.appTheme.primarye),
             ),
           ),
         ),

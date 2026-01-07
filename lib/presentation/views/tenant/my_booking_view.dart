@@ -43,9 +43,9 @@ class _LandLordDashboardState extends State<MyBookingView> {
               style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
-            bottom:  TabBar(
+            bottom: TabBar(
               labelStyle: TextStyle(fontSize: 16),
-              labelColor: context.appTheme.primary,
+              labelColor: context.appTheme.primarye,
               unselectedLabelColor: context.appTheme.secondary,
               indicatorColor: context.appTheme.fourthly,
               tabs: [

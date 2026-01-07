@@ -19,11 +19,15 @@ class AmentionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: context.appTheme.primary),
+        border: Border.all(color: context.appTheme.primarye),
         borderRadius: BorderRadiusGeometry.circular(10),
       ),
       child: ListTile(
-        leading: Icon(icon, size: rem(iconsSize), color: context.appTheme.fourthly),
+        leading: Icon(
+          icon,
+          size: rem(iconsSize),
+          color: context.appTheme.fourthly,
+        ),
         trailing: LayoutBuilder(
           builder: (context, constraints) {
             return SizedBox(

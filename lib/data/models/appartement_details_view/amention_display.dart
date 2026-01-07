@@ -27,7 +27,7 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
           );
         },
         child: CircleAvatar(
-          foregroundColor: context.appTheme.primary,
+          foregroundColor: context.appTheme.primarye,
           child: Text("+${amention.length - 3}"),
         ),
       ),

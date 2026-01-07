@@ -386,7 +386,7 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: context.appTheme.primary.withAlpha(127),
+            backgroundColor: context.appTheme.primarye.withAlpha(127),
             child: IconButton(
               onPressed: () {
                 backTo(context);

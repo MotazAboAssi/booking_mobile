@@ -64,7 +64,7 @@ class _AppartmentStateDashboardState extends State<AppartmentStateDashboard> {
             style: TextStyle(
               color: isSelected
                   ? context.appTheme.thirdly
-                  : context.appTheme.primary,
+                  : context.appTheme.primarye,
               fontWeight: FontWeight.bold,
             ),
           ),
