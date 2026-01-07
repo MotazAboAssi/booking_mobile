@@ -803,6 +803,36 @@ class HttpRequest {
     }
   }
 
+  Future<void> getAllNotification() async {
+    try {
+      final String? token = await AuthStorage().readData('token');
+      Response response = await dio.get(
+        '/apartments/notifications',
+        options: Options(headers: authrizationHeaders(token ?? '')),
+      );
+      printGreen(response.data.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
+  Future<void> clearAllNotification() async {
+    try {
+      final String? token = await AuthStorage().readData('token');
+      Response response = await dio.delete(
+        '/apartments/clear/notifications',
+        options: Options(headers: authrizationHeaders(token ?? '')),
+      );
+      // if (response.data != null && response.data['message'] != null) {
+      //   throw Exception(response.data['message'].toString());
+      // }
+      // No notifications to delete.
+      printGreen(response.data.toString());
+    } catch (e) {
+      printRed(e.toString());
+    }
+  }
+
   // ************** for tenant **************
 
   // ************** for any user **************
