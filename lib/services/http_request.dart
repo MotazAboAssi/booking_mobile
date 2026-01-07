@@ -667,7 +667,6 @@ class HttpRequest {
         "/apartments/booking",
         options: Options(headers: authrizationHeaders(token!)),
       );
-      printGreen(response.data[0].toString());
       List<dynamic> data = response.data;
       List<BookingApartmentType> bookings = [];
       for (int i = 0; i < data.length; i++) {

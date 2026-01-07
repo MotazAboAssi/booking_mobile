@@ -442,7 +442,7 @@ class RequestModel extends StatelessWidget {
                       color: book?.status == null
                           ? null
                           : book!.status == BookingStatus.pending
-                          ? Colors.blueGrey
+                          ? context.appTheme.fourthly
                           : context.appTheme.success,
                     ),
                   ),

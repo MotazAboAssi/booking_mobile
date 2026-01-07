@@ -1,5 +1,5 @@
 class NavigateFromLoginStates {
-  final String role;
+  final String? role;
 
   NavigateFromLoginStates({required this.role});
 }

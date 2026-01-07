@@ -69,7 +69,7 @@ class ButtonSignIn extends StatelessWidget {
           borderRadius: BorderRadiusGeometry.circular(5),
         ),
 
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: context.appTheme.fourthly,
       ),
 
       child: BlocConsumer<LoginCubit, LoginStateCubit>(

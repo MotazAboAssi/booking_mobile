@@ -18,6 +18,7 @@ class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
     emit(NavigateLoading());
     if (role != null && role.isNotEmpty) {
       emit(NavigateTo(role: role));
+      await Future.delayed(const Duration(seconds: 3));
       if (state.role == UserRole.tenant.name) {
         await navigatorKey.currentState!.pushReplacementNamed(tenantView);
       } else if (state.role == UserRole.landlord.name) {
@@ -26,6 +27,7 @@ class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
         );
       }
     } else {
+      emit(NavigateTo(role: null));
       await navigatorKey.currentState!.pushReplacementNamed(loginView);
     }
     printRed("text");

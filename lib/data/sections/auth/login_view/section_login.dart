@@ -27,7 +27,7 @@ class SectionLogin extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: rem(1)),
             child: Text(
               "Log in to your phone number to continue.",
-              style: TextStyle(fontSize: rem(1), color: Colors.blueGrey),
+              style: TextStyle(fontSize: rem(1), color: context.appTheme.secondary),
             ),
           ),
           LoginForm(),

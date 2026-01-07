@@ -9,7 +9,7 @@ AppBar appBarTenantView(BuildContext context) {
     ),
     title: Text("title app"),
     actionsPadding: const EdgeInsets.only(right: 10),
-    
+
     actions: [
       Stack(
         children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void navigateTo(BuildContext context, String routeName, {Object? arguments}) {
+Future<void> navigateTo(BuildContext context, String routeName, {Object? arguments}) async {
   bool routeExists = false;
 
   Navigator.of(context).popUntil((route) {
@@ -13,6 +13,6 @@ void navigateTo(BuildContext context, String routeName, {Object? arguments}) {
   });
 
   if (!routeExists) {
-    Navigator.of(context).pushNamed(routeName, arguments: arguments);
+   await Navigator.of(context).pushNamed(routeName, arguments: arguments);
   }
 }
