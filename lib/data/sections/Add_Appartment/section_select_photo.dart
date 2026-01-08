@@ -3,6 +3,7 @@ import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_states.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/image_from_apartment.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,10 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context)?.settings.arguments != null) {
+      apartmentCopy =
+          (ModalRoute.of(context)!.settings.arguments as Map)['apartment'];
+    }
     final double radiusCircul = 2;
     return Column(
       children: [
@@ -73,7 +78,6 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
           ),
         ),
       ],
-      
     );
   }
 
@@ -168,9 +172,66 @@ class DisplayImages extends StatefulWidget {
 class _DisplayImagesState extends State<DisplayImages> {
   @override
   Widget build(BuildContext context) {
+    printGreen(
+      BlocProvider.of<ApiApartmentCubit>(context).state.deleteImage.toString(),
+    );
     return ListView(
       scrollDirection: Axis.horizontal,
       children: [
+        if (widget.apartmentCopy?.images != null &&
+            widget.apartmentCopy!.images!.isNotEmpty)
+          ...widget.apartmentCopy!.images!.asMap().entries.map((entry) {
+            int index = entry.key;
+            String url = entry.value.image;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: fetchImageFromDB(url)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          final ImageFromApartment image = widget
+                              .apartmentCopy!
+                              .images!
+                              .removeAt(index);
+                          BlocProvider.of<ApiApartmentCubit>(
+                            context,
+                          ).state.deleteImage.add(image.id);
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: context.appTheme.primarye,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.close,
+                          color: context.appTheme.thirdly,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+
         ...widget.selectedImages.asMap().entries.map((entry) {
           int index = entry.key;
           File file = entry.value;
