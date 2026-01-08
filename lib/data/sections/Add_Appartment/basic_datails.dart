@@ -500,7 +500,7 @@ class InputDescription extends StatelessWidget {
       validator: (v) {
         if (v == null || v.isEmpty) {
           return "Description is required";
-        } else if (v.length < 7) {
+        } else if (v.length < 10) {
           return 'Description is bigger than 7 character';
         } else {
           return null;
@@ -518,9 +518,9 @@ class InputDescription extends StatelessWidget {
             required maxLength,
           }) {
             if (isFocused) {
-              if (currentLength < 7) {
+              if (currentLength < 10) {
                 return Text(
-                  '$currentLength > 7',
+                  '$currentLength > 10',
                   style: TextStyle(color: context.appTheme.error),
                 );
               } else if (currentLength == maxLength) {

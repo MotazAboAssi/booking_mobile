@@ -1,12 +1,13 @@
 class BookingApartmentStates {}
 
 class BookingApartmentInitial extends BookingApartmentStates {}
+
 class BookingApartmentLoading extends BookingApartmentStates {}
 
 class BookingApartmentSuccessful extends BookingApartmentStates {
-  final String response;
+  String? response;
 
-  BookingApartmentSuccessful({required this.response});
+  BookingApartmentSuccessful({this.response});
 }
 
 class BookingApartmentFaild extends BookingApartmentStates {

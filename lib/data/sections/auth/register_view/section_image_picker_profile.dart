@@ -40,7 +40,7 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
             Align(
               child: CircleAvatar(
                 radius: rem(radiusProfile),
-                // backgroundColor: context.appTheme.error,
+                backgroundColor: context.appTheme.primarye,
                 child: CircleAvatar(
                   radius: rem(radiusProfile - 0.1),
                   backgroundImage: image == null

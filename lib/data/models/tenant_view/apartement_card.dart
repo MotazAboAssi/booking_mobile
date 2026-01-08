@@ -74,8 +74,9 @@ class AppartementCard extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                              spacing: 5,
+                              // spacing: 5,
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

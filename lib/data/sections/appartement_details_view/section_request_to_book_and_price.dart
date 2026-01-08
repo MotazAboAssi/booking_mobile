@@ -128,9 +128,7 @@ class RequestBookButton extends StatelessWidget {
                 }
               };
             }
-            return () {
-              printRed("object");
-            };
+            return null;
           }),
           child: context.select<Null, Widget?>((_) {
             if (state is BookingApartmentLoading) {

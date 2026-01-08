@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/methods/create_form_data.dart';
@@ -387,6 +386,12 @@ class HttpRequest {
   }
 
   Future<void> addApartmentForLandlord(ApartmentType apartment) async {
+    if (apartment.images != null && apartment.images!.isEmpty) {
+      throw Exception('The images field is required.');
+    }
+    if (apartment.images != null && apartment.images!.length >= 5) {
+      throw Exception('number of image must be smaller or equal 5');
+    }
     final String? token = await AuthStorage().readData("token");
     printRed('${apartment.images?.length}');
     final formData = await createFormData(apartment.images!, {
@@ -404,9 +409,13 @@ class HttpRequest {
         options: Options(headers: authrizationHeaders(token ?? "")),
         data: formData,
       );
+
       printGreen(response.data.toString());
     } on DioException catch (e) {
       printRed(e.response!.data.toString());
+      if (e.response?.data['message'] != null) {
+        throw Exception(e.response!.data['message']);
+      }
       throw Exception(e);
     } catch (e) {
       printRed(e.toString());
@@ -668,9 +677,18 @@ class HttpRequest {
           "end_date": endDate.toIso8601String().split("T")[0],
         },
       );
+
       printGreen(response.data.toString());
+      if (response.data['message'] != null) {
+        if (response.data['booking'] == null) {
+          throw Exception(response.data['message']);
+        }
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
     } catch (e) {
       printRed(e.toString());
+      throw Exception(e);
     }
   }
 
@@ -891,8 +909,6 @@ class HttpRequest {
       throw Exception(e.toString());
     }
   }
-
-  Future<Object?>? displayAvailableDateForParticularApartment(int i) async {}
 
   // ************** for any user **************
 }

@@ -5,6 +5,8 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
+import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_states.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
@@ -30,6 +32,10 @@ class Appartmentbooking extends StatelessWidget {
         );
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: context.appTheme.primarye),
+          borderRadius: BorderRadiusGeometry.circular(rem(1))
+        ),
         color: context.appTheme.thirdly,
         elevation: 0,
 
@@ -51,8 +57,8 @@ class Appartmentbooking extends StatelessWidget {
                           ),
                         ),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(rem(1)),
+                          topRight: Radius.circular(rem(1)),
                         ),
                       ),
                     ),
@@ -63,12 +69,12 @@ class Appartmentbooking extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     spacing: rem(0.2),
-
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
-                        spacing: rem(0.35),
-
+                        // spacing: rem(0.35),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -134,7 +140,10 @@ class Appartmentbooking extends StatelessWidget {
                       ),
 
                       apartment!.status.name == BookingStatus.pending.name
-                          ? PendingButton(apartment: apartment)
+                          ? BlocProvider(
+                              create: (context) => BookingApartmentCubit(),
+                              child: PendingButton(apartment: apartment),
+                            )
                           : apartment!.status.name ==
                                     BookingStatus.confirmed.name &&
                                 DateTime.now().isAfter(apartment!.endDate)
@@ -282,75 +291,105 @@ class PendingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<RangeUnavailableDate> disabledRanges = [
-      RangeUnavailableDate(
-        startNonAvailableDate: DateTime(2026, 1, 10),
-        endNonAvailableDate: DateTime(2026, 1, 15),
-      ),
-      RangeUnavailableDate(
-        startNonAvailableDate: DateTime(2026, 2, 1),
-        endNonAvailableDate: DateTime(2026, 2, 3),
-      ),
-    ];
-    
+  
+
     return Row(
       spacing: rem(0.5),
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: context.appTheme.fourthly, // لون الخلفية
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8), // بدون انحناءات
-              ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ), // حجم اللزر
-            ),
-            onPressed: () async {
-              final DateTimeRange<DateTime>? picked = await showDateRangePicker(
-                context: context,
-                initialEntryMode: DatePickerEntryMode.calendarOnly,
-                firstDate: DateTime.now().add(const Duration(days: 1)),
-                lastDate: DateTime.now()
-                    .add(const Duration(days: 1))
-                    .add(const Duration(days: 2000)),
-                selectableDayPredicate:
-                    (day, selectedStartDay, selectedEndDay) {
-                      if (day.isBefore(DateTime.now())) return false;
-                      return !isDayInDisabledRange(day, disabledRanges);
-                    },
-              );
-              if (picked != null) {
-                final hasConflict = disabledRanges.any((range) {
-                  return picked.start.isBefore(range.endNonAvailableDate) &&
-                      picked.end.isAfter(range.startNonAvailableDate);
-                });
-
-                if (hasConflict) {
-                  customSnakBar(
-                    context: context,
-                    color: context.appTheme.error,
-                    message: "Selected dates include unavailable days",
-                  );
-                  return;
-                }
-
-                await HttpRequest().updateBookingParticularApartmentByID(
-                  apartment!.bookingID,
-                  picked.start,
-                  picked.end,
+          child: BlocConsumer<BookingApartmentCubit, BookingApartmentStates>(
+            listener: (context, state) async {
+              if ((state is BookingApartmentSuccessful)) {
+                customSnakBar(
+                  margin: EdgeInsets.only(bottom: rem(4)),
+                  context: context,
+                  color: context.appTheme.success,
+                  message: state.response.toString(),
                 );
+
                 final cubit = context.read<MyBookingViewCubit>();
                 cubit.getAllApartmentsBooking();
+                
+              } else if (state is BookingApartmentFaild) {
+                customSnakBar(
+                  margin: EdgeInsets.only(bottom: rem(4)),
+                  context: context,
+                  color: context.appTheme.error,
+                  message: state.errorMessage,
+                );
               }
             },
-            child: Text(
-              'Edit',
-              style: TextStyle(color: context.appTheme.thirdly),
-            ),
+            builder: (context, state) {
+              return ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: context.appTheme.fourthly, // لون الخلفية
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8), // بدون انحناءات
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ), // حجم اللزر
+                ),
+                onPressed: context.select<Null, void Function()?>((_) {
+                  if (state is BookingApartmentInitial ||
+                      state is BookingApartmentFaild) {
+                    return () async {
+                      final List<RangeUnavailableDate> dates =
+                          await HttpRequest()
+                              .displayUnavailableDateForParticularApartment(
+                                apartment!.apartmentID,
+                              );
+
+                      final DateTimeRange<DateTime>?
+                      picked = await showDateRangePicker(
+                        context: context,
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
+                        firstDate: DateTime.now().add(const Duration(days: 1)),
+                        lastDate: DateTime.now()
+                            .add(const Duration(days: 1))
+                            .add(const Duration(days: 2000)),
+                        selectableDayPredicate:
+                            (day, selectedStartDay, selectedEndDay) {
+                              if (day.isBefore(DateTime.now())) return false;
+                              return !isDayInDisabledRange(day, dates);
+                            },
+                      );
+                      if (picked != null) {
+                        final hasConflict = dates.any((range) {
+                          return picked.start.isBefore(
+                                range.endNonAvailableDate,
+                              ) &&
+                              picked.end.isAfter(range.startNonAvailableDate);
+                        });
+
+                        if (hasConflict) {
+                          customSnakBar(
+                            context: context,
+                            color: context.appTheme.error,
+                            message: "Selected dates include unavailable days",
+                          );
+                          return;
+                        }
+                        final cubit = context.read<BookingApartmentCubit>();
+                        cubit.update(
+                          apartment!.apartmentID,
+                          picked.start,
+                          picked.end,
+                        );
+                      }
+                    };
+                  }
+                  return null;
+                }),
+
+                child: Text(
+                  'Edit',
+                  style: TextStyle(color: context.appTheme.thirdly),
+                ),
+              );
+            },
           ),
         ),
 

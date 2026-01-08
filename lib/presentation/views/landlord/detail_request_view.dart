@@ -253,7 +253,6 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
         return BlocConsumer<ConfirmBookCubit, ConfirmBookStates>(
           builder: (context, state) {
             final bool isLoading = state is ConfirmBookLoading;
-            bool isAccept = false;
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -277,7 +276,6 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                       onPressed: isLoading
                           ? null
                           : () async {
-                              isAccept = true;
                               final cubit = BlocProvider.of<ConfirmBookCubit>(
                                 context,
                               );
@@ -290,7 +288,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                                 (Route<dynamic> route) => false,
                               );
                             },
-                      child: (isLoading && isAccept)
+                      child: isLoading
                           ? SizedBox(
                               width: rem(1),
                               height: rem(1),
@@ -328,7 +326,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                                 (Route<dynamic> route) => false,
                               );
                             },
-                      child: (isLoading && !isAccept)
+                      child: isLoading
                           ? SizedBox(
                               width: rem(1),
                               height: rem(1),

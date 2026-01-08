@@ -9,14 +9,20 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
-class SectionGroupOfInputField extends StatelessWidget {
+class SectionGroupOfInputField extends StatefulWidget {
   const SectionGroupOfInputField({super.key});
 
+  @override
+  State<SectionGroupOfInputField> createState() =>
+      _SectionGroupOfInputFieldState();
+}
+
+class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
+  final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
     // final String role =
     //     (ModalRoute.of(context)?.settings.arguments as Map)["role"];
-    final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
     return Column(
       spacing: rem(1),
       children: [
@@ -27,7 +33,7 @@ class SectionGroupOfInputField extends StatelessWidget {
           textInputType: TextInputType.phone,
           validatorsProps: [
             FormBuilderValidators.phoneNumber(
-              regex: RegExp(r"^\+963[0-9]{9}$"),
+              regex: RegExp(r"^\+9639[0-9]{8}$"),
             ),
           ],
         ),
@@ -55,25 +61,26 @@ class SectionGroupOfInputField extends StatelessWidget {
           name: firstNameKey,
           hintText: "Motaz",
           labelTeaxt: toCapitalize(firstNameKey),
-          validatorsProps: [FormBuilderValidators.firstName()],
+          
         ),
         InputFieldForm(
           name: lastNameKey,
           hintText: "Abo Assi",
           labelTeaxt: toCapitalize(lastNameKey),
-          validatorsProps: [FormBuilderValidators.lastName()],
+
         ),
         FormBuilderDateTimePicker(
-          
+          name: dateOfBirthKey,
           keyboardType: TextInputType.none,
+          focusNode: FocusNode(canRequestFocus: false),
           inputType: InputType.date,
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           format: DateFormat('dd-MM-yyyy'),
           decoration: decorationInputFieldLogin(
             hintText: "select your date of birth",
-            labelTeaxt: dateOfBirthKey, context: context,
+            labelTeaxt: dateOfBirthKey,
+            context: context,
           ),
-
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
             (value) {
@@ -83,29 +90,9 @@ class SectionGroupOfInputField extends StatelessWidget {
               return null;
             },
           ]),
-          name: dateOfBirthKey,
           firstDate: DateTime(1990, 1, 1),
-          lastDate: DateTime(5000),
+          lastDate: DateTime.now(), // also fix this 😉
         ),
-
-        // role == UserRole.tenant.name
-        //     ? InputFieldForm(
-        //         name: balanceKey,
-        //         hintText: "How you have money ? ",
-        //         labelTeaxt: toCapitalize(lastNameKey),
-        //         validatorsProps: [
-        //           FormBuilderValidators.notZeroNumber(),
-        //           FormBuilderValidators.hasNumericChars(),
-        //           (value) {
-        //             if (value?.replaceFirst(",", "") != value) {
-        //               return "mustn't use ','";
-        //             }
-        //             return null;
-        //           },
-        //         ],
-        //         textInputType: TextInputType.number,
-        //       )
-        //     : Container(),
       ],
     );
   }

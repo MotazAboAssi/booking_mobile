@@ -4,6 +4,8 @@ import 'package:booking/data/models/auth/register/button_sign_up.dart';
 import 'package:booking/data/sections/auth/register_view/section_group_of_input_field.dart';
 import 'package:booking/data/sections/auth/register_view/section_image_picker_profile.dart';
 import 'package:booking/data/sections/auth/register_view/section_pick_image_picture_id.dart';
+import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +95,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              navigateTo(context, loginView);
                             },
                             child: Text(
                               "Sign In",
