@@ -10,6 +10,7 @@ class GetAllNotificationsSucceful extends GetAllNotificationsStates {
   final List<NotificateType> notifications;
 
   GetAllNotificationsSucceful({required this.notifications});
+  int get count => notifications.length;
 }
 
 class GetAllNotificationsFailed extends GetAllNotificationsStates {

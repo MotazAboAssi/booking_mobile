@@ -12,7 +12,7 @@ class NotificateType {
   factory NotificateType.fromJson(Map<String, dynamic> json) {
     return NotificateType(
       id: json['id'],
-      userID: json['userID'],
+      userID: json['user_id'],
       message: json['message'],
     );
   }

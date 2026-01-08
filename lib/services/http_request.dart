@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
 import 'package:booking/helper/constant/api.dart';
 import 'package:booking/helper/methods/authrization_headers.dart';
 import 'package:booking/helper/methods/create_form_data.dart';
@@ -19,8 +20,8 @@ class HttpRequest {
   static final Dio dio = Dio(
     BaseOptions(
       baseUrl: api,
-      // connectTimeout: const Duration(seconds: 1),
-      // receiveTimeout: const Duration(seconds: 1),
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 5),
       headers: {'Accept': 'application/json'},
     ),
   );
@@ -845,7 +846,7 @@ class HttpRequest {
     }
   }
 
-  Future<void> clearAllNotification() async {
+  Future<void> clearAllNotifications() async {
     try {
       final String? token = await AuthStorage().readData('token');
       Response response = await dio.delete(
@@ -862,6 +863,10 @@ class HttpRequest {
     }
   }
 
+  Future<int> countNotifications() async {
+    final List<NotificateType> notifications = await getAllNotification();
+    return notifications.length;
+  }
   // ************** for tenant **************
 
   // ************** for any user **************
@@ -883,6 +888,8 @@ class HttpRequest {
       throw Exception(e.toString());
     }
   }
+
+  Future<Object?>? displayAvailableDateForParticularApartment(int i) async {}
 
   // ************** for any user **************
 }

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:isolate';
+
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -9,12 +12,36 @@ import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_t
 import 'package:booking/presentation/widgets/tenant_view/app_bar_tenant_view.dart';
 import 'package:booking/presentation/widgets/tenant_view/body_tenant_view.dart';
 import 'package:booking/services/http_request.dart';
+import 'package:booking/types/notificate_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class TenantView extends StatelessWidget {
+class TenantView extends StatefulWidget {
   const TenantView({super.key});
+
+  @override
+  State<TenantView> createState() => _TenantViewState();
+}
+
+class _TenantViewState extends State<TenantView> {
+  late final Timer _timer;
+
+  void initState() {
+    super.initState();
+    context.read<GetAllNotificationsCubit>().fetch();
+
+    _timer = Timer.periodic(
+      const Duration(seconds: 10),
+      (_) => context.read<GetAllNotificationsCubit>().fetch(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +58,7 @@ class TenantView extends StatelessWidget {
 
       onEndDrawerChanged: (isOpened) async {
         if (!isOpened) {
-          await HttpRequest().clearAllNotification();
+          await HttpRequest().clearAllNotifications();
           printWhite('Done clear');
         } else {
           final cubit = BlocProvider.of<GetAllNotificationsCubit>(context);

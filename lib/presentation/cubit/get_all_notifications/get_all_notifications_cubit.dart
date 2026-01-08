@@ -7,8 +7,8 @@ class GetAllNotificationsCubit extends Cubit<GetAllNotificationsStates> {
   Future<void> fetch() async {
     try {
       emit(GetAllNotificationsLoading());
-      await HttpRequest().getAllNotification();
-      emit(GetAllNotificationsSucceful(notifications: []));
+      final notifications = await HttpRequest().getAllNotification();
+      emit(GetAllNotificationsSucceful(notifications: notifications));
     } catch (e) {
       emit(GetAllNotificationsFailed(message: e.toString()));
     }
