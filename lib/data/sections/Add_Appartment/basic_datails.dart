@@ -34,28 +34,16 @@ class _BasicDatailsState extends State<BasicDatails> {
   TextEditingController descriptionController = TextEditingController();
 
   ApartmentType? apartmentCopy;
-  @override
-  void initState() {
-    super.initState();
-    apartmentCopy = BlocProvider.of<ApiApartmentCubit>(context).state.apartment;
-  }
 
   /// الميزات المختارة
 
   List<int> selectedAmenities = [];
   @override
   Widget build(BuildContext context) {
-    // if (ModalRoute.of(context)?.settings.arguments != null) {
-    //   ApartmentType apartment =
-    //       (ModalRoute.of(context)?.settings.arguments as Map)['apartment'];
-    //   apartmentCopy = ApartmentType.copyFrom(apartment);
-    //   apartmentCopy.images = apartment.images;
-    //   apartmentCopy.images = apartment.images;
-    //   selectedAmenities = apartmentCopy.features;
-
-    //   selectedCity = apartmentCopy.town;
-    //   selectedCountry = apartmentCopy.city;
-    // }
+    if (ModalRoute.of(context)?.settings.arguments != null) {
+      apartmentCopy =
+          (ModalRoute.of(context)!.settings.arguments as Map)['apartment'];
+    }
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Column(
@@ -77,41 +65,43 @@ class _BasicDatailsState extends State<BasicDatails> {
                       ),
                     ],
                   ),
-                  // apartmentCopy == null
-                  //     ? Text(apartmentCopy! .city)
-                  //     :
-                  DropdownButtonFormField(
-                    initialValue: selectedCountry,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Country is required";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      hintText: "eg. USA",
-                      hintStyle: TextStyle(fontSize: rem(1)),
-                    ),
+                  apartmentCopy?.city != null
+                      ? Text(apartmentCopy!.city)
+                      : DropdownButtonFormField(
+                          initialValue: selectedCountry,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Country is required";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "eg. USA",
+                            hintStyle: TextStyle(fontSize: rem(1)),
+                          ),
 
-                    items: governorates
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                    onChanged: (String? value) {
-                      if (value == null) return;
+                          items: governorates
+                              .map(
+                                (e) =>
+                                    DropdownMenuItem(value: e, child: Text(e)),
+                              )
+                              .toList(),
+                          onChanged: (String? value) {
+                            if (value == null) return;
 
-                      setState(() {
-                        selectedCountry = value;
-                        countryController.text = value;
+                            setState(() {
+                              selectedCountry = value;
+                              countryController.text = value;
 
-                        // update cities list based on country
-                        cities = citiesByGovernorate[value]!;
+                              // update cities list based on country
+                              cities = citiesByGovernorate[value]!;
 
-                        // IMPORTANT: reset city
-                        selectedCity = null;
-                        cityController.clear();
-                      });
-                    },
-                  ),
+                              // IMPORTANT: reset city
+                              selectedCity = null;
+                              cityController.clear();
+                            });
+                          },
+                        ),
                   SizedBox(height: 10),
 
                   /// CITY
@@ -123,36 +113,35 @@ class _BasicDatailsState extends State<BasicDatails> {
                       ),
                     ],
                   ),
-                  // apartmentCopy == null
-                  //     ? Text(apartmentCopy!.town)
-                  //     :
-                  DropdownButtonFormField<String>(
-                    initialValue: selectedCity,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "City is required";
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "eg. New York",
-                      hintStyle: TextStyle(fontSize: 12),
-                    ),
-                    items: cities
-                        .map(
-                          (e) => DropdownMenuItem<String>(
-                            value: e,
-                            child: Text(e),
+                  apartmentCopy?.town != null
+                      ? Text(apartmentCopy!.town)
+                      : DropdownButtonFormField<String>(
+                          initialValue: selectedCity,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "City is required";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            hintText: "eg. New York",
+                            hintStyle: TextStyle(fontSize: 12),
                           ),
-                        )
-                        .toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        selectedCity = value;
-                        cityController.text = value ?? '';
-                      });
-                    },
-                  ),
+                          items: cities
+                              .map(
+                                (e) => DropdownMenuItem<String>(
+                                  value: e,
+                                  child: Text(e),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedCity = value;
+                              cityController.text = value ?? '';
+                            });
+                          },
+                        ),
                   SizedBox(height: 10),
 
                   /// ROOMS NUMBER
@@ -230,7 +219,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Container(
                     padding: EdgeInsets.all(5),
                     height: rem(20),
-                    child: ListView.builder(
+                    child: GridView.builder(
                       scrollDirection: Axis.vertical,
 
                       itemCount: amentions.length,
@@ -243,7 +232,7 @@ class _BasicDatailsState extends State<BasicDatails> {
 
                         return Padding(
                           padding: EdgeInsets.only(bottom: 8.0),
-                          child: InkWell(
+                          child: GestureDetector(
                             onTap: () {
                               setState(() {
                                 if (isSelected) {
@@ -308,6 +297,12 @@ class _BasicDatailsState extends State<BasicDatails> {
                           ),
                         );
                       },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 2,
+                        crossAxisSpacing: rem(1),
+                        mainAxisSpacing: rem(0.5),
+                      ),
                     ),
                   ),
                 ],
@@ -355,29 +350,59 @@ class _BasicDatailsState extends State<BasicDatails> {
                           return () async {
                             if (_formKey.currentState!.validate()) {
                               try {
-                                apartmentCopy?.features = selectedAmenities;
-                                apartmentCopy?.city = countryController.text;
-                                apartmentCopy?.town = cityController.text;
-                                apartmentCopy?.description =
-                                    descriptionController.text;
-                                log(countryController.text);
-                                apartmentCopy?.priceForMonth = int.parse(
-                                  priceController.text,
-                                );
-                                apartmentCopy?.rooms = int.parse(
-                                  roomsController.text,
-                                );
-                                apartmentCopy?.space = int.parse(
-                                  spaceController.text,
-                                );
+                                ApartmentType? apartmenFromCubit =
+                                    BlocProvider.of<ApiApartmentCubit>(
+                                      context,
+                                    ).state.apartment;
 
+                                apartmenFromCubit.features = selectedAmenities;
+                                apartmenFromCubit.city =
+                                    countryController.text.isEmpty
+                                    ? apartmentCopy!.city
+                                    : countryController.text;
+
+                                apartmenFromCubit.town =
+                                    cityController.text.isEmpty
+                                    ? apartmentCopy!.town
+                                    : cityController.text;
+
+                                apartmenFromCubit.description =
+                                    descriptionController.text.isEmpty
+                                    ? apartmentCopy!.description
+                                    : descriptionController.text;
+
+                                apartmenFromCubit.priceForMonth =
+                                    priceController.text.isEmpty
+                                    ? apartmentCopy!.priceForMonth
+                                    : int.parse(priceController.text);
+
+                                log(roomsController.text);
+                                apartmenFromCubit.rooms =
+                                    roomsController.text.isEmpty
+                                    ? apartmentCopy!.rooms
+                                    : int.parse(roomsController.text);
+
+                                apartmenFromCubit.space =
+                                    spaceController.text.isEmpty
+                                    ? apartmentCopy!.space
+                                    : int.parse(spaceController.text);
+
+                                if (apartmentCopy != null) {
+                                  apartmenFromCubit.idApartment =
+                                      apartmentCopy!.idApartment;
+                                }
                                 final cubit =
                                     BlocProvider.of<ApiApartmentCubit>(context);
 
                                 // apartmentCopy == null
                                 //     ? print('object')
                                 //     :
-                                cubit.add(apartmentCopy!);
+                                apartmentCopy == null
+                                    ? cubit.add(apartmenFromCubit)
+                                    : cubit.update(
+                                        apartmenFromCubit,
+                                        cubit.state.deleteImage,
+                                      );
                               } catch (e) {
                                 printRed(e.toString());
                               }
@@ -527,7 +552,7 @@ class InputPriceForMonth extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       // controller: priceController,
-      initialValue: apartmentCopy?.priceForMonth == 0
+      initialValue: apartmentCopy?.priceForMonth == null
           ? null
           : '${apartmentCopy!.priceForMonth}',
       keyboardType: TextInputType.number,
@@ -562,7 +587,7 @@ class InputSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: apartmentCopy?.space == 0
+      initialValue: apartmentCopy?.space == null
           ? null
           : '${apartmentCopy!.space}',
       // controller: spaceController,
@@ -598,7 +623,7 @@ class InputRoomNumver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: apartmentCopy?.rooms == 0
+      initialValue: apartmentCopy?.rooms == null
           ? null
           : '${apartmentCopy?.rooms}',
       keyboardType: TextInputType.number,

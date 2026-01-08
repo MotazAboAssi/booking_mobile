@@ -22,7 +22,7 @@ class ApiApartmentCubit extends Cubit<ApiApartmentStates> {
           deleteImage: state.deleteImage,
         ),
       );
-      await HttpRequest().updateApartmentForLandlord(apartment);
+      await HttpRequest().updateApartmentForLandlord(apartment, deleteImage);
       emit(
         ApiApartmentSuccefulAdd(
           apartment: state.apartment,

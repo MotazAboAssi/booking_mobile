@@ -432,20 +432,23 @@ class HttpRequest {
     }
   }
 
-  Future<void> updateApartmentForLandlord(ApartmentType apartment) async {
+  Future<void> updateApartmentForLandlord(
+    ApartmentType apartment,
+    List<int> deleteImages,
+  ) async {
+    printBlueWithBold(deleteImages.toString());
     final String? token = await AuthStorage().readData("token");
     final formData = await createFormData(apartment.images!, {
-      'city': apartment.city,
-      'town': apartment.town,
       'space': apartment.space,
       'rooms': apartment.rooms,
       'price_for_month': apartment.priceForMonth,
       'description': apartment.description,
       'features': apartment.features.toString(),
+      'deleted_images[]': deleteImages,
     });
     try {
       Response response = await dio.put(
-        "/apartment",
+        "/apartment/${apartment.idApartment}",
         options: Options(headers: authrizationHeaders(token ?? "")),
         data: formData,
       );
