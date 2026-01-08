@@ -73,6 +73,7 @@ class _SectionSelectPhotoState extends State<SectionSelectPhoto>
           ),
         ),
       ],
+      
     );
   }
 

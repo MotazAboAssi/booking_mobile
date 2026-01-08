@@ -179,24 +179,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                       ),
                     ],
                   ),
-                  TextFormField(
-                    initialValue: '${apartmentCopy?.space ?? ''}',
-                    // controller: spaceController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "eg. 120",
-                      hintStyle: TextStyle(fontSize: 12),
-                    ),
-                    validator: (v) {
-                      if (v!.isEmpty) return "Space number is required";
-                      if (int.tryParse(v) == null) {
-                        return "Enter a valid number";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      spaceController.text = value;
-                    },
+                  InputSpace(
+                    apartmentCopy: apartmentCopy,
+                    spaceController: spaceController,
                   ),
                   SizedBox(height: 10),
 
@@ -209,24 +194,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                       ),
                     ],
                   ),
-                  TextFormField(
-                    // controller: priceController,
-                    initialValue: '${apartmentCopy?.priceForMonth ?? ''}',
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "eg. 1000000",
-                      hintStyle: TextStyle(fontSize: 12),
-                    ),
-                    validator: (v) {
-                      if (v!.isEmpty) return "Price is required";
-                      if (int.tryParse(v) == null) {
-                        return "Enter a valid number";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      priceController.text = value;
-                    },
+                  InputPriceForMonth(
+                    apartmentCopy: apartmentCopy,
+                    priceController: priceController,
                   ),
                   SizedBox(height: 10),
 
@@ -239,19 +209,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                       ),
                     ],
                   ),
-                  TextFormField(
-                    // controller: descriptionController,
-                    initialValue: apartmentCopy?.description ?? '',
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      hintText: "Describe your apartment",
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (v) =>
-                        v!.isEmpty ? "Description is required" : null,
-                    onChanged: (value) {
-                      descriptionController.text = value;
-                    },
+                  InputDescription(
+                    apartmentCopy: apartmentCopy,
+                    descriptionController: descriptionController,
                   ),
                   SizedBox(height: 10),
                   Row(
@@ -492,6 +452,139 @@ class _BasicDatailsState extends State<BasicDatails> {
   }
 }
 
+class InputDescription extends StatelessWidget {
+  const InputDescription({
+    super.key,
+    required this.apartmentCopy,
+    required this.descriptionController,
+  });
+
+  final ApartmentType? apartmentCopy;
+  final TextEditingController descriptionController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      // controller: descriptionController,
+      initialValue: apartmentCopy?.description ?? '',
+      maxLines: 4,
+      decoration: InputDecoration(
+        hintText: "Describe your apartment",
+        border: OutlineInputBorder(),
+      ),
+      validator: (v) {
+        if (v == null || v.isEmpty) {
+          return "Description is required";
+        } else if (v.length < 7) {
+          return 'Description is bigger than 7 character';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (value) {
+        descriptionController.text = value;
+      },
+      maxLength: 70,
+      buildCounter:
+          (
+            context, {
+            required currentLength,
+            required isFocused,
+            required maxLength,
+          }) {
+            if (isFocused) {
+              if (currentLength < 7) {
+                return Text(
+                  '$currentLength > 7',
+                  style: TextStyle(color: context.appTheme.error),
+                );
+              } else if (currentLength == maxLength) {
+                return Text(
+                  '$currentLength = $maxLength',
+                  style: TextStyle(color: context.appTheme.error),
+                );
+              } else {
+                return Text('$currentLength < $maxLength');
+              }
+            }
+            return null;
+          },
+    );
+  }
+}
+
+class InputPriceForMonth extends StatelessWidget {
+  const InputPriceForMonth({
+    super.key,
+    required this.apartmentCopy,
+    required this.priceController,
+  });
+
+  final ApartmentType? apartmentCopy;
+  final TextEditingController priceController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      // controller: priceController,
+      initialValue: apartmentCopy?.priceForMonth == 0
+          ? null
+          : '${apartmentCopy!.priceForMonth}',
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: "eg. 1000000",
+        hintStyle: TextStyle(fontSize: 12),
+      ),
+      validator: (v) {
+        if (v!.isEmpty) return "Price is required";
+        if (int.tryParse(v) == null) {
+          return "Enter a valid number";
+        }
+        return null;
+      },
+      onChanged: (value) {
+        priceController.text = value;
+      },
+    );
+  }
+}
+
+class InputSpace extends StatelessWidget {
+  const InputSpace({
+    super.key,
+    required this.apartmentCopy,
+    required this.spaceController,
+  });
+
+  final ApartmentType? apartmentCopy;
+  final TextEditingController spaceController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: apartmentCopy?.space == 0
+          ? null
+          : '${apartmentCopy!.space}',
+      // controller: spaceController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: "eg. 120",
+        hintStyle: TextStyle(fontSize: 12),
+      ),
+      validator: (v) {
+        if (v!.isEmpty) return "Space number is required";
+        if (int.tryParse(v) == null) {
+          return "Enter a valid number";
+        }
+        return null;
+      },
+      onChanged: (value) {
+        spaceController.text = value;
+      },
+    );
+  }
+}
+
 class InputRoomNumver extends StatelessWidget {
   const InputRoomNumver({
     super.key,
@@ -505,14 +598,16 @@ class InputRoomNumver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: '${apartmentCopy?.rooms ?? ''}',
+      initialValue: apartmentCopy?.rooms == 0
+          ? null
+          : '${apartmentCopy?.rooms}',
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         hintText: "eg. 3",
         hintStyle: TextStyle(fontSize: 12),
       ),
       validator: (v) {
-        if (v!.isEmpty) return "R3ooms number is required";
+        if (v!.isEmpty) return "Rooms number is required";
         if (int.tryParse(v) == null) {
           return "Enter a valid number";
         }
