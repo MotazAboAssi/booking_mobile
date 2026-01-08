@@ -5,7 +5,9 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_states.dart';
+import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:booking/types/range_unavailable_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,11 +54,16 @@ class RequestBookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<DateTime> disabledDates = [
-      // // DateTime(2025, 1, 10),
-      // DateTime(2026, 1, 6),
-      // DateTime(2026, 1, 5),
-    ];
+    // List<RangeUnavailableDate> disabledRanges = [
+    //   RangeUnavailableDate(
+    //     startNonAvailableDate: DateTime(2026, 1, 10),
+    //     endNonAvailableDate: DateTime(2026, 1, 15),
+    //   ),
+    //   RangeUnavailableDate(
+    //     startNonAvailableDate: DateTime(2026, 2, 1),
+    //     endNonAvailableDate: DateTime(2026, 2, 3),
+    //   ),
+    // ];
     return BlocConsumer<BookingApartmentCubit, BookingApartmentStates>(
       builder: (BuildContext context, state) {
         return ElevatedButton(
@@ -79,6 +86,11 @@ class RequestBookButton extends StatelessWidget {
             if (state is BookingApartmentInitial ||
                 state is BookingApartmentFaild) {
               return () async {
+                final List<RangeUnavailableDate> dates = await HttpRequest()
+                    .displayUnavailableDateForParticularApartment(
+                      apartment.idApartment,
+                    );
+
                 final DateTimeRange<DateTime>? picked =
                     await showDateRangePicker(
                       context: context,
@@ -89,13 +101,24 @@ class RequestBookButton extends StatelessWidget {
                           .add(const Duration(days: 2000)),
                       selectableDayPredicate:
                           (day, selectedStartDay, selectedEndDay) {
-                            final isDisabled = disabledDates.any(
-                              (disabledDay) => isSameDay(disabledDay, day),
-                            );
-                            return !isDisabled;
+                            if (day.isBefore(DateTime.now())) return false;
+                            return !isDayInDisabledRange(day, dates);
                           },
                     );
                 if (picked != null) {
+                  final hasConflict = dates.any((range) {
+                    return picked.start.isBefore(range.endNonAvailableDate) &&
+                        picked.end.isAfter(range.startNonAvailableDate);
+                  });
+
+                  if (hasConflict) {
+                    customSnakBar(
+                      context: context,
+                      color: context.appTheme.error,
+                      message: "Selected dates include unavailable days",
+                    );
+                    return;
+                  }
                   final cubit = context.read<BookingApartmentCubit>();
                   cubit.booking(
                     apartment.idApartment,
@@ -154,6 +177,16 @@ class RequestBookButton extends StatelessWidget {
   }
 }
 
-bool isSameDay(DateTime a, DateTime b) {
-  return a.year == b.year && a.month == b.month && a.day == b.day;
+// bool isSameDay(DateTime a, DateTime b) {
+//   return a.year == b.year && a.month == b.month && a.day == b.day;
+// }
+
+bool isDayInDisabledRange(DateTime day, List<RangeUnavailableDate> ranges) {
+  for (final range in ranges) {
+    if (!day.isBefore(range.startNonAvailableDate) &&
+        !day.isAfter(range.endNonAvailableDate)) {
+      return true;
+    }
+  }
+  return false;
 }

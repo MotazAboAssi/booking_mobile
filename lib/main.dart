@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_cubit.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
 import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
@@ -22,6 +24,7 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => ToggleColorCubit()..init()),
         BlocProvider(create: (context) => NavigateFromLoginCubit()),
+        BlocProvider(create: (context) => GetAllNotificationsCubit()),
       ],
       child: const MyApp(),
     ),
@@ -62,17 +65,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           navigatorObservers: [Observ()],
           routes: appRoutes,
-          // initialRoute: waitingView,
-          home: Scaffold(
-            body: FutureBuilder(
-              future: HttpRequest().displayAvailableDateForParticularApartment(
-                3,
-              ),
-              builder: (context, snapshot) {
-                return Text('data');
-              },
-            ),
-          ),
+          initialRoute: waitingView,
         );
       },
     );

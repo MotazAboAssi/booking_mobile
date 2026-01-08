@@ -285,10 +285,13 @@ class SectionEditOrRemoveAndPrice extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.edit, color: context.appTheme.success),
                 onPressed: () {
+                  ApartmentType apartmentCopy = ApartmentType.copyFrom(
+                    apartment,
+                  );
                   Navigator.pushNamed(
                     context,
                     addApartment,
-                    arguments: {'apartment': apartment},
+                    arguments: {'apartment': apartmentCopy},
                   );
                 },
               ),
