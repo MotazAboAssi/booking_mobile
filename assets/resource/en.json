@@ -1,0 +1,179 @@
+{
+  "auth": {
+    "login_view": {
+      "title_page": "Welcome Back!",
+      "text_guide": "Log in to your phone number to continue.",
+      "input_phone": {
+        "label": "Phone No",
+        "error_text": "the field require a valid  phone number"
+      },
+      "input_password": {
+        "label": "Password",
+        "error_text": "the field cannot be empty"
+      },
+      "button_submit": "Sign in",
+      "footer": {
+        "question": "Don't have an account?",
+        "action_link": "Sign Up"
+      }
+    },
+    "role_selection_view": {
+      "header_title": "Find Your Next Home",
+      "sub_header": "How will you be using the app ?",
+      "options": {
+        "tenant": {
+          "role": "I'm a Tenant",
+          "description": "Search, tour and rent apartments"
+        },
+        "landlord": {
+          "role": "I'm a Landlord",
+          "description": "List and manage your properities"
+        }
+      },
+      "footer": {
+        "question": "Already have an account ?",
+        "action_link": "Log in"
+      }
+    },
+    "register_view": {
+      "profile_section": {
+        "action_text": "Add Profile Picture"
+      },
+      "form_fields": {
+        "input_phone": "Phone No",
+        "input_password": "Password",
+        "input_first_name": "First Name",
+        "input_last_name": "Last Name",
+        "input_dob": "date of birth"
+      },
+      "id_upload_section": {
+        "title": "Upload ID Picture",
+        "format_requirement": "PNG, GPG, up to 10MB"
+      },
+      "button_submit": "Sign up",
+      "footer": {
+        "question": "Do you have an account?",
+        "action_link": "Sign In"
+      }
+    },
+    "logout": {
+      "confirme_question": "Are you sure ?",
+      "buttons": {
+        "ok": "Ok",
+        "discard": "Discard"
+      }
+    }
+  },
+  "tenant": {
+    "tenant_view": {
+      "header": {
+        "app_name": "SYRent"
+      },
+      "sections": {
+        "popular": "Most Popular",
+        "search_in": "Search in"
+      }
+    },
+    "favorite_view": {
+      "page_title": "My Wishlist",
+      "empty_state": {
+        "message": "No Favorite ❤️ Apartments yet"
+      }
+    },
+    "booking_view": {
+      "page_title": "My Booking",
+      "tabs": {
+        "current": "Current",
+        "past": "Past",
+        "canceled": "Canceled"
+      },
+      "empty_state": {
+        "message": "No Booking 📑 Apartments yet"
+      }
+    },
+    "profile_view": {
+      "page_title": "My Account"
+    },
+    "bottom_nav": {
+      "search": "Search",
+      "wishlist": "WishList",
+      "booking": "Booking",
+      "account": "Account"
+    },
+    "apartment_detail": {
+      "owner": "Owner",
+      "description": "Description",
+      "amenities": "Amenities",
+      "location": {
+        "title": "Location",
+        "not_available": "Not Available Location 😥"
+      },
+      "booking_bar": {
+        "per_month": " /month",
+        "request_button": "Request to Book"
+      }
+    },
+    "filter_view": {
+      "title": "Filter in As Suwayda",
+      "city": {
+        "label": "City",
+        "placeholder": "Select city"
+      },
+      "price": "Price For Month :",
+      "space": "Space Apartment",
+      "rooms": "Rooms",
+      "apply": "Apply Filter"
+    }
+  },
+  "landlord": {
+    "dashboard": {
+      "title": "Dashboard",
+      "stats": {
+        "rented": "Rented",
+        "not_rented": "Not Rented",
+        "count": "Appartment count"
+      },
+      "requests": {
+        "title": "New Requests",
+        "total_cost": "Total Cost",
+        "status": "Status : "
+      }
+    },
+    "bottom_nav": {
+      "dashboard": "Dashboard",
+      "account": "Account"
+    },
+    "request_detail": {
+      "apartment_section": "Apartment",
+      "tenant_section": "Tenant",
+      "request_section": "Request",
+      "stay": "Stay : ",
+      "total_cost": "Total Cost",
+      "actions": {
+        "accept": "Accept",
+        "reject": "Rejected"
+      }
+    },
+    "add_apartment": {
+      "title": "Add Apartment",
+      "photos": {
+        "title": "Photos",
+        "label": "Add Photos",
+        "instruction": "Upload at least 5 photos",
+        "button": "Upload"
+      },
+      "fields": {
+        "country": "Country",
+        "city": "City",
+        "rooms": "Rooms number",
+        "space": "Space m²",
+        "price": "Price per month (Lsy)",
+        "description": "Description"
+      },
+      "actions": {
+        "discard": "Discard",
+        "publish": "Publish"
+      }
+    }
+  }
+}

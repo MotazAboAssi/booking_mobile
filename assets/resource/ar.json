@@ -1,0 +1,179 @@
+{
+  "auth": {
+    "login_view": {
+      "title_page": "أهلاً بك مجدداً!",
+      "text_guide": "سجل الدخول إلى رقم هاتفك للمتابعة.",
+      "input_phone": {
+        "label": "رقم الهاتف",
+        "error_text": "هذا الحقل مطلوب ويتطلب رقم موبايل صحيح"
+      },
+      "input_password": {
+        "label": "كلمة المرور",
+        "error_text": "هذا الحقل مطلوب"
+      },
+      "button_submit": "تسجيل الدخول",
+      "footer": {
+        "question": "ليس لديك حساب؟",
+        "action_link": "إنشاء حساب"
+      }
+    },
+    "role_selection_view": {
+      "header_title": "ابحث عن منزلك القادم",
+      "sub_header": "كيف ستستخدم التطبيق؟",
+      "options": {
+        "tenant": {
+          "role": "أنا مستأجر",
+          "description": "ابحث، تجول واستأجر الشقق"
+        },
+        "landlord": {
+          "role": "أنا صاحب عقار",
+          "description": "أدرج وأدر عقاراتك"
+        }
+      },
+      "footer": {
+        "question": "لديك حساب بالفعل؟",
+        "action_link": "تسجيل الدخول"
+      }
+    },
+    "register_view": {
+      "profile_section": {
+        "action_text": "أضف صورة شخصية"
+      },
+      "form_fields": {
+        "input_phone": "رقم الهاتف",
+        "input_password": "كلمة المرور",
+        "input_first_name": "الاسم الأول",
+        "input_last_name": "الكنية",
+        "input_dob": "تاريخ الميلاد"
+      },
+      "id_upload_section": {
+        "title": "تحميل صورة الهوية",
+        "format_requirement": "PNG, GPG، حتى 10 ميجابايت"
+      },
+      "button_submit": "إنشاء حساب",
+      "footer": {
+        "question": "هل لديك حساب؟",
+        "action_link": "تسجيل الدخول"
+      }
+    },
+    "logout": {
+      "confirme_question": "هل أنت متأكد؟",
+      "buttons": {
+        "ok": "موافق",
+        "discard": "إلغاء"
+      }
+    }
+  },
+  "tenant": {
+    "tenant_view": {
+      "header": {
+        "app_name": "SYRent"
+      },
+      "sections": {
+        "popular": "الأكثر شيوعاً",
+        "search_in": "ابحث في"
+      }
+    },
+    "favorite_view": {
+      "page_title": "قائمة المفضلة",
+      "empty_state": {
+        "message": "لا يوجد شقق في المفضلة ❤️ بعد"
+      }
+    },
+    "booking_view": {
+      "page_title": "حجوزاتي",
+      "tabs": {
+        "current": "الحالية",
+        "past": "السابقة",
+        "canceled": "الملغاة"
+      },
+      "empty_state": {
+        "message": "لا يوجد حجوزات 📑 لشقق بعد"
+      }
+    },
+    "profile_view": {
+      "page_title": "حسابي"
+    },
+    "bottom_nav": {
+      "search": "بحث",
+      "wishlist": "المفضلة",
+      "booking": "الحجوزات",
+      "account": "الحساب"
+    },
+    "apartment_detail": {
+      "owner": "المالك",
+      "description": "الوصف",
+      "amenities": "المرافق",
+      "location": {
+        "title": "الموقع",
+        "not_available": "الموقع غير متوفر 😥"
+      },
+      "booking_bar": {
+        "per_month": " /شهرياً",
+        "request_button": "طلب حجز"
+      }
+    },
+    "filter_view": {
+      "title": "تصفية في السويداء",
+      "city": {
+        "label": "المدينة",
+        "placeholder": "اختر مدينة"
+      },
+      "price": "السعر الشهري :",
+      "space": "مساحة الشقة",
+      "rooms": "الغرف",
+      "apply": "تطبيق التصفية"
+    }
+  },
+  "landlord": {
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "stats": {
+        "rented": "مؤجر",
+        "not_rented": "غير مؤجر",
+        "count": "عدد الشقق"
+      },
+      "requests": {
+        "title": "طلبات جديدة",
+        "total_cost": "التكلفة الإجمالية",
+        "status": "الحالة : "
+      }
+    },
+    "bottom_nav": {
+      "dashboard": "الرئيسية",
+      "account": "الحساب"
+    },
+    "request_detail": {
+      "apartment_section": "الشقة",
+      "tenant_section": "المستأجر",
+      "request_section": "الطلب",
+      "stay": "الإقامة : ",
+      "total_cost": "التكلفة الإجمالية",
+      "actions": {
+        "accept": "قبول",
+        "reject": "رفض"
+      }
+    },
+    "add_apartment": {
+      "title": "إضافة شقة",
+      "photos": {
+        "title": "الصور",
+        "label": "أضف صوراً",
+        "instruction": "قم بتحميل 5 صور على الأقل",
+        "button": "تحميل"
+      },
+      "fields": {
+        "country": "البلد",
+        "city": "المدينة",
+        "rooms": "عدد الغرف",
+        "space": "المساحة م²",
+        "price": "السعر الشهري (ل.س)",
+        "description": "الوصف"
+      },
+      "actions": {
+        "discard": "تجاهل",
+        "publish": "نشر"
+      }
+    }
+  }
+}

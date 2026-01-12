@@ -1,0 +1,578 @@
+/*
+{
+  "auth": {
+    "login_view": {
+      "title_page": "Welcome Back!",
+      "text_guide": "Log in to your phone number to continue.",
+      "input_phone": {
+        "label": "Phone No"
+      },
+      "input_password": {
+        "label": "Password"
+      },
+      "button_submit": "Sign in",
+      "footer": {
+        "question": "Don't have an account?",
+        "action_link": "Sign Up"
+      }
+    },
+    "role_selection_view": {
+      "header_title": "Find Your Next Home",
+      "sub_header": "How will you be using the app ?",
+      "options": [
+        {
+          "role": "I'm a Tenant",
+          "description": "Search, tour and rent apartments"
+        },
+        {
+          "role": "I'm a Landlord",
+          "description": "List and manage your properities"
+        }
+      ],
+      "footer": {
+        "question": "Already have an account ?",
+        "action_link": "Log in"
+      }
+    },
+    "register_view": {
+      "profile_section": {
+        "action_text": "Add Profile Picture"
+      },
+      "form_fields": {
+        "input_phone": "Phone No",
+        "input_password": "Password",
+        "input_first_name": "First Name",
+        "input_last_name": "Last Name",
+        "input_dob": "date of birth"
+      },
+      "id_upload_section": {
+        "title": "Upload ID Picture",
+        "format_requirement": "PNG, GPG, up to 10MB"
+      },
+      "button_submit": "Sign up",
+      "footer": {
+        "question": "Do you have an account?",
+        "action_link": "Sign In"
+      }
+    },
+    "logout": {
+      "confirme_question": "Are you sure ?",
+      "buttons": ["Ok", "Discard"]
+    }
+  },
+  "tenant": {
+    "tenant_view": {
+      "header": {
+        "app_name": "SYRent"
+      },
+      "sections": [
+        {
+          "section_title": "Most Popular"
+        },
+        {
+          "section_title": "Search in"
+        }
+      ]
+    },
+    "favorite_view": {
+      "page_title": "My Wishlite",
+      "empty_state": {
+        "message": "No Favorite ❤️ Apartments yet"
+      }
+    },
+    "booking_view": {
+      "page_title": "My Booking",
+      "tabs": ["Current", "Past", "Canceled"],
+      "empty_state": {
+        "message": "No Booking 📑 Apartments yet"
+      }
+    },
+    "profile_view": {
+      "page_title": "My Account"
+    },
+    "custom_bottom_navigation_bar": {
+      "items": [
+        {
+          "label": "Search"
+        },
+        {
+          "label": "WishList"
+        },
+        {
+          "label": "Booking"
+        },
+        {
+          "label": "Account"
+        }
+      ]
+    },
+    "apartment_detail_view": {
+      "owner_section": {
+        "label": "Owner"
+      },
+      "description_section": {
+        "title": "Description"
+      },
+      "amenities_section": {
+        "title": "Amention"
+      },
+      "location_section": {
+        "title": "Location",
+        "status_message": "Not Available Location 😥"
+      },
+      "footer_booking_bar": {
+        "price_display": " /month",
+        "button_text": "Request to Book"
+      }
+    },
+    "filter_view": {
+      "header": {
+        "title": "Filter in As Suwayda"
+      },
+      "form_elements": {
+        "dropdown_city": {
+          "label": "City",
+          "placeholder": "Select city"
+        },
+        "slider_price": {
+          "label": "Price For Month :"
+        },
+        "slider_space": {
+          "label": "Space Apartment"
+        },
+        "slider_rooms": {
+          "label": "Rooms"
+        }
+      },
+      "actions": {
+        "submit_button": "Apply Filter"
+      }
+    },
+    "display_filter_view": {
+      "page_title": "Filter"
+    }
+  },
+  "landlord": {
+    "profile_view": {
+      "page_title": "My Account"
+    },
+    "landlord_dashboard_view": {
+      "header": {
+        "title": "Dashboard"
+      },
+      "statistics_cards": [
+        {
+          "label": "Rented"
+        },
+        {
+          "label": "Not Rented"
+        },
+        {
+          "label": "Appartment count"
+        }
+      ],
+      "requests_section": {
+        "title": "New Requests",
+        "request_cards": [
+          {
+            "total_cost": "total cost",
+            "status": "status : "
+          }
+        ]
+      }
+    },
+    "custom_bottom_navigation_bar": {
+      "items": [
+        {
+          "label": "Dashboard"
+        },
+        {
+          "label": "Account"
+        }
+      ]
+    },
+    "request_detail_view": {
+      "sections": [
+        {
+          "section_title": "Apartment",
+          "description_section": {
+            "title": "Description"
+          },
+          "amenities_section": {
+            "title": "Amention"
+          },
+          "location_section": {
+            "title": "Location",
+            "status_message": "Not Available Location 😥"
+          },
+          "footer_booking_bar": {
+            "price_display": " /month",
+            "button_text": "Request to Book"
+          }
+        },
+        {
+          "section_title": "Tenant"
+        },
+        {
+          "section_title": "Request",
+          "booking_period": {
+            "title": "Stay : "
+          },
+          "financials": {
+            "title": "Total Cost"
+          }
+        }
+      ],
+      "footer": {
+        "buttons": ["Accept", "Rejected"]
+      }
+    },
+    "apartments_view": {
+      "title_page": "Apartmetns"
+    },
+    "add_apartment_view": {
+      "header": {
+        "title": "Add appartment"
+      },
+      "photos_section": {
+        "title": "Photos",
+        "upload_box": {
+          "label": "Add Photos",
+          "instruction": "Upload at more 5 photos of your apartment",
+          "button_text": "Uplaod"
+        }
+      },
+      "basic_details_section": {
+        "title": "Basic Details",
+        "fields": [
+          {
+            "label": "Country",
+            "placeholder": "eg. USA"
+          },
+          {
+            "label": "City",
+            "placeholder": "eg. New York"
+          },
+          {
+            "label": "Rooms number",
+            "placeholder": "eg. 3"
+          },
+          {
+            "label": "Space m²",
+            "placeholder": "eg. 120"
+          },
+          {
+            "label": "Price per month in Lsy",
+            "placeholder": "eg. 1000000"
+          },
+          {
+            "label": "Description",
+            "placeholder": "Describe your apartment"
+          }
+        ]
+      },
+      "amenities_section": {
+        "title": "Amenities"
+      },
+      "form_actions": {
+        "dismiss_button": {
+          "text": "Discard"
+        },
+        "submit_button": {
+          "text": "Publish"
+        }
+      }
+    }
+  }
+}
+*/
+
+/*
+  "auth": {
+    "login_view": {
+      "title_page": "أهلاً بك مجدداً!",
+      "text_guide": "سجل الدخول إلى رقم هاتفك للمتابعة.",
+      "input_phone": {
+        "label": "رقم الهاتف"
+      },
+      "input_password": {
+        "label": "كلمة المرور"
+      },
+      "button_submit": "تسجيل الدخول",
+      "footer": {
+        "question": "ليس لديك حساب؟",
+        "action_link": "إنشاء حساب"
+      }
+    },
+    "role_selection_view": {
+      "header_title": "ابحث عن منزلك القادم",
+      "sub_header": "كيف ستستخدم التطبيق؟",
+      "options": [
+        {
+          "role": "أنا مستأجر",
+          "description": "ابحث، تجول واستأجر الشقق"
+        },
+        {
+          "role": "أنا صاحب عقار",
+          "description": "أدرج وأدر عقاراتك"
+        }
+      ],
+      "footer": {
+        "question": "لديك حساب بالفعل؟",
+        "action_link": "تسجيل الدخول"
+      }
+    },
+    "register_view": {
+      "profile_section": {
+        "action_text": "أضف صورة شخصية"
+      },
+      "form_fields": {
+        "input_phone": "رقم الهاتف",
+        "input_password": "كلمة المرور",
+        "input_first_name": "الاسم الأول",
+        "input_last_name": "الكنية",
+        "input_dob": "تاريخ الميلاد"
+      },
+      "id_upload_section": {
+        "title": "تحميل صورة الهوية",
+        "format_requirement": "PNG, GPG، حتى 10 ميجابايت"
+      },
+      "button_submit": "إنشاء حساب",
+      "footer": {
+        "question": "هل لديك حساب؟",
+        "action_link": "تسجيل الدخول"
+      }
+    },
+    "logout": {
+      "confirme_question": "هل أنت متأكد؟",
+      "buttons": ["موافق", "إلغاء"]
+    }
+  },
+  "tenant": {
+    "tenant_view": {
+      "header": {
+        "app_name": "SYRent"
+      },
+      "sections": [
+        {
+          "section_title": "الأكثر شيوعاً"
+        },
+        {
+          "section_title": "ابحث في"
+        }
+      ]
+    },
+    "favorite_view": {
+      "page_title": "قائمة المفضلة",
+      "empty_state": {
+        "message": "لا يوجد شقق في المفضلة ❤️ بعد"
+      }
+    },
+    "booking_view": {
+      "page_title": "حجوزاتي",
+      "tabs": ["الحالية", "السابقة", "الملغاة"],
+      "empty_state": {
+        "message": "لا يوجد حجوزات 📑 لشقق بعد"
+      }
+    },
+    "profile_view": {
+      "page_title": "حسابي"
+    },
+    "custom_bottom_navigation_bar": {
+      "items": [
+        {
+          "label": "بحث"
+        },
+        {
+          "label": "المفضلة"
+        },
+        {
+          "label": "الحجوزات"
+        },
+        {
+          "label": "الحساب"
+        }
+      ]
+    },
+    "apartment_detail_view": {
+      "owner_section": {
+        "label": "المالك"
+      },
+      "description_section": {
+        "title": "الوصف"
+      },
+      "amenities_section": {
+        "title": "المرافق"
+      },
+      "location_section": {
+        "title": "الموقع",
+        "status_message": "الموقع غير متوفر 😥"
+      },
+      "footer_booking_bar": {
+        "price_display": " /شهرياً",
+        "button_text": "طلب حجز"
+      }
+    },
+    "filter_view": {
+      "header": {
+        "title": "تصفية في السويداء"
+      },
+      "form_elements": {
+        "dropdown_city": {
+          "label": "المدينة",
+          "placeholder": "اختر مدينة"
+        },
+        "slider_price": {
+          "label": "السعر الشهري:"
+        },
+        "slider_space": {
+          "label": "مساحة الشقة"
+        },
+        "slider_rooms": {
+          "label": "الغرف"
+        }
+      },
+      "actions": {
+        "submit_button": "تطبيق التصفية"
+      }
+    },
+    "display_filter_view": {
+      "page_title": "تصفية"
+    }
+  },
+  "landlord": {
+    "profile_view": {
+      "page_title": "حسابي"
+    },
+    "landlord_dashboard_view": {
+      "header": {
+        "title": "لوحة التحكم"
+      },
+      "statistics_cards": [
+        {
+          "label": "مؤجر"
+        },
+        {
+          "label": "غير مؤجر"
+        },
+        {
+          "label": "عدد الشقق"
+        }
+      ],
+      "requests_section": {
+        "title": "طلبات جديدة",
+        "request_cards": [
+          {
+            "total_cost": "التكلفة الإجمالية",
+            "status": "الحالة : "
+          }
+        ]
+      }
+    },
+    "custom_bottom_navigation_bar": {
+      "items": [
+        {
+          "label": "الرئيسية"
+        },
+        {
+          "label": "الحساب"
+        }
+      ]
+    },
+    "request_detail_view": {
+      "sections": [
+        {
+          "section_title": "الشقة",
+          "description_section": {
+            "title": "الوصف"
+          },
+          "amenities_section": {
+            "title": "المرافق"
+          },
+          "location_section": {
+            "title": "الموقع",
+            "status_message": "الموقع غير متوفر 😥"
+          },
+          "footer_booking_bar": {
+            "price_display": " /شهرياً",
+            "button_text": "طلب حجز"
+          }
+        },
+        {
+          "section_title": "المستأجر"
+        },
+        {
+          "section_title": "الطلب",
+          "booking_period": {
+            "title": "الإقامة : "
+          },
+          "financials": {
+            "title": "التكلفة الإجمالية"
+          }
+        }
+      ],
+      "footer": {
+        "buttons": ["قبول", "رفض"]
+      }
+    },
+    "apartments_view": {
+      "title_page": "الشقق"
+    },
+    "add_apartment_view": {
+      "header": {
+        "title": "إضافة شقة"
+      },
+      "photos_section": {
+        "title": "الصور",
+        "upload_box": {
+          "label": "أضف صوراً",
+          "instruction": "قم بتحميل 5 صور على الأقل لشقتك",
+          "button_text": "تحميل"
+        }
+      },
+      "basic_details_section": {
+        "title": "تفاصيل أساسية",
+        "fields": [
+          {
+            "label": "البلد",
+            "placeholder": "مثلاً: سوريا"
+          },
+          {
+            "label": "المدينة",
+            "placeholder": "مثلاً: دمشق"
+          },
+          {
+            "label": "عدد الغرف",
+            "placeholder": "مثلاً: 3"
+          },
+          {
+            "label": "المساحة م²",
+            "placeholder": "مثلاً: 120"
+          },
+          {
+            "label": "السعر الشهري (ل.س)",
+            "placeholder": "مثلاً: 1000000"
+          },
+          {
+            "label": "الوصف",
+            "placeholder": "صف شقتك..."
+          }
+        ]
+      },
+      "amenities_section": {
+        "title": "المرافق"
+      },
+      "form_actions": {
+        "dismiss_button": {
+          "text": "تجاهل"
+        },
+        "submit_button": {
+          "text": "نشر"
+        }
+      }
+    }
+  }
+  */
+    
+
+
