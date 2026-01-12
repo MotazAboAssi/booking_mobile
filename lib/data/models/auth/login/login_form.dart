@@ -1,8 +1,10 @@
 import 'package:booking/data/models/auth/form/input_field_form.dart';
 import 'package:booking/data/models/auth/login/button_sign_in.dart';
 import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/login/login_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -43,11 +45,13 @@ class _LoginFormState extends State<LoginForm> {
           InputFieldForm(
             name: "phone",
             hintText: "+963*********",
-            labelTeaxt: "Phone No",
+            labelTeaxt: AuthKeys.loginInputPhoneLabel.tr(),
             textInputType: TextInputType.phone,
             validatorsProps: [
               FormBuilderValidators.phoneNumber(
                 regex: RegExp(r"^\+963[0-9]{9}$"),
+                errorText: AuthKeys.loginErrorInputPhone.tr()
+
               ),
             ],
           ),
@@ -58,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
               return InputFieldForm(
                 name: "password",
                 hintText: "********",
-                labelTeaxt: "Password",
+                labelTeaxt: AuthKeys.loginInputPasswordLabel.tr(),
                 suffixIcon: IconButton(
                   onPressed: () {
                     isSecure.value = !isSecure.value;
@@ -83,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Don't have an account?",
+                AuthKeys.loginFooterQuestion.tr(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: rem(1)),
               ),
               TextButton(
@@ -91,7 +95,7 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.pushNamed(context, roleSelectionView);
                 },
                 child: Text(
-                  "Sign Up",
+                  AuthKeys.loginButtonSubmit.tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: rem(1),

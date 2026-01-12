@@ -1,14 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
-
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_cubit.dart';
-import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_cubit.dart';
-import 'package:booking/presentation/cubit/navigate_from_login/navigate_from_login_states.dart';
+import 'package:booking/presentation/cubit/locale/locale_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
-import 'package:booking/services/http_request.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:booking/helper/constant/routes.dart';
@@ -19,14 +16,21 @@ typedef FileCallBackvoid = File? Function();
 typedef BoolFunString = bool Function(String);
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ToggleColorCubit()..init()),
-        BlocProvider(create: (context) => NavigateFromLoginCubit()),
-        BlocProvider(create: (context) => GetAllNotificationsCubit()),
+        BlocProvider(create: (context) => LocaleCubit()),
+          BlocProvider(create: (context) => GetAllNotificationsCubit()),
       ],
-      child: const MyApp(),
+      child: EasyLocalization(
+        supportedLocales: [Locale('en'), Locale('ar')],
+        path: 'assets/resource',
+
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -44,19 +48,17 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  void initState() {
-    super.initState();
-    final cubit = BlocProvider.of<NavigateFromLoginCubit>(context);
-    cubit.routeFromLogin(context, navigatorKey);
-  }
-
-  @override
   Widget build(BuildContext context) {
     log(ThemeMode.values.toString());
     return BlocBuilder<ToggleColorCubit, ToggleColorStates>(
       builder: (context, state) {
         return MaterialApp(
           navigatorKey: navigatorKey,
+          // local
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          // color
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: state is ToggleColorSuccessful

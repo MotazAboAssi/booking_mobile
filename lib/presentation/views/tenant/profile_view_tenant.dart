@@ -8,10 +8,12 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
+import 'package:booking/presentation/cubit/locale/locale_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
 import 'package:booking/services/http_request.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -35,20 +37,12 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
     return Scaffold(
       bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 3),
       appBar: AppBar(
-        leading: BlocBuilder<ToggleColorCubit, ToggleColorStates>(
-          builder: (context, state) {
-            return IconButton(
-              onPressed: () {
-                final cubit = BlocProvider.of<ToggleColorCubit>(context);
-                cubit.toggle(context);
-              },
-              icon: Icon(
-                Theme.of(context).brightness == Brightness.light
-                    ? Icons.dark_mode
-                    : Icons.light_mode,
-              ),
-            );
-          },
+        leadingWidth: MediaQuery.of(context).size.width * 0.3,
+        leading: Row(
+          children: [
+            ButtonMode(),
+            ButtonLocalization(),
+          ],
         ),
         actions: [
           IconButton(
@@ -104,7 +98,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
           ),
         ],
         title: Text(
-          "My Account",
+          'tenant.tenant_view.header.app_name'.tr(),
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -179,4 +173,49 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
   //   if()
   //   return CustomeBottomNavigationBarForTenant(index: 3);
   // }
+}
+
+class ButtonMode extends StatelessWidget {
+  const ButtonMode({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ToggleColorCubit, ToggleColorStates>(
+      builder: (context, state) {
+        return IconButton(
+          onPressed: () {
+            final cubit = BlocProvider.of<ToggleColorCubit>(context);
+            cubit.toggle(context);
+          },
+          icon: Icon(
+            Theme.of(context).brightness == Brightness.light
+                ? Icons.dark_mode
+                : Icons.light_mode,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ButtonLocalization extends StatelessWidget {
+  const ButtonLocalization({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LocaleCubit, Locale>(
+      builder: (context, state) {
+        return IconButton(
+          onPressed: () {
+            BlocProvider.of<LocaleCubit>(context).toggleLanguage(context);
+          },
+          icon: Icon(Icons.language, color: context.appTheme.primarye,) ,
+        );
+      },
+    );
+  }
 }

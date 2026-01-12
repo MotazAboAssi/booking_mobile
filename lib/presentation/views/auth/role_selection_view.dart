@@ -1,7 +1,9 @@
 import 'package:booking/data/sections/auth/role_selection_view/section_determine_role.dart';
 import 'package:booking/data/sections/auth/role_selection_view/section_logo_and_description.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class RoleSelectionView extends StatelessWidget {
@@ -31,12 +33,12 @@ class RoleSelectionView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Already have an account ?"),
+                  Text(AuthKeys.roleFooterQuestion.tr()),
                   TextButton(
                     onPressed: () {
                       backTo(context);
                     },
-                    child: Text("Log in"),
+                    child: Text(AuthKeys.roleFooterActionLink.tr()),
                   ),
                 ],
               ),

@@ -20,15 +20,19 @@ class NavigateFromLoginCubit extends Cubit<NavigateFromLoginStates> {
       emit(NavigateTo(role: role));
       await Future.delayed(const Duration(seconds: 3));
       if (state.role == UserRole.tenant.name) {
-        await navigatorKey.currentState!.pushReplacementNamed(tenantView);
+        await navigatorKey.currentState!.pushReplacementNamed(tenantView) ??
+            navigateTo(context, tenantView);
       } else if (state.role == UserRole.landlord.name) {
-        await navigatorKey.currentState!.pushReplacementNamed(
-          landlordDashBoard,
-        );
+        // navigateTo(context, landlordDashBoard);
+        await navigatorKey.currentState?.pushReplacementNamed(
+              landlordDashBoard,
+            ) ??
+            navigateTo(context, landlordDashBoard);
       }
     } else {
       emit(NavigateTo(role: null));
-      await navigatorKey.currentState!.pushReplacementNamed(loginView);
+      await navigatorKey.currentState?.pushReplacementNamed(loginView) ??
+          navigateTo(context, loginView);
     }
     printRed("text");
   }

@@ -1,5 +1,7 @@
 import 'package:booking/data/models/auth/role_selection_view/role_card_model.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SectionDetermineRole extends StatelessWidget {
@@ -13,12 +15,12 @@ class SectionDetermineRole extends StatelessWidget {
         RoleCardModel(
           icon: Icons.key,
           role: 'tenant',
-          permissions: 'Search, tour and rent apartments',
+          permissions: AuthKeys.roleTenantDesc.tr(), title: AuthKeys.roleTenantName.tr() ,
         ),
         RoleCardModel(
           icon: Icons.real_estate_agent,
           role: 'landlord',
-          permissions: 'List and manage your properities',
+          permissions: AuthKeys.roleLandlordDesc.tr(), title: AuthKeys.roleLandlordName.tr(),
         ),
       ],
     );

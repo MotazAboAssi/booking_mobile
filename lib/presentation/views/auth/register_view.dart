@@ -5,9 +5,11 @@ import 'package:booking/data/sections/auth/register_view/section_group_of_input_
 import 'package:booking/data/sections/auth/register_view/section_image_picker_profile.dart';
 import 'package:booking/data/sections/auth/register_view/section_pick_image_picture_id.dart';
 import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/auth/register/register_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -87,7 +89,7 @@ class _RegisterViewState extends State<RegisterView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Do you have an account?",
+                            AuthKeys.registerFooterQuestion.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: rem(1),
@@ -98,7 +100,7 @@ class _RegisterViewState extends State<RegisterView> {
                               navigateTo(context, loginView);
                             },
                             child: Text(
-                              "Sign In",
+                              AuthKeys.registerFooterActionLink.tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: rem(1),

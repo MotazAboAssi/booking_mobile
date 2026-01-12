@@ -140,5 +140,8 @@ final Map<String, WidgetBuilder> appRoutes = {
       child: AppartementDetailsViewForLandlord(apartment: args["apartment"]),
     );
   },
-  waitingView: (_) => WaitingView(),
+  waitingView: (_) => BlocProvider(
+    create: (context) => NavigateFromLoginCubit(),
+    child: WaitingView(),
+  ),
 };

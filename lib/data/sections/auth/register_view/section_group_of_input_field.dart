@@ -1,9 +1,11 @@
 import 'package:booking/data/models/auth/form/decoration_input_field.dart';
 import 'package:booking/data/models/auth/form/input_field_form.dart';
 import 'package:booking/helper/constant/form_keys/registers_keys.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/comapre_two_date.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -29,7 +31,7 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
         InputFieldForm(
           name: phoneKey,
           hintText: "+963*********",
-          labelTeaxt: "Phone No",
+          labelTeaxt: AuthKeys.registerInputPhone.tr(),
           textInputType: TextInputType.phone,
           validatorsProps: [
             FormBuilderValidators.phoneNumber(
@@ -43,7 +45,7 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
             return InputFieldForm(
               name: passwordKey,
               hintText: "********",
-              labelTeaxt: toCapitalize(passwordKey),
+              labelTeaxt: AuthKeys.registerInputPassword.tr(),
               suffixIcon: IconButton(
                 onPressed: () {
                   isSecure.value = !isSecure.value;
@@ -60,14 +62,12 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
         InputFieldForm(
           name: firstNameKey,
           hintText: "Motaz",
-          labelTeaxt: toCapitalize(firstNameKey),
-          
+          labelTeaxt: AuthKeys.registerInputFirstName.tr(),
         ),
         InputFieldForm(
           name: lastNameKey,
           hintText: "Abo Assi",
-          labelTeaxt: toCapitalize(lastNameKey),
-
+          labelTeaxt: AuthKeys.registerInputLastName.tr(),
         ),
         FormBuilderDateTimePicker(
           name: dateOfBirthKey,
@@ -78,7 +78,7 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
           format: DateFormat('dd-MM-yyyy'),
           decoration: decorationInputFieldLogin(
             hintText: "select your date of birth",
-            labelTeaxt: dateOfBirthKey,
+            labelTeaxt: AuthKeys.registerInputDob.tr(),
             context: context,
           ),
           validator: FormBuilderValidators.compose([

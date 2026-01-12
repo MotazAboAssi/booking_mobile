@@ -1,6 +1,8 @@
 import 'package:booking/data/models/auth/login/login_form.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SectionLogin extends StatelessWidget {
@@ -20,14 +22,17 @@ class SectionLogin extends StatelessWidget {
       child: ListView(
         children: [
           Text(
-            "Welcome Back!",
+            AuthKeys.loginTitlePage.tr(),
             style: TextStyle(fontSize: rem(2.5), fontWeight: FontWeight.bold),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: rem(1)),
             child: Text(
-              "Log in to your phone number to continue.",
-              style: TextStyle(fontSize: rem(1), color: context.appTheme.secondary),
+              AuthKeys.loginTextGuide.tr(),
+              style: TextStyle(
+                fontSize: rem(1),
+                color: context.appTheme.secondary,
+              ),
             ),
           ),
           LoginForm(),

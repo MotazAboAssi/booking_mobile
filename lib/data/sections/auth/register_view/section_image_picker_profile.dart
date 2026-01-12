@@ -4,9 +4,11 @@ import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/pick_image_from_camera.dart';
 import 'package:booking/helper/constant/pick_image_from_gallery.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/alert_dialog.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/main.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -93,7 +95,7 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
         ),
         Center(
           child: Text(
-            "Add Profile Picture",
+            AuthKeys.registerProfileAction.tr(),
             style: TextStyle(fontSize: rem(1), fontWeight: FontWeight.bold),
           ),
         ),

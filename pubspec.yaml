@@ -75,6 +75,8 @@ flutter:
   assets:
     - assets/anonymous_man_avatar.jpg
     - assets/freedom.jpg
+    - assets/resource/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
