@@ -19,6 +19,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   late GlobalKey<FormBuilderState> formKey;
+  final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -34,7 +35,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
     return FormBuilder(
       key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -44,14 +44,13 @@ class _LoginFormState extends State<LoginForm> {
           // Email Input
           InputFieldForm(
             name: "phone",
-            hintText: "+963*********",
+            hintText: AuthKeys.phoneHint.tr(),
             labelTeaxt: AuthKeys.loginInputPhoneLabel.tr(),
             textInputType: TextInputType.phone,
             validatorsProps: [
               FormBuilderValidators.phoneNumber(
                 regex: RegExp(r"^\+963[0-9]{9}$"),
-                errorText: AuthKeys.loginErrorInputPhone.tr()
-
+                errorText: AuthKeys.loginErrorInputPhone.tr(),
               ),
             ],
           ),
@@ -74,6 +73,7 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
                 obscureText: !isSecure.value,
+                validatorsProps: [FormBuilderValidators.password()],
               );
             },
           ),

@@ -95,7 +95,7 @@ class ButtonSignUp extends StatelessWidget {
         builder: (context, state) {
           if (state is RegisterFailed || state is InitialRegister) {
             return Text(
-              AuthKeys.registerButtonSubmit.tr(),
+              AuthKeys.buttonSubmit.tr(),
               style: TextStyle(color: context.appTheme.thirdly),
             );
           } else if ((state is RegisterSuccessfuly)) {

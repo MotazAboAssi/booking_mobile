@@ -36,15 +36,33 @@
       }
     },
     "register_view": {
+      "pick_image": {
+        "camera": "Camera",
+        "gallery": "Gallery"
+      },
       "profile_section": {
         "action_text": "Add Profile Picture"
       },
       "form_fields": {
-        "input_phone": "Phone No",
+        "input_phone": {
+          "lable": "Phone No",
+          "hint_text": "+9639********"
+        },
+
         "input_password": "Password",
-        "input_first_name": "First Name",
-        "input_last_name": "Last Name",
-        "input_dob": "date of birth"
+        "input_first_name": {
+          "lable": "First Name",
+          "hint_text": "Motaz"
+        },
+        "input_last_name": {
+          "lable": "Last Name",
+          "hint_text": "Motaz"
+        },
+        "input_dob": {
+          "lable": "date of birth",
+          "error_text": "The birthday field must be a date before today.",
+          "hint-text": "select your date of birth"
+        }
       },
       "id_upload_section": {
         "title": "Upload ID Picture",

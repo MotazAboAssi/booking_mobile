@@ -36,23 +36,40 @@
       }
     },
     "register_view": {
+      "pick_image": {
+        "camera": "الكاميرا",
+        "gallery": "المعرض"
+      },
       "profile_section": {
-        "action_text": "أضف صورة شخصية"
+        "action_text": "إضافة صورة شخصية"
       },
       "form_fields": {
-        "input_phone": "رقم الهاتف",
+        "input_phone": {
+          "lable": "رقم الهاتف",
+          "hint_text": "+٩٦٣ ٩********"
+        },
         "input_password": "كلمة المرور",
-        "input_first_name": "الاسم الأول",
-        "input_last_name": "الكنية",
-        "input_dob": "تاريخ الميلاد"
+        "input_first_name": {
+          "lable": "الاسم الأول",
+          "hint_text": "معتز"
+        },
+        "input_last_name": {
+          "lable": "الكنية",
+          "hint_text": "معتز"
+        },
+        "input_dob": {
+          "lable": "تاريخ الميلاد",
+          "error_text": "يجب أن يكون تاريخ الميلاد قبل تاريخ اليوم.",
+          "hint-text": "اختر تاريخ ميلادك"
+        }
       },
       "id_upload_section": {
         "title": "تحميل صورة الهوية",
-        "format_requirement": "PNG, GPG، حتى 10 ميجابايت"
+        "format_requirement": "PNG, JPG، حتى 10 ميجابايت"
       },
       "button_submit": "إنشاء حساب",
       "footer": {
-        "question": "هل لديك حساب؟",
+        "question": "هل لديك حساب بالفعل؟",
         "action_link": "تسجيل الدخول"
       }
     },
@@ -114,7 +131,7 @@
       }
     },
     "filter_view": {
-      "title": "تصفية في السويداء",
+      "title": "تصفية في ",
       "city": {
         "label": "المدينة",
         "placeholder": "اختر مدينة"

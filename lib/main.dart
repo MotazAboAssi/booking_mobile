@@ -23,7 +23,7 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => ToggleColorCubit()..init()),
         BlocProvider(create: (context) => LocaleCubit()),
-          BlocProvider(create: (context) => GetAllNotificationsCubit()),
+        BlocProvider(create: (context) => GetAllNotificationsCubit()),
       ],
       child: EasyLocalization(
         supportedLocales: [Locale('en'), Locale('ar')],

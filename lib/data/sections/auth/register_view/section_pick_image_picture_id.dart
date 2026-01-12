@@ -64,7 +64,6 @@ class _SectionPickImagePictureIDState extends State<SectionPickImagePictureID> {
           child: AspectRatio(
             aspectRatio: 1.5,
             child: DottedBorder(
-              
               options: RoundedRectDottedBorderOptions(
                 color: context.appTheme.primarye,
                 radius: Radius.circular(rem(1.4)),

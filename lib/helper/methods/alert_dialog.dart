@@ -1,4 +1,6 @@
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -28,7 +30,7 @@ Future<void> showAlertDialog(
                     ),
                   ),
                   child: Text(
-                    '🖼️ Gallery',
+                    '🖼️ ${AuthKeys.pickGallery.tr()}',
                     style: TextStyle(fontSize: rem(1.5)),
                   ),
                   onPressed: () async {
@@ -38,7 +40,7 @@ Future<void> showAlertDialog(
                 ),
                 TextButton(
                   child: Text(
-                    '📷 Camera',
+                    '📷 ${AuthKeys.pickCamera.tr()}',
                     style: TextStyle(fontSize: rem(1.5)),
                   ),
                   onPressed: () async {

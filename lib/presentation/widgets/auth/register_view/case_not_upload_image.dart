@@ -1,5 +1,6 @@
-
+import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CaseNotUploadImage extends StatelessWidget {
@@ -17,10 +18,13 @@ class CaseNotUploadImage extends StatelessWidget {
             child: Icon(Icons.upload_file_rounded, size: rem(2)),
           ),
           Text(
-            "Upload ID Picture",
+            AuthKeys.idUploadTitle.tr(),
             style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
           ),
-          Text("PNG, GPG, up to 10MB", style: TextStyle(fontSize: rem(0.8))),
+          Text(
+            AuthKeys.idUploadRequirement.tr(),
+            style: TextStyle(fontSize: rem(0.8)),
+          ),
         ],
       ),
     );

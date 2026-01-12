@@ -89,7 +89,7 @@ class _RegisterViewState extends State<RegisterView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            AuthKeys.registerFooterQuestion.tr(),
+                            AuthKeys.footerQuestion.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: rem(1),
@@ -100,7 +100,7 @@ class _RegisterViewState extends State<RegisterView> {
                               navigateTo(context, loginView);
                             },
                             child: Text(
-                              AuthKeys.registerFooterActionLink.tr(),
+                              AuthKeys.footerActionLink.tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: rem(1),

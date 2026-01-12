@@ -1,5 +1,7 @@
 import 'package:booking/data/models/auth/form/decoration_input_field.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -27,7 +29,11 @@ class InputFieldForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String? Function(String?)> validators = validatorsProps ?? [];
-    validators.add(FormBuilderValidators.required());
+    validators.add(
+      FormBuilderValidators.required(
+        errorText: AuthKeys.loginErrorInputPassword.tr(),
+      ),
+    );
 
     return FormBuilderTextField(
       initialValue: initialValue,

@@ -21,18 +21,40 @@ class AuthKeys {
   static const String roleFooterActionLink = 'auth.role_selection_view.footer.action_link';
 
   // Register View
-  static const String registerProfileAction = 'auth.register_view.profile_section.action_text';
-  static const String registerInputPhone = 'auth.register_view.form_fields.input_phone';
-  static const String registerInputPassword = 'auth.register_view.form_fields.input_password';
-  static const String registerInputFirstName = 'auth.register_view.form_fields.input_first_name';
-  static const String registerInputLastName = 'auth.register_view.form_fields.input_last_name';
-  static const String registerInputDob = 'auth.register_view.form_fields.input_dob';
-  static const String registerIdTitle = 'auth.register_view.id_upload_section.title';
-  static const String registerIdFormat = 'auth.register_view.id_upload_section.format_requirement';
-  static const String registerButtonSubmit = 'auth.register_view.button_submit';
-  static const String registerFooterQuestion = 'auth.register_view.footer.question';
-  static const String registerFooterActionLink = 'auth.register_view.footer.action_link';
+static const String pickCamera = 'auth.register_view.pick_image.camera';
+  static const String pickGallery = 'auth.register_view.pick_image.gallery';
 
+  // Profile Section
+  static const String profileActionText = 'auth.register_view.profile_section.action_text';
+
+  // Phone Field
+  static const String phoneLabel = 'auth.register_view.form_fields.input_phone.lable';
+  static const String phoneHint = 'auth.register_view.form_fields.input_phone.hint_text';
+
+  // Password (String value)
+  static const String passwordLabel = 'auth.register_view.form_fields.input_password';
+
+  // First Name
+  static const String firstNameLabel = 'auth.register_view.form_fields.input_first_name.lable';
+  static const String firstNameHint = 'auth.register_view.form_fields.input_first_name.hint_text';
+
+  // Last Name
+  static const String lastNameLabel = 'auth.register_view.form_fields.input_last_name.lable';
+  static const String lastNameHint = 'auth.register_view.form_fields.input_last_name.hint_text';
+
+  // Date of Birth
+  static const String dobLabel = 'auth.register_view.form_fields.input_dob.lable';
+  static const String dobError = 'auth.register_view.form_fields.input_dob.error_text';
+  static const String dobHint = 'auth.register_view.form_fields.input_dob.hint-text';
+
+  // ID Upload
+  static const String idUploadTitle = 'auth.register_view.id_upload_section.title';
+  static const String idUploadRequirement = 'auth.register_view.id_upload_section.format_requirement';
+
+  // Actions
+  static const String buttonSubmit = 'auth.register_view.button_submit';
+  static const String footerQuestion = 'auth.register_view.footer.question';
+  static const String footerActionLink = 'auth.register_view.footer.action_link';
   // Logout
   static const String logoutConfirmQuestion = 'auth.logout.confirme_question';
   static const String logoutButtonOk = 'auth.logout.buttons.ok';

@@ -4,12 +4,11 @@ import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/keys_localization/auth_key.dart';
 import 'package:booking/helper/methods/comapre_two_date.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/methods/to_capitalize.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class SectionGroupOfInputField extends StatefulWidget {
   const SectionGroupOfInputField({super.key});
@@ -23,19 +22,18 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
   final ValueNotifier<bool> isSecure = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
-    // final String role =
-    //     (ModalRoute.of(context)?.settings.arguments as Map)["role"];
     return Column(
       spacing: rem(1),
       children: [
         InputFieldForm(
           name: phoneKey,
-          hintText: "+963*********",
-          labelTeaxt: AuthKeys.registerInputPhone.tr(),
+          hintText: AuthKeys.phoneHint.tr(),
+          labelTeaxt: AuthKeys.loginInputPhoneLabel.tr(),
           textInputType: TextInputType.phone,
           validatorsProps: [
             FormBuilderValidators.phoneNumber(
               regex: RegExp(r"^\+9639[0-9]{8}$"),
+              errorText: AuthKeys.loginErrorInputPhone.tr(),
             ),
           ],
         ),
@@ -45,7 +43,7 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
             return InputFieldForm(
               name: passwordKey,
               hintText: "********",
-              labelTeaxt: AuthKeys.registerInputPassword.tr(),
+              labelTeaxt: AuthKeys.passwordLabel.tr(),
               suffixIcon: IconButton(
                 onPressed: () {
                   isSecure.value = !isSecure.value;
@@ -61,13 +59,13 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
         ),
         InputFieldForm(
           name: firstNameKey,
-          hintText: "Motaz",
-          labelTeaxt: AuthKeys.registerInputFirstName.tr(),
+          hintText: AuthKeys.firstNameHint.tr(),
+          labelTeaxt: AuthKeys.firstNameLabel.tr(),
         ),
         InputFieldForm(
           name: lastNameKey,
-          hintText: "Abo Assi",
-          labelTeaxt: AuthKeys.registerInputLastName.tr(),
+          hintText: AuthKeys.lastNameHint.tr(),
+          labelTeaxt: AuthKeys.lastNameLabel.tr(),
         ),
         FormBuilderDateTimePicker(
           name: dateOfBirthKey,
@@ -77,15 +75,17 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           format: DateFormat('dd-MM-yyyy'),
           decoration: decorationInputFieldLogin(
-            hintText: "select your date of birth",
-            labelTeaxt: AuthKeys.registerInputDob.tr(),
+            hintText: AuthKeys.dobHint.tr(),
+            labelTeaxt: AuthKeys.dobLabel.tr(),
             context: context,
           ),
           validator: FormBuilderValidators.compose([
-            FormBuilderValidators.required(),
+            FormBuilderValidators.required(
+              errorText: AuthKeys.loginErrorInputPassword.tr(),
+            ),
             (value) {
               if (value != null && compareTwoDate(value, DateTime.now()) >= 0) {
-                return "The birthday field must be a date before today.";
+                return;
               }
               return null;
             },

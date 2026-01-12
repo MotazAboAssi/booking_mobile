@@ -95,7 +95,7 @@ class _SectionImagePickerProfileState extends State<SectionImagePickerProfile> {
         ),
         Center(
           child: Text(
-            AuthKeys.registerProfileAction.tr(),
+            AuthKeys.profileActionText.tr(),
             style: TextStyle(fontSize: rem(1), fontWeight: FontWeight.bold),
           ),
         ),
