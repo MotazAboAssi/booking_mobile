@@ -10,6 +10,7 @@ import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
+import 'package:booking/presentation/views/tenant/profile_view_tenant.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_landlord.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:flutter/material.dart';
@@ -35,21 +36,8 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
     return Scaffold(
       bottomNavigationBar: CustomeBottomNavigationBarForLandlord(index: 1),
       appBar: AppBar(
-        leading: BlocBuilder<ToggleColorCubit, ToggleColorStates>(
-          builder: (context, state) {
-            return IconButton(
-              onPressed: () {
-                final cubit = BlocProvider.of<ToggleColorCubit>(context);
-                cubit.toggle(context);
-              },
-              icon: Icon(
-                Theme.of(context).brightness == Brightness.light
-                    ? Icons.dark_mode
-                    : Icons.light_mode,
-              ),
-            );
-          },
-        ),
+        leadingWidth: MediaQuery.of(context).size.width * 0.3,
+        leading: Row(children: [ButtonMode(), ButtonLocalization()]),
         actions: [
           IconButton(
             style: ElevatedButton.styleFrom(iconColor: context.appTheme.error),
