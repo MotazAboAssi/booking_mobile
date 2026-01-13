@@ -83,13 +83,25 @@
     }
   },
   "tenant": {
+    "notification": {
+      "lable": "Notifcations",
+      "empty_state": {
+        "message": "No Notification 🔔 yet"
+      }
+    },
     "tenant_view": {
       "header": {
         "app_name": "SYRent"
       },
       "sections": {
-        "popular": "Most Popular",
-        "search_in": "Search in"
+        "popular": {
+          "lable": "Most Popular",
+          "empty_state": "⚠️ Not Found Apartment"
+        },
+        "search_in": {
+          "lable": "Search in",
+          "cities": "[As Suwayda,Damascus,Aleppo,Homs,Latakia]"
+        }
       }
     },
     "favorite_view": {
@@ -104,6 +116,14 @@
         "current": "Current",
         "past": "Past",
         "canceled": "Canceled"
+      },
+      "card": {
+        "status_pending": "pending",
+        "status_confirmed": "confirmed",
+        "btn_edit": "Edit",
+        "btn_cancel": "Cancele",
+        "btn_contact": "Contact Owner",
+        "btn_rate": "Rate"
       },
       "empty_state": {
         "message": "No Booking 📑 Apartments yet"
@@ -122,9 +142,11 @@
       "owner": "Owner",
       "description": "Description",
       "amenities": "Amenities",
+      "review" : "Review",
+      "review_on" : "Review on",
       "location": {
         "title": "Location",
-        "not_available": "Not Available Location 😥"
+        "not_available": "Not Available Location"
       },
       "booking_bar": {
         "per_month": " /month",
@@ -132,7 +154,7 @@
       }
     },
     "filter_view": {
-      "title": "Filter in As Suwayda",
+      "title": "Filter in",
       "city": {
         "label": "City",
         "placeholder": "Select city"

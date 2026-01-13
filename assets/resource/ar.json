@@ -82,13 +82,25 @@
     }
   },
   "tenant": {
+    "notification": {
+      "lable": "الإشعارات",
+      "empty_state": {
+        "message": "لا يوجد إشعارات 🔔 بعد"
+      }
+    },
     "tenant_view": {
       "header": {
         "app_name": "SYRent"
       },
       "sections": {
-        "popular": "الأكثر شيوعاً",
-        "search_in": "ابحث في"
+        "popular": {
+          "lable": "الأكثر شيوعا",
+          "empty_state": "لا يوجد منازل حاليا ⚠️"
+        },
+        "search_in": {
+          "lable": "أبحث في",
+          "cities": "[سويداء, دمشق, حلب, حمص, لاذقيه]"
+        }
       }
     },
     "favorite_view": {
@@ -104,8 +116,16 @@
         "past": "السابقة",
         "canceled": "الملغاة"
       },
+      "card": {
+        "status_pending": "قيد الانتظار",
+        "status_confirmed": "مؤكد",
+        "btn_edit": "تعديل",
+        "btn_cancel": "إلغاء",
+        "btn_contact": "اتصل بالمالك",
+        "btn_rate": "تقييم"
+      },
       "empty_state": {
-        "message": "لا يوجد حجوزات 📑 لشقق بعد"
+        "message": "لا يوجد حجوزات 📑 للشقق بعد"
       }
     },
     "profile_view": {
@@ -121,9 +141,11 @@
       "owner": "المالك",
       "description": "الوصف",
       "amenities": "المرافق",
+      "review": "التقييم",
+      "review_on": "قيم في",
       "location": {
         "title": "الموقع",
-        "not_available": "الموقع غير متوفر 😥"
+        "not_available": "الموقع غير متوفر"
       },
       "booking_bar": {
         "per_month": " /شهرياً",
