@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:booking/data/models/tenant_view/apartement_card.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_cubit.dart';
 import 'package:booking/presentation/cubit/favorite_apartment_view.dart/favorite_apartment_view_states.dart';
 import 'package:booking/presentation/widgets/button_refresh.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -35,7 +37,7 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "My Wishlite",
+          TenantKeys.favoritePageTitle.tr(),
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -72,7 +74,7 @@ class _FavoriteApartmentsState extends State<FavoriteApartments> {
                   return favoroites.isEmpty
                       ? Center(
                           child: Text(
-                            "No Favorite ❤️ Apartments yet",
+                            TenantKeys.favoriteEmptyMessage.tr(),
                             style: TextStyle(
                               fontSize: rem(1),
                               fontWeight: FontWeight.bold,

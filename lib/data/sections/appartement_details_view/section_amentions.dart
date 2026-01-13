@@ -1,6 +1,8 @@
 import 'package:booking/data/models/appartement_details_view/amention_display.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SectionAmentions extends StatelessWidget {
@@ -16,7 +18,7 @@ class SectionAmentions extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Text(
-            "Amention",
+            TenantKeys.detailAmenities.tr(),
             style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
           ),
         ),

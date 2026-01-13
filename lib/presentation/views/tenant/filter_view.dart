@@ -1,5 +1,8 @@
 import 'package:booking/data/sections/tenant_view/section_search_and_filter.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
+import 'package:booking/helper/methods/convert_string_to_list_of_string.dart';
 import 'package:booking/helper/methods/rem.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FilterView extends StatelessWidget {
@@ -7,11 +10,15 @@ class FilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final city = (ModalRoute.of(context)?.settings.arguments as Map)['city'];
+    final List<String> cities = convertStringToListOfString(
+      TenantKeys.tenantHomeSectionSearchInCities.tr().toString(),
+    );
+    final indexCity =
+        (ModalRoute.of(context)?.settings.arguments as Map)['indexCity'];
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Filter in $city",
+          '${TenantKeys.filterTitle.tr()} ${cities[indexCity]} ',
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

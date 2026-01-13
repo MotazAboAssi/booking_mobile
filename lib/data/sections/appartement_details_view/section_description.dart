@@ -1,6 +1,8 @@
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SectionDescription extends StatelessWidget {
@@ -16,7 +18,7 @@ class SectionDescription extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Text(
-            "Description",
+            TenantKeys.detailDescription.tr(),
             style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/presentation/cubit/toggle_favorite_apartment_button/toggle_favorite_apartment_button_cubit.dart';
 import 'package:booking/presentation/widgets/swiper_images.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,7 +30,13 @@ class SectionHeaderAndAppartementImages extends StatelessWidget {
               )
             : SwiperImage(images: apartment?.images),
         Positioned(
-          right: 0,
+          right: context.select<Null, double>((_) {
+            if (context.locale.languageCode == 'en') {
+              return 0;
+            } else {
+              return MediaQuery.of(context).size.width*0.87;
+            }
+          }),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(

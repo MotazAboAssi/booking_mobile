@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:booking/data/models/tenant_view/apartement_card.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_cubit.dart';
 import 'package:booking/presentation/cubit/tenant_view/tenant_view_state_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -40,7 +42,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
               Padding(
                 padding: const EdgeInsets.only(left: 2.0),
                 child: Text(
-                  "Most Popular",
+                  TenantKeys.tenantHomeSectionPopular.tr(),
                   style: TextStyle(
                     fontSize: rem(2),
                     fontWeight: FontWeight.bold,
@@ -51,22 +53,7 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                 aspectRatio: 7 / 6,
                 child: BlocBuilder<TenantViewCubit, TenantViewStateCubit>(
                   builder: (context, state) {
-                    if (state is TenantViewLoading) {
-                      return Skeletonizer(
-                        child: SizedBox(
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 2,
-                            itemBuilder: (context, index) {
-                              return AspectRatio(
-                                aspectRatio:1,
-                                child: AppartementCard(apartment: null),
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    } else if (state is TenantViewSucceeful) {
+                    if (state is TenantViewSucceeful) {
                       final apartments = state.apartment;
                       return apartments.isNotEmpty
                           ? ListView.builder(
@@ -89,7 +76,8 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "⚠️ Not Found Apartment",
+                                  TenantKeys.tenantHomeSectionPopularEmptyState
+                                      .tr(),
                                   style: TextStyle(
                                     fontSize: rem(1.5),
                                     fontWeight: FontWeight.bold,
@@ -118,7 +106,20 @@ class _SectionMostPopularState extends State<SectionMostPopular> {
                         ),
                       );
                     }
-                    return Text("data");
+                    return Skeletonizer(
+                      child: SizedBox(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 2,
+                          itemBuilder: (context, index) {
+                            return AspectRatio(
+                              aspectRatio: 1,
+                              child: AppartementCard(apartment: null),
+                            );
+                          },
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),

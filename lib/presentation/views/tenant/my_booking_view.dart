@@ -1,10 +1,12 @@
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/my_booking_keys.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_states.dart';
 import 'package:booking/presentation/widgets/button_refresh.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_tenant.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/presentation/widgets/my_Booking/body_my_booking.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +41,7 @@ class _LandLordDashboardState extends State<MyBookingView> {
           ),
           appBar: AppBar(
             title: Text(
-              "My Booking",
+              TenantKeys.bookingPageTitle.tr(),
               style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
@@ -49,9 +51,9 @@ class _LandLordDashboardState extends State<MyBookingView> {
               unselectedLabelColor: context.appTheme.secondary,
               indicatorColor: context.appTheme.fourthly,
               tabs: [
-                Tab(text: 'Current'),
-                Tab(text: 'Past'),
-                Tab(text: 'Canceled'),
+                Tab(text: TenantKeys.bookingTabCurrent.tr()),
+                Tab(text: TenantKeys.bookingTabPast.tr()),
+                Tab(text: TenantKeys.bookingTabCanceled.tr()),
               ],
             ),
           ),
@@ -95,6 +97,19 @@ class _LandLordDashboardState extends State<MyBookingView> {
                             .toList(),
                       ),
                     ],
+                  );
+                } else if (state is MyBookingViewFaild) {
+                  return Padding(
+                    padding: EdgeInsets.all(rem(1)),
+                    child: Center(
+                      child: Text(
+                        "No Internet 😢",
+                        style: TextStyle(
+                          fontSize: rem(2),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   );
                 }
                 return Skeletonizer(

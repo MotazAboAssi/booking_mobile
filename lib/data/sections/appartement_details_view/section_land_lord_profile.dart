@@ -1,5 +1,6 @@
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -8,6 +9,7 @@ import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/presentation/views/tenant/display_profile_user_view.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/user_register_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -85,7 +87,7 @@ class LandLordProfileCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Owner",
+                      TenantKeys.detailOwner.tr(),
                       style: TextStyle(color: context.appTheme.secondary),
                     ),
                     Text(

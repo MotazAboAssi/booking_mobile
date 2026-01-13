@@ -12,10 +12,6 @@ class SectionTitleAndPosition extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text(
-        //   "Modern 2-Bedroom Loft in Downtown",
-        //   style: TextStyle(fontSize: rem(2), fontWeight: FontWeight.w900),
-        // ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(

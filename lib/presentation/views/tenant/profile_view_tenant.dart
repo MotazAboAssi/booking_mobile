@@ -3,6 +3,8 @@ import 'package:booking/data/sections/display_profile_user_view/section_group_of
 import 'package:booking/data/sections/display_profile_user_view/section_image_picker_profile.dart';
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/routes.dart';
+import 'package:booking/helper/keys_localization/auth_key.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -38,12 +40,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
       bottomNavigationBar: CustomeBottomNavigationBarForTenant(index: 3),
       appBar: AppBar(
         leadingWidth: MediaQuery.of(context).size.width * 0.3,
-        leading: Row(
-          children: [
-            ButtonMode(),
-            ButtonLocalization(),
-          ],
-        ),
+        leading: Row(children: [ButtonMode(), ButtonLocalization()]),
         actions: [
           IconButton(
             style: ElevatedButton.styleFrom(iconColor: context.appTheme.error),
@@ -59,7 +56,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "Are you sure ?",
+                            AuthKeys.logoutConfirmQuestion.tr(),
                             style: TextStyle(
                               fontSize: rem(1.5),
                               fontWeight: FontWeight.bold,
@@ -77,13 +74,13 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
                                     printYallow(e.toString());
                                   }
                                 },
-                                child: Text("Ok"),
+                                child: Text(AuthKeys.logoutButtonOk.tr()),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text("Discard"),
+                                child: Text(AuthKeys.logoutButtonDiscard.tr()),
                               ),
                             ],
                           ),
@@ -98,7 +95,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
           ),
         ],
         title: Text(
-          'tenant.tenant_view.header.app_name'.tr(),
+          TenantKeys.profilePageTitle.tr(),
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -176,9 +173,7 @@ class _ProfileViewTenantState extends State<ProfileViewTenant> {
 }
 
 class ButtonMode extends StatelessWidget {
-  const ButtonMode({
-    super.key,
-  });
+  const ButtonMode({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -201,9 +196,7 @@ class ButtonMode extends StatelessWidget {
 }
 
 class ButtonLocalization extends StatelessWidget {
-  const ButtonLocalization({
-    super.key,
-  });
+  const ButtonLocalization({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +206,7 @@ class ButtonLocalization extends StatelessWidget {
           onPressed: () {
             BlocProvider.of<LocaleCubit>(context).toggleLanguage(context);
           },
-          icon: Icon(Icons.language, color: context.appTheme.primarye,) ,
+          icon: Icon(Icons.language, color: context.appTheme.primarye),
         );
       },
     );

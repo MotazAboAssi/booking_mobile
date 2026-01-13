@@ -1,7 +1,9 @@
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_notifications/get_all_notifications_states.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +19,7 @@ AppBar appBarTenantView(BuildContext context) {
       ),
     ),
     title: Text(
-      'SYRent',
+      TenantKeys.tenantHomeAppName.tr(),
       style: TextStyle(
         fontWeight: FontWeight.bold,
         color: context.appTheme.primarye,

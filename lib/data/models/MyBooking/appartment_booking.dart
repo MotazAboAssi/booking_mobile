@@ -3,6 +3,7 @@ import 'package:booking/data/sections/appartement_details_view/section_request_t
 import 'package:booking/helper/constant/my_booking_keys.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:booking/types/range_unavailable_date.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -189,7 +191,7 @@ class ConfirmedPastButton extends StatelessWidget {
                 ), // حجم اللزر
               ),
               onPressed: null,
-              child: Text('Contact Owner'),
+              child: Text(TenantKeys.bookingBtnContact.tr()),
             ),
           ),
         ),
@@ -214,7 +216,7 @@ class ConfirmedPastButton extends StatelessWidget {
               );
             },
             child: Text(
-              'Rate',
+              TenantKeys.bookingBtnRate.tr(),
               style: TextStyle(color: context.appTheme.primarye),
             ),
           ),
@@ -249,7 +251,7 @@ class ConfirmedButton extends StatelessWidget {
                 ), // حجم اللزر
               ),
               onPressed: null,
-              child: Text('Contact Owner'),
+              child: Text(TenantKeys.bookingBtnContact.tr()),
             ),
           ),
         ),
@@ -274,7 +276,7 @@ class ConfirmedButton extends StatelessWidget {
               cubit.getAllApartmentsBooking();
             },
             child: Text(
-              'Cancele',
+              TenantKeys.bookingBtnCancel.tr(),
               style: TextStyle(color: context.appTheme.thirdly),
             ),
           ),
@@ -385,7 +387,7 @@ class PendingButton extends StatelessWidget {
                 }),
 
                 child: Text(
-                  'Edit',
+                  TenantKeys.bookingBtnEdit.tr(),
                   style: TextStyle(color: context.appTheme.thirdly),
                 ),
               );
@@ -413,7 +415,7 @@ class PendingButton extends StatelessWidget {
               cubit.getAllApartmentsBooking();
             },
             child: Text(
-              'Cancele',
+              TenantKeys.bookingBtnCancel.tr(),
               style: TextStyle(color: context.appTheme.thirdly),
             ),
           ),

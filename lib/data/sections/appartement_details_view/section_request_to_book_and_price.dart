@@ -1,6 +1,7 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_s
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/range_unavailable_date.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,7 +40,7 @@ class SectionRequestToBookAndPrice extends StatelessWidget {
                   color: context.appTheme.fourthly,
                 ),
               ),
-              Text(" /month"),
+              Text(TenantKeys.detailBarPriceSuffix.tr()),
             ],
           ),
           RequestBookButton(apartment: apartment),
@@ -143,7 +145,7 @@ class RequestBookButton extends StatelessWidget {
               return Icon(Icons.check, color: context.appTheme.thirdly);
             } else {
               return Text(
-                "Request to Book",
+                TenantKeys.detailBarRequestButton.tr(),
                 style: TextStyle(color: context.appTheme.thirdly),
               );
             }

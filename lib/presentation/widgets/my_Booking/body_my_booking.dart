@@ -1,4 +1,5 @@
 import 'package:booking/data/models/MyBooking/appartment_booking.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class BodyMyBooking extends StatelessWidget {
     return apartments.isEmpty
         ? Center(
             child: Text(
-              "No Booking 🧾 Apartments yet",
+              TenantKeys.bookingEmptyMessage,
               style: TextStyle(fontSize: rem(1), fontWeight: FontWeight.bold),
             ),
           )

@@ -1,6 +1,8 @@
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SectionLocation extends StatelessWidget {
@@ -16,7 +18,7 @@ class SectionLocation extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Text(
-            "Location",
+            TenantKeys.detailLocationTitle.tr(),
             style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
           ),
         ),
@@ -32,7 +34,7 @@ class SectionLocation extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Not Available Location",
+                  TenantKeys.detailLocationNotAvailable.tr(),
                   style: TextStyle(fontSize: rem(2)),
                 ),
                 Text("😢", style: TextStyle(fontSize: rem(2))),

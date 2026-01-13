@@ -8,6 +8,7 @@ import 'package:booking/data/sections/appartement_details_view/section_location.
 import 'package:booking/data/sections/appartement_details_view/section_request_to_book_and_price.dart';
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
@@ -15,6 +16,7 @@ import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_states.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -115,7 +117,7 @@ class Reviews extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Review",
+                      TenantKeys.detailReview.tr(),
                       style: TextStyle(
                         fontSize: rem(1.5),
                         fontWeight: FontWeight.bold,
@@ -137,7 +139,7 @@ class Reviews extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Reviewed on ${state.rates[index].createdAt.toIso8601String().split("T")[0]}",
+                                  "${TenantKeys.detailReviewOn.tr()} ${state.rates[index].createdAt.toIso8601String().split("T")[0]}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: rem(1.1),

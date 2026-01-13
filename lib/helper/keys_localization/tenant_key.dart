@@ -1,8 +1,10 @@
 class TenantKeys {
   // Tenant Home View
   static const String tenantHomeAppName = 'tenant.tenant_view.header.app_name';
-  static const String tenantHomeSectionPopular = 'tenant.tenant_view.sections.popular';
-  static const String tenantHomeSectionSearchIn = 'tenant.tenant_view.sections.search_in';
+  static const String tenantHomeSectionPopular = 'tenant.tenant_view.sections.popular.lable';
+  static const String tenantHomeSectionPopularEmptyState = 'tenant.tenant_view.sections.popular.empty_state';
+  static const String tenantHomeSectionSearchIn = 'tenant.tenant_view.sections.search_in.lable';
+  static const String tenantHomeSectionSearchInCities = 'tenant.tenant_view.sections.search_in.cities';
 
   // Favorite / Wishlist View
   static const String favoritePageTitle = 'tenant.favorite_view.page_title';
@@ -14,7 +16,12 @@ class TenantKeys {
   static const String bookingTabPast = 'tenant.booking_view.tabs.past';
   static const String bookingTabCanceled = 'tenant.booking_view.tabs.canceled';
   static const String bookingEmptyMessage = 'tenant.booking_view.empty_state.message';
-
+  static const String bookingStatusPending = 'tenant.booking_view.card.status_pending';
+  static const String bookingStatusConfirmed = 'tenant.booking_view.card.status_confirmed';
+  static const String bookingBtnEdit = 'tenant.booking_view.card.btn_edit';
+  static const String bookingBtnCancel = 'tenant.booking_view.card.btn_cancel';
+  static const String bookingBtnContact = 'tenant.booking_view.card.btn_contact';
+  static const String bookingBtnRate = 'tenant.booking_view.card.btn_rate';
   // Profile View
   static const String profilePageTitle = 'tenant.profile_view.page_title';
 
@@ -27,6 +34,8 @@ class TenantKeys {
   // Apartment Detail
   static const String detailOwner = 'tenant.apartment_detail.owner';
   static const String detailDescription = 'tenant.apartment_detail.description';
+  static const String detailReview = 'tenant.apartment_detail.review';
+  static const String detailReviewOn = 'tenant.apartment_detail.review_on';
   static const String detailAmenities = 'tenant.apartment_detail.amenities';
   static const String detailLocationTitle = 'tenant.apartment_detail.location.title';
   static const String detailLocationNotAvailable = 'tenant.apartment_detail.location.not_available';
@@ -41,4 +50,10 @@ class TenantKeys {
   static const String filterSpaceLabel = 'tenant.filter_view.space';
   static const String filterRoomsLabel = 'tenant.filter_view.rooms';
   static const String filterApplyButton = 'tenant.filter_view.apply';
+
+// Notification  
+  static const String notificationLable = 'tenant.notification.lable';
+  static const String notificationEmptyStateMessage = 'tenant.notification.empty_state.message';
+
 }
+

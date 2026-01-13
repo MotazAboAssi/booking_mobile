@@ -2,10 +2,12 @@ import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/constant/amentions.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_states.dart';
 import 'package:booking/types/filter_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/helper/constant/cities_with_towns.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,8 +95,8 @@ class _BodyFilterViewState extends State<BodyFilterView> {
 
   @override
   Widget build(BuildContext context) {
-    final city = (ModalRoute.of(context)?.settings.arguments as Map)['city'];
-
+    final indexCity =
+        (ModalRoute.of(context)?.settings.arguments as Map)['indexCity'];
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -108,16 +110,15 @@ class _BodyFilterViewState extends State<BodyFilterView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: rem(1.5),
           children: [
-            // const Text(
-            //   "Filter",
-            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            // ),
-            const Text("City", style: TextStyle(fontWeight: FontWeight.w600)),
-            // const SizedBox(height: 8),
+            Text(
+              TenantKeys.filterCityLabel.tr(),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            // // const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: selectedTown,
-              hint: const Text("Select city"),
-              items: citiesByGovernorate[city]!
+              initialValue: selectedTown,
+              hint: Text(TenantKeys.filterCityPlaceholder.tr()),
+              items: citiesByGovernorate[governorates[indexCity]]!
                   .map(
                     (city) => DropdownMenuItem(value: city, child: Text(city)),
                   )
@@ -153,7 +154,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
               children: [
                 SizedBox(
                   child: Text(
-                    "Price For Month : ",
+                    TenantKeys.filterPriceLabel.tr(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -180,7 +181,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
               children: [
                 SizedBox(
                   child: Text(
-                    "Space Apartment",
+                    TenantKeys.filterSpaceLabel.tr(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -207,7 +208,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
               children: [
                 SizedBox(
                   child: Text(
-                    "Rooms",
+                    TenantKeys.filterRoomsLabel.tr(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -262,12 +263,12 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                     onPressed: state is FilterViewLoading
                         ? null
                         : () {
-                            final city =
+                            final indexCity =
                                 (ModalRoute.of(context)?.settings.arguments
-                                    as Map)['city'];
+                                    as Map)['indexCity'];
 
                             final filter = FilterType(
-                              city: city,
+                              city: governorates[indexCity],
                               town: selectedTown,
                               minPrice: priceRange.start.floor(),
                               maxPrice: priceRange.end.floor(),
@@ -289,7 +290,7 @@ class _BodyFilterViewState extends State<BodyFilterView> {
                             ),
                           )
                         : Text(
-                            "Apply Filter",
+                            TenantKeys.filterApplyButton.tr(),
                             style: TextStyle(color: context.appTheme.thirdly),
                           ),
                   );

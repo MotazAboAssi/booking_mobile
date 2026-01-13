@@ -1,8 +1,8 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
-import 'package:booking/helper/methods/navigate_to.dart';
-import 'package:booking/helper/methods/rem.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CustomeBottomNavigationBarForTenant extends StatelessWidget {
@@ -18,10 +18,10 @@ class CustomeBottomNavigationBarForTenant extends StatelessWidget {
       color: context.appTheme.thirdly,
 
       items: [
-        TabItem(icon: Icons.search, title: 'Search'),
-        TabItem(icon: Icons.favorite, title: 'WishList'),
-        TabItem(icon: Icons.card_travel, title: 'Booking'),
-        TabItem(icon: Icons.person, title: 'Account'),
+        TabItem(icon: Icons.search, title: TenantKeys.navSearch.tr()),
+        TabItem(icon: Icons.favorite, title: TenantKeys.navWishlist.tr()),
+        TabItem(icon: Icons.card_travel, title: TenantKeys.navBooking.tr()),
+        TabItem(icon: Icons.person, title: TenantKeys.navAccount.tr()),
       ],
       onTap: (index) async {
         if (index == 0) {
