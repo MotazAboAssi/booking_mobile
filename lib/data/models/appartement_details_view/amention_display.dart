@@ -2,6 +2,7 @@ import 'package:booking/data/models/appartement_details_view/amention_card.dart'
 import 'package:booking/data/models/appartement_details_view/amention_display_dialog.dart';
 import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
@@ -12,7 +13,7 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
       arr.add(
         AmentionCard(
           icon: amentions[i - 1].icon,
-          title: amentions[i - 1].title,
+          title: amentions[i - 1].titleKey.tr(),
           fontSize: 1,
           iconsSize: 2,
         ),
@@ -37,7 +38,7 @@ List<Widget> amentionDisplay(BuildContext context, List<int> amention) {
       arr.add(
         AmentionCard(
           icon: amentions[i - 1].icon,
-          title: amentions[i - 1].title,
+          title: amentions[i - 1].titleKey.tr(),
           fontSize: 1,
           iconsSize: 2,
         ),

@@ -48,7 +48,6 @@
           "lable": "Phone No",
           "hint_text": "+9639********"
         },
-
         "input_password": "Password",
         "input_first_name": {
           "lable": "First Name",
@@ -166,6 +165,13 @@
     }
   },
   "landlord": {
+    "profileView": {
+      "logout": {
+        "AreYouSure": "Are You sure?",
+        "yes": "Confirme",
+        "no": " Discard"
+      }
+    },
     "dashboard": {
       "title": "Dashboard",
       "stats": {
@@ -177,7 +183,8 @@
         "title": "New Requests",
         "total_cost": "Total Cost",
         "status": "Status : "
-      }
+      },
+      "noApartments":"No Request Booking 🏠 Apartments yet"
     },
     "bottom_nav": {
       "dashboard": "Dashboard",
@@ -203,17 +210,39 @@
         "button": "Upload"
       },
       "fields": {
+        "title": "Basic Details",
         "country": "Country",
         "city": "City",
         "rooms": "Rooms number",
         "space": "Space m²",
         "price": "Price per month (Lsy)",
-        "description": "Description"
+        "description": "Description",
+        "Amenities": "Amenities",
+        "discripeHint": "discripe Your Appartment"
       },
       "actions": {
         "discard": "Discard",
         "publish": "Publish"
       }
     }
-  }
+  },
+
+  "amenities": {
+    "tv": "TV",
+    "wifi": "Wi-Fi",
+    "air_con": "Air Conditioning",
+    "lift": "Lift",
+    "heating": "Heating",
+    "washing_machine": "Washing Machine",
+    "dryer": "Dryer",
+    "doorman": "Doorman",
+    "furnished": "Furnished",
+    "pool": "Pool",
+    "private_bathroom": "Private Bathroom",
+    "natural_light": "Natural Light",
+    "garden": "Garden",
+    "balcony": "Balcony & Terrace",
+    "wheelchair": "Wheelchair Friendly"
+}
+
 }

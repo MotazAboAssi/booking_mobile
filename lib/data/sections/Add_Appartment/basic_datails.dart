@@ -12,6 +12,8 @@ import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_
 import 'package:booking/types/apartment_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class BasicDatails extends StatefulWidget {
   const BasicDatails({super.key});
@@ -60,7 +62,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "Country",
+                        LandlordKeys.fieldCountry.tr(),
                         style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
@@ -108,7 +110,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "City",
+                        LandlordKeys.fieldCity.tr(),
                         style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
@@ -148,7 +150,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "Rooms number",
+                        LandlordKeys.fieldRooms.tr(),
                         style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
@@ -163,7 +165,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "Space m\u00B2",
+                        LandlordKeys.fieldSpace.tr(),
                         style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
@@ -178,7 +180,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "Price per month in Lsy",
+                        LandlordKeys.fieldPrice.tr(),
                         style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
@@ -193,7 +195,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "Description",
+                        LandlordKeys.fieldDescription.tr(),
                         style: TextStyle(color: context.appTheme.secondary),
                       ),
                     ],
@@ -206,7 +208,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                   Row(
                     children: [
                       Text(
-                        "Amenities",
+                        LandlordKeys.fieldAmenities.tr(),
                         style: TextStyle(
                           color: context.appTheme.secondary,
                           fontWeight: FontWeight.bold,
@@ -273,7 +275,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                                   const SizedBox(width: 15),
                                   Expanded(
                                     child: Text(
-                                      item.title,
+                                      item.titleKey.tr(),
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: isSelected
@@ -328,7 +330,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      "Discard",
+                      LandlordKeys.actionDiscard.tr(),
                       style: TextStyle(
                         color: context.appTheme.thirdly,
                         fontSize: rem(1),
@@ -435,7 +437,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                         } else {
                           return Text(
                             // apartmentCopy != null ? "Save" :
-                            "Publish",
+                            LandlordKeys.actionPublish.tr(),
                             style: TextStyle(
                               color: context.appTheme.thirdly,
                               fontSize: rem(1),
@@ -494,7 +496,7 @@ class InputDescription extends StatelessWidget {
       initialValue: apartmentCopy?.description ?? '',
       maxLines: 4,
       decoration: InputDecoration(
-        hintText: "Describe your apartment",
+        hintText: LandlordKeys.discripeHint.tr(),
         border: OutlineInputBorder(),
       ),
       validator: (v) {

@@ -12,7 +12,6 @@ class LandLordDashboard extends StatelessWidget {
       appBar: appbarLandLordDashboard(context),
       body: LandlordDashboard(),
       bottomNavigationBar: CustomeBottomNavigationBarForLandlord(index: 0),
-      // bottomNavigationBar: LandLordDashboardBottomNavigationBar(),
     );
   }
 }

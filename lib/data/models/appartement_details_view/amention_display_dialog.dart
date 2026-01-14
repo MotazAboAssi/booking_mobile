@@ -1,5 +1,6 @@
 import 'package:booking/data/models/appartement_details_view/amention_card.dart';
 import 'package:booking/helper/constant/amentions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 Dialog amentionDisplayDialog(List<int> amention) {
@@ -20,8 +21,8 @@ Dialog amentionDisplayDialog(List<int> amention) {
           ),
           itemCount: amention.length,
           itemBuilder: (BuildContext context, int index) => AmentionCard(
-            icon: amentions[amention[index]-1].icon,
-            title: amentions[amention[index]-1].title,
+            icon: amentions[amention[index] - 1].icon,
+            title: amentions[amention[index] - 1].titleKey.tr(),
             fontSize: 0.7,
             iconsSize: 2,
           ),

@@ -165,6 +165,13 @@
     }
   },
   "landlord": {
+    "profileView": {
+      "logout": {
+        "AreYouSure": "هل أنت متأكد؟",
+        "yes": "تأكيد",
+        "no": " إالغاء"
+      }
+    },
     "dashboard": {
       "title": "لوحة التحكم",
       "stats": {
@@ -176,7 +183,8 @@
         "title": "طلبات جديدة",
         "total_cost": "التكلفة الإجمالية",
         "status": "الحالة : "
-      }
+      },
+      "noApartments":"لا يوجد طلبات حجز بعد🏠"
     },
     "bottom_nav": {
       "dashboard": "الرئيسية",
@@ -202,17 +210,40 @@
         "button": "تحميل"
       },
       "fields": {
+        "title": "المعلومات الأساسية",
         "country": "البلد",
         "city": "المدينة",
         "rooms": "عدد الغرف",
         "space": "المساحة م²",
         "price": "السعر الشهري (ل.س)",
-        "description": "الوصف"
+        "description": "الوصف",
+        "Amenities": "الميزات",
+        "discripeHint": "صف المنزل المراد اضافته"
       },
       "actions": {
         "discard": "تجاهل",
         "publish": "نشر"
       }
     }
+  },
+  "amenities": {
+    "tv": "تلفاز",
+    "wifi": "واي فاي",
+    "air_con": "مكيف",
+    "lift": "مصعد",
+    "heating": "تدفئة",
+    "washing_machine": "غسالة",
+    "dryer": "نشافة",
+    "doorman": "حارس",
+    "furnished": "مفروش",
+    "pool": "مسبح",
+    "private_bathroom": "حمام خاص",
+    "natural_light": "إضاءة طبيعية",
+    "garden": "حديقة",
+    "balcony": "شرفة وتراس",
+    "wheelchair": "مناسب لذوي الإعاقة"
   }
+
 }
+
+
