@@ -11,7 +11,8 @@ AppBar addApartmentAppBar(BuildContext context) {
   return AppBar(
     leading: ButtonLocalization(),
     title: Text(
-      LandlordKeys.addApartmentTitle.tr(),
+      ModalRoute.of(context)?.settings.arguments == null ?
+      LandlordKeys.addApartmentTitle.tr():LandlordKeys.updateApartmentTitle.tr(),
       style: TextStyle(fontSize: rem(1)),
     ),
     centerTitle: true,

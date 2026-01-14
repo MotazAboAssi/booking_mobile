@@ -45,6 +45,10 @@ class _BasicDatailsState extends State<BasicDatails> {
     if (ModalRoute.of(context)?.settings.arguments != null) {
       apartmentCopy =
           (ModalRoute.of(context)!.settings.arguments as Map)['apartment'];
+      selectedAmenities = apartmentCopy!.features;
+      // for (final int feature in apartmentCopy!.features) {
+      //   selectedAmenities.add(feature);
+      // }
     }
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
@@ -205,6 +209,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                     descriptionController: descriptionController,
                   ),
                   SizedBox(height: 10),
+                  // Amentions
                   Row(
                     children: [
                       Text(
@@ -436,8 +441,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                           );
                         } else {
                           return Text(
-                            // apartmentCopy != null ? "Save" :
-                            LandlordKeys.actionPublish.tr(),
+                              apartmentCopy == null
+                                    ? 
+                            LandlordKeys.actionPublish.tr():LandlordKeys.actionUpdate.tr(),
                             style: TextStyle(
                               color: context.appTheme.thirdly,
                               fontSize: rem(1),

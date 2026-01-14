@@ -202,7 +202,8 @@
       }
     },
     "add_apartment": {
-      "title": "Add Apartment",
+      "title_add": "Add Apartment",
+      "title_update": "Update Apartment",
       "photos": {
         "title": "Photos",
         "label": "Add Photos",
@@ -222,7 +223,8 @@
       },
       "actions": {
         "discard": "Discard",
-        "publish": "Publish"
+        "publish": "Publish",
+        "update": "Update"
       }
     }
   },
