@@ -1,4 +1,3 @@
-import 'package:booking/types/apartment_unavailable_date.dart';
 import 'package:booking/types/range_unavailable_date.dart';
 
 class ShowUnavailabaleDateStates {}

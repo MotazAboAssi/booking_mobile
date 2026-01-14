@@ -9,8 +9,6 @@ import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
 import 'package:booking/presentation/cubit/locale/locale_cubit.dart';
-import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
-import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
 import 'package:booking/presentation/views/tenant/profile_view_tenant.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_landlord.dart';
 import 'package:booking/services/http_request.dart';

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/keys_localization/tenant_key.dart';
@@ -16,7 +15,6 @@ import 'package:booking/services/http_request.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class TenantView extends StatefulWidget {
   const TenantView({super.key});
@@ -28,6 +26,7 @@ class TenantView extends StatefulWidget {
 class _TenantViewState extends State<TenantView> {
   late final Timer _timer;
 
+  @override
   void initState() {
     super.initState();
     context.read<GetAllNotificationsCubit>().fetch();

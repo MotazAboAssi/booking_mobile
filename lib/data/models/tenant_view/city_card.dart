@@ -1,9 +1,7 @@
-import 'package:booking/helper/constant/cities_with_towns.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/convert_string_to_list_of_string.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 

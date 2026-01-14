@@ -1,8 +1,5 @@
 import 'package:booking/data/models/appartement_details_view/amention_model.dart';
 import 'package:flutter/material.dart';
-import 'package:booking/helper/keys_localization/landlord_key.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 
 const List<AmentionModel> amentions = [
   AmentionModel(id: 1, icon: Icons.tv, titleKey: 'amenities.tv'),

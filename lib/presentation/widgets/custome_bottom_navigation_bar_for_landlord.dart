@@ -1,6 +1,5 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
-import 'package:booking/helper/methods/navigate_to.dart';
 import 'package:booking/helper/keys_localization/landlord_key.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
