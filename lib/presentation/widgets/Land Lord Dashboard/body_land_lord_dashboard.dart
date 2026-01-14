@@ -1,11 +1,13 @@
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/display_booking_apartment/display_booking_apartment_states.dart';
 import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_cubit.dart';
 import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_landlord/fetch_all_apartment_for_landlord_states.dart';
 import 'package:booking/types/booking_apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -97,7 +99,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
   Widget build(BuildContext context) {
     final cards = [
       _Card(
-        'Appartment count',
+        LandlordKeys.dashboardStatsCount.tr(),
         '12',
         Icons.apartment,
         bloc: FetchAllApartmentForLandlordCubit(),
@@ -108,7 +110,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       ),
 
       _Card(
-        'Rented',
+        LandlordKeys.dashboardStatsRented.tr(),
         '8',
         Icons.check_circle,
         onTap: () async {
@@ -121,7 +123,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       ),
 
       _Card(
-        'Not Rented',
+        LandlordKeys.dashboardStatsNotRented.tr(),
         '4',
         Icons.cancel,
         onTap: () {
@@ -156,9 +158,9 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           ],
         ),
         SizedBox(height: 24),
-        const Text(
-          'New Requests',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Text(
+          LandlordKeys.dashboardRequestsTitle.tr(),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Expanded(
@@ -182,7 +184,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                     return bookings.isEmpty
                         ? Center(
                             child: Text(
-                              "No Request Booking 🏠 Apartments yet",
+                              LandlordKeys.noApartments.tr(),
                               style: TextStyle(
                                 fontSize: rem(1),
                                 fontWeight: FontWeight.bold,

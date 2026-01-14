@@ -1,24 +1,43 @@
 import 'package:booking/data/models/appartement_details_view/amention_model.dart';
 import 'package:flutter/material.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
-final List<AmentionModel> amentions = [
-  AmentionModel(icon: Icons.tv, title: "TV", id: 1),
-  AmentionModel(icon: Icons.wifi, title: "Wifi", id: 2),
-  AmentionModel(icon: Icons.ac_unit, title: "Air Con", id: 3),
-  AmentionModel(icon: Icons.elevator, title: "Lift", id: 4),
-  AmentionModel(icon: Icons.local_fire_department, title: "Heating", id: 5),
+const List<AmentionModel> amentions = [
+  AmentionModel(id: 1, icon: Icons.tv, titleKey: 'amenities.tv'),
+  AmentionModel(id: 2, icon: Icons.wifi, titleKey: 'amenities.wifi'),
+  AmentionModel(id: 3, icon: Icons.ac_unit, titleKey: 'amenities.air_con'),
+  AmentionModel(id: 4, icon: Icons.elevator, titleKey: 'amenities.lift'),
   AmentionModel(
-    icon: Icons.local_laundry_service,
-    title: "Washing Machine",
-    id: 6,
+    id: 5,
+    icon: Icons.local_fire_department,
+    titleKey: 'amenities.heating',
   ),
-  AmentionModel(icon: Icons.dry, title: "Dryer", id: 7),
-  AmentionModel(icon: Icons.security, title: "Doorman", id: 8),
-  AmentionModel(icon: Icons.chair_alt, title: "Furnished", id: 9),
-  AmentionModel(icon: Icons.pool, title: "Pool", id: 10),
-  AmentionModel(icon: Icons.bathtub, title: "Private Bathroom", id: 11),
-  AmentionModel(icon: Icons.wb_sunny, title: "Natural Light", id: 12),
-  AmentionModel(icon: Icons.park, title: "Garden", id: 13),
-  AmentionModel(icon: Icons.balcony, title: "Balcony & Terrace", id: 14),
-  AmentionModel(icon: Icons.accessible, title: "Wheelchair Friendly", id: 15),
+  AmentionModel(
+    id: 6,
+    icon: Icons.local_laundry_service,
+    titleKey: 'amenities.washing_machine',
+  ),
+  AmentionModel(id: 7, icon: Icons.dry, titleKey: 'amenities.dryer'),
+  AmentionModel(id: 8, icon: Icons.security, titleKey: 'amenities.doorman'),
+  AmentionModel(id: 9, icon: Icons.chair_alt, titleKey: 'amenities.furnished'),
+  AmentionModel(id: 10, icon: Icons.pool, titleKey: 'amenities.pool'),
+  AmentionModel(
+    id: 11,
+    icon: Icons.bathtub,
+    titleKey: 'amenities.private_bathroom',
+  ),
+  AmentionModel(
+    id: 12,
+    icon: Icons.wb_sunny,
+    titleKey: 'amenities.natural_light',
+  ),
+  AmentionModel(id: 13, icon: Icons.park, titleKey: 'amenities.garden'),
+  AmentionModel(id: 14, icon: Icons.balcony, titleKey: 'amenities.balcony'),
+  AmentionModel(
+    id: 15,
+    icon: Icons.accessible,
+    titleKey: 'amenities.wheelchair',
+  ),
 ];

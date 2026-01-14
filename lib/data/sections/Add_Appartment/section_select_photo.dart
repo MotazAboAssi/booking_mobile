@@ -7,8 +7,11 @@ import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/image_from_apartment.dart';
 import 'package:flutter/material.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -123,14 +126,14 @@ class UIAddPictures extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Add Photos",
+                  LandlordKeys.addPhotosLabel.tr(),
                   style: TextStyle(
                     fontSize: rem(1),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "Upload at more 5 photos of your apartment",
+                  LandlordKeys.addPhotosInstruction.tr(),
                   style: TextStyle(
                     fontSize: rem(0.9),
                     color: context.appTheme.secondary,
@@ -143,7 +146,7 @@ class UIAddPictures extends StatelessWidget {
                     borderRadius: BorderRadius.circular(rem(0.4)),
                   ),
                   child: Text(
-                    "Uplaod",
+                    LandlordKeys.addPhotosButton.tr(),
                     style: TextStyle(color: context.appTheme.thirdly),
                   ),
                 ),

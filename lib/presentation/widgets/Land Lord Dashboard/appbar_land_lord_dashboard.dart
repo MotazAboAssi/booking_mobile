@@ -5,11 +5,16 @@ import 'package:booking/presentation/cubit/landlord/fetch_all_apartment_for_land
 import 'package:flutter/material.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 AppBar appbarLandLordDashboard(BuildContext context) {
   return AppBar(
     forceMaterialTransparency: true,
-    title: Text("Dashboard", style: TextStyle(fontSize: rem(1))),
+    title: Text(
+      LandlordKeys.dashboardTitle.tr(),
+      style: TextStyle(fontSize: rem(1)),
+    ),
     centerTitle: true,
     leading: Tooltip(
       message: 'new apartment',
@@ -22,7 +27,7 @@ AppBar appbarLandLordDashboard(BuildContext context) {
       Tooltip(
         message: 'refresh new requests',
         child: IconButton(
-          onPressed: ()  {
+          onPressed: () {
             final displayBookingApartment =
                 BlocProvider.of<DisplayBookingApartmentCubit>(context);
             displayBookingApartment.displayBookingApartment();

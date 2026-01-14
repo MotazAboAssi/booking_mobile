@@ -8,10 +8,13 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_cubit.dart';
 import 'package:booking/presentation/cubit/fetch_user/fetch_user_states.dart';
+import 'package:booking/presentation/cubit/locale/locale_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_cubit.dart';
 import 'package:booking/presentation/cubit/toggle_color/toggle_color_states.dart';
 import 'package:booking/presentation/widgets/custome_bottom_navigation_bar_for_landlord.dart';
 import 'package:booking/services/http_request.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -51,6 +54,7 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
           },
         ),
         actions: [
+          ButtonLocalization(),
           IconButton(
             style: ElevatedButton.styleFrom(iconColor: context.appTheme.error),
             onPressed: () async {
@@ -65,7 +69,7 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "Are you sure ?",
+                            LandlordKeys.AreYouSure.tr(),
                             style: TextStyle(
                               fontSize: rem(1.5),
                               fontWeight: FontWeight.bold,
@@ -83,13 +87,13 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
                                     printYallow(e.toString());
                                   }
                                 },
-                                child: Text("Ok"),
+                                child: Text(LandlordKeys.ConfirmeLogout.tr()),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text("Discard"),
+                                child: Text(LandlordKeys.DiscardLogout.tr()),
                               ),
                             ],
                           ),
@@ -104,7 +108,7 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
           ),
         ],
         title: Text(
-          "My Account",
+          LandlordKeys.dashboardTitle.tr(),
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -179,4 +183,22 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
   //   if()
   //   return CustomeBottomNavigationBarForTenant(index: 3);
   // }
+}
+
+class ButtonLocalization extends StatelessWidget {
+  const ButtonLocalization({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LocaleCubit, Locale>(
+      builder: (context, state) {
+        return IconButton(
+          onPressed: () {
+            BlocProvider.of<LocaleCubit>(context).toggleLanguage(context);
+          },
+          icon: Icon(Icons.language, color: context.appTheme.primarye),
+        );
+      },
+    );
+  }
 }
