@@ -1,7 +1,6 @@
 import 'package:booking/data/models/auth/form/custom_snak_bar.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
-import 'package:booking/helper/constant/amentions.dart';
 import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';

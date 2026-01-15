@@ -3,7 +3,6 @@ import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
-import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_states.dart';
 import 'package:booking/services/http_request.dart';

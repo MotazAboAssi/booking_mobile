@@ -3,7 +3,6 @@ import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_cubit.dart';
-import 'package:booking/presentation/cubit/landlord/api_apartment/api_apartment_states.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/image_from_apartment.dart';
 import 'package:flutter/material.dart';

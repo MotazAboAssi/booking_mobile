@@ -10,7 +10,8 @@ import 'package:easy_localization/easy_localization.dart';
 AppBar addApartmentAppBar(BuildContext context) {
   return AppBar(
     title: Text(
-      LandlordKeys.addApartmentTitle.tr(),
+      ModalRoute.of(context)?.settings.arguments == null ?
+      LandlordKeys.addApartmentTitle.tr():LandlordKeys.updateApartmentTitle.tr(),
       style: TextStyle(fontSize: rem(1)),
     ),
     centerTitle: true,

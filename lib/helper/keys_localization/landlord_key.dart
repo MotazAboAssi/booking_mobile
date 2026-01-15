@@ -39,7 +39,8 @@ class LandlordKeys {
       'landlord.request_detail.actions.reject';
 
   // Add Apartment View
-  static const String addApartmentTitle = 'landlord.add_apartment.title';
+  static const String addApartmentTitle = 'landlord.add_apartment.title_add';
+  static const String updateApartmentTitle = 'landlord.add_apartment.title_update';
   static const String addPhotosTitle = 'landlord.add_apartment.photos.title';
   static const String addPhotosLabel = 'landlord.add_apartment.photos.label';
   static const String addPhotosInstruction =
@@ -63,5 +64,6 @@ class LandlordKeys {
   // Add Apartment Actions
   static const String actionDiscard = 'landlord.add_apartment.actions.discard';
   static const String actionPublish = 'landlord.add_apartment.actions.publish';
+  static const String actionUpdate = 'landlord.add_apartment.actions.update';
   static const String Tv = 'landlord.Amentions.tv';
 }

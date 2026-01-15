@@ -203,7 +203,8 @@
       }
     },
     "add_apartment": {
-      "title": "إضافة شقة",
+      "title_add": "إضافة شقة",
+      "title_update": "تحديث شقة",
       "photos": {
         "title": "الصور",
         "label": "أضف صوراً",
@@ -223,7 +224,8 @@
       },
       "actions": {
         "discard": "تجاهل",
-        "publish": "نشر"
+        "publish": "نشر",
+        "update" : "تحديث"
       }
     }
   },
