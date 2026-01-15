@@ -1,13 +1,16 @@
 import 'dart:developer';
 
+import 'package:booking/data/sections/Add_Appartment/basic_datails.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -134,7 +137,7 @@ class AppartementCard extends StatelessWidget {
                                           },
                                     ),
                                     Text(
-                                      "${apartment?.city}, ${apartment?.town}",
+                                      "${'governorates.${normalizeKey(apartment?.city ?? '')}'.tr()} , ${'cities.${normalizeKey(apartment?.town ?? '')}'.tr()} ",
                                       style: TextStyle(
                                         fontSize: rem(1),
                                         color: context.appTheme.secondary,
@@ -153,7 +156,7 @@ class AppartementCard extends StatelessWidget {
                                           color: context.appTheme.secondary,
                                         ),
                                         Text(
-                                          "${apartment?.rooms} rooms",
+                                          "${apartment?.rooms} ${TenantKeys.filterRoomsLabel.tr()}",
                                           style: TextStyle(
                                             color: context.appTheme.secondary,
                                           ),
@@ -186,7 +189,7 @@ class AppartementCard extends StatelessWidget {
                                         color: context.appTheme.fourthly,
                                       ),
                                     ),
-                                    Text(" / month"),
+                                    Text(TenantKeys.filterPriceLabel.tr()),
                                   ],
                                 ),
                               ],

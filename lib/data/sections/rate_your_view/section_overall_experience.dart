@@ -1,5 +1,6 @@
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/rate_your_stay/rate_your_stay_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,7 +13,7 @@ class SectionOverallExperience extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "Overall Experience",
+          'rate.overall_experience'.tr(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: rem(1.5)),
         ),
 
@@ -52,7 +53,7 @@ class SectionOverallExperience extends StatelessWidget {
           },
           onRatingUpdate: (rating) {
             final pov = BlocProvider.of<RateYourStayCubit>(context).state.pov;
-            pov.overallExperlence =  rating.floor();
+            pov.overallExperlence = rating.floor();
           },
         ),
       ],

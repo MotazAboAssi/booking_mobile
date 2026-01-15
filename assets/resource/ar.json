@@ -182,9 +182,10 @@
       "requests": {
         "title": "طلبات جديدة",
         "total_cost": "التكلفة الإجمالية",
-        "status": "الحالة : "
+        "status": "الحالة : ",
+        "idApartment": "معرف الشقة"
       },
-      "noApartments":"لا يوجد طلبات حجز بعد🏠"
+      "noApartments": "لا يوجد طلبات حجز بعد🏠"
     },
     "bottom_nav": {
       "dashboard": "الرئيسية",
@@ -242,8 +243,52 @@
     "garden": "حديقة",
     "balcony": "شرفة وتراس",
     "wheelchair": "مناسب لذوي الإعاقة"
+  },
+  "governorates": {
+    "as_suwayda": "السويداء",
+    "damascus": "دمشق",
+    "aleppo": "حلب",
+    "homs": "حمص",
+    "latakia": "اللاذقية"
+  },
+  "cities": {
+    "as_suwayda_al_balad": "السويداء البلد",
+    "shahba": "شهبا",
+    "nejran": "نجران",
+    "salkhad": "صلخد",
+    "karrasa": "كَرّاسة",
+    "mezzeh": "المزة",
+    "baramkeh": "البرامكة",
+    "kafr_sousa": "كفر سوسة",
+    "qassaa": "القصاع",
+    "rukn_al_din": "ركن الدين",
+    "jamiliyah": "الجميلية",
+    "al_sukkari": "السكري",
+    "seif_al_dawla": "سيف الدولة",
+    "hamdaniyah": "الحمدانية",
+    "al_shahbaa": "الشهباء",
+    "al_waer": "الوعر",
+    "al_zahraa": "الزهراء",
+    "bab_amr": "باب عمرو",
+    "karm_al_loz": "كرم اللوز",
+    "al_qusour": "القصور",
+    "al_saliba": "الصليبة",
+    "al_raml_al_janoubi": "الرمل الجنوبي",
+    "al_raml_al_shamali": "الرمل الشمالي",
+    "bsnada": "بسنادا",
+    "agriculture_project": "مشروع الزراعة"
+  },
+  "rate": {
+    "overall_experience": "التجربة العامة",
+    "share_more_details": "شاركنا المزيد من التفاصيل",
+    "share_details_hint": "كيف كانت تجربة تسجيل الدخول؟ هل كان الشقة كما هو موصوف؟ ما الذي أعجبك أو ترى أنه يحتاج إلى تحسين؟",
+    "features": {
+      "cleanliness": "النظافة",
+      "location": "الموقع",
+      "communication": "التواصل",
+      "value": "القيمة مقابل السعر"
+},
+  "submit_review": "إرسال التقييم"
+
   }
-
 }
-
-

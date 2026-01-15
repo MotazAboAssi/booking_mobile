@@ -6,6 +6,7 @@ import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_cubit.dart';
 import 'package:booking/presentation/cubit/filter_view/filter_view_states.dart';
+import 'package:booking/presentation/views/tenant/filter_view.dart';
 import 'package:booking/types/filter_type.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,10 @@ class _BodyFilterViewState extends State<BodyFilterView> {
               hint: Text(TenantKeys.filterCityPlaceholder.tr()),
               items: citiesByGovernorate[governorates[indexCity]]!
                   .map(
-                    (city) => DropdownMenuItem(value: city, child: Text(city)),
+                    (city) => DropdownMenuItem(
+                      value: city,
+                      child: Text('cities.${normalizeKey(city)}'.tr()),
+                    ),
                   )
                   .toList(),
               onChanged: (value) {

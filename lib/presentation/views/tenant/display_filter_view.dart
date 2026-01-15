@@ -1,6 +1,8 @@
 import 'package:booking/data/models/tenant_view/apartement_card.dart';
+import 'package:booking/helper/keys_localization/tenant_key.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DisplayFilterView extends StatelessWidget {
@@ -14,7 +16,7 @@ class DisplayFilterView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Filter',
+          TenantKeys.filterTitle.tr(),
           style: TextStyle(fontSize: rem(1.5), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

@@ -6,9 +6,11 @@ import 'package:booking/data/sections/appartement_details_view/section_location.
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_group_of_input_field.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_image_picker_profile.dart';
+import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
+import 'package:booking/helper/keys_localization/landlord_key.dart';
 import 'package:booking/helper/methods/back_to.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/test/print.dart';
@@ -21,6 +23,7 @@ import 'package:booking/presentation/widgets/swiper_images.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:booking/types/user_register_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -95,7 +98,7 @@ class BodyDetailRequestView extends StatelessWidget {
           slivers: [
             SliverToBoxAdapter(
               child: Text(
-                'Apartment',
+                LandlordKeys.requestDetailApartment.tr(),
                 style: TextStyle(
                   fontSize: rem(1.5),
                   fontWeight: FontWeight.bold,
@@ -136,7 +139,7 @@ class BodyDetailRequestView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Price For Month :",
+                          "${LandlordKeys.fieldPrice.tr()} :",
                           style: TextStyle(
                             fontSize: rem(1.5),
                             fontWeight: FontWeight.bold,
@@ -168,7 +171,7 @@ class BodyDetailRequestView extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                'Tenant',
+                                LandlordKeys.requestDetailTenant.tr(),
                                 style: TextStyle(
                                   fontSize: rem(1.5),
                                   fontWeight: FontWeight.bold,
@@ -191,21 +194,21 @@ class BodyDetailRequestView extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Request',
+                            LandlordKeys.requestDetailSection.tr(),
                             style: TextStyle(
                               fontSize: rem(1.5),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Stay : ${book?.startDate.toIso8601String().split('T')[0]} - ${book?.endDate.toIso8601String().split('T')[0]}',
+                            '${LandlordKeys.requestDetailStay.tr()} ${book?.startDate.toIso8601String().split('T')[0]} - ${book?.endDate.toIso8601String().split('T')[0]}',
                             style: TextStyle(
                               fontSize: rem(1),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'total Cost : ${book?.totalCost} \$',
+                            '${LandlordKeys.requestDetailTotalCost.tr()} : ${book?.totalCost} \$',
                             style: TextStyle(
                               fontSize: rem(1),
                               fontWeight: FontWeight.bold,
@@ -295,7 +298,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             )
                           : Text(
-                              'Accept',
+                              LandlordKeys.requestActionAccept.tr(),
                               style: TextStyle(
                                 color: context.appTheme.thirdly,
                                 fontWeight: FontWeight.bold,
@@ -333,7 +336,7 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             )
                           : Text(
-                              'Rejected',
+                              LandlordKeys.requestActionReject.tr(),
                               style: TextStyle(
                                 color: context.appTheme.thirdly,
                                 fontWeight: FontWeight.bold,

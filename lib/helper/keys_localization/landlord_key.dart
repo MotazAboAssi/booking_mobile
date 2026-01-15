@@ -12,6 +12,8 @@ class LandlordKeys {
       'landlord.dashboard.requests.total_cost';
   static const String dashboardRequestsStatus =
       'landlord.dashboard.requests.status';
+  static const String dashboardRequestsApartmentId =
+      'landlord.dashboard.requests.idApartment';
 
   // Bottom Navigation
   static const String navDashboard = 'landlord.bottom_nav.dashboard';

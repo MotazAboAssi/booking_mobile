@@ -68,7 +68,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   apartmentCopy?.city != null
-                      ? Text(apartmentCopy!.city)
+                      ? Text(
+                          "${'governorates.${normalizeKey(apartmentCopy!.city)}'.tr()}",
+                        )
                       : DropdownButtonFormField(
                           initialValue: selectedCountry,
                           validator: (value) {
@@ -84,8 +86,12 @@ class _BasicDatailsState extends State<BasicDatails> {
 
                           items: governorates
                               .map(
-                                (e) =>
-                                    DropdownMenuItem(value: e, child: Text(e)),
+                                (e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    "${'governorates.${normalizeKey(e)}'.tr()}",
+                                  ),
+                                ),
                               )
                               .toList(),
                           onChanged: (String? value) {
@@ -97,7 +103,7 @@ class _BasicDatailsState extends State<BasicDatails> {
 
                               // update cities list based on country
                               cities = citiesByGovernorate[value]!;
-
+                              print(value);
                               // IMPORTANT: reset city
                               selectedCity = null;
                               cityController.clear();
@@ -116,7 +122,9 @@ class _BasicDatailsState extends State<BasicDatails> {
                     ],
                   ),
                   apartmentCopy?.town != null
-                      ? Text(apartmentCopy!.town)
+                      ? Text(
+                          "${'cities.${normalizeKey(apartmentCopy!.town)}'.tr()} ",
+                        )
                       : DropdownButtonFormField<String>(
                           initialValue: selectedCity,
                           validator: (value) {
@@ -133,7 +141,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                               .map(
                                 (e) => DropdownMenuItem<String>(
                                   value: e,
-                                  child: Text(e),
+                                  child: Text('cities.${normalizeKey(e)}'.tr()),
                                 ),
                               )
                               .toList(),
@@ -141,6 +149,7 @@ class _BasicDatailsState extends State<BasicDatails> {
                             setState(() {
                               selectedCity = value;
                               cityController.text = value ?? '';
+                              print(value);
                             });
                           },
                         ),
@@ -645,4 +654,11 @@ class InputRoomNumver extends StatelessWidget {
       },
     );
   }
+}
+
+String normalizeKey(String value) {
+  return value
+      .toLowerCase()
+      .replaceAll('&', 'and')
+      .replaceAll(RegExp(r'[\s\-]+'), '_');
 }

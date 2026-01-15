@@ -4,25 +4,19 @@ List<String> governorates = [
   'Damascus',
   'Aleppo',
   'Homs',
-  'Latakia'
+  'Latakia',
 ];
 
 // Map: Governorate -> List of Cities
 Map<String, List<String>> citiesByGovernorate = {
-    'As Suwayda': [
+  'As Suwayda': [
     'As Suwayda Al-Balad',
     'Shahba',
     'Nejran',
     'Salkhad',
     'Karrasa',
   ],
-  'Damascus': [
-    'Mezzeh',
-    'Baramkeh',
-    'Kafr Sousa',
-    'Qassaa',
-    'Rukn al-Din',
-  ],
+  'Damascus': ['Mezzeh', 'Baramkeh', 'Kafr Sousa', 'Qassaa', 'Rukn al-Din'],
   'Aleppo': [
     'Jamiliyah',
     'Al-Sukkari',
@@ -30,13 +24,7 @@ Map<String, List<String>> citiesByGovernorate = {
     'Hamdaniyah',
     'Al-Shahbaa',
   ],
-  'Homs': [
-    'Al-Waer',
-    'Al-Zahraa',
-    'Bab Amr',
-    'Karm Al-Loz',
-    'Al-Qusour',
-  ],
+  'Homs': ['Al-Waer', 'Al-Zahraa', 'Bab Amr', 'Karm Al-Loz', 'Al-Qusour'],
   'Latakia': [
     'Al-Saliba',
     'Al-Raml Al-Janoubi',

@@ -4,8 +4,10 @@ import 'package:booking/helper/constant/app_theme.dart';
 import 'package:booking/helper/methods/fetch_image_from_db.dart';
 import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/helper/methods/to_capitalize.dart';
+import 'package:booking/presentation/views/tenant/filter_view.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DispalyResaultCategory extends StatelessWidget {
@@ -75,7 +77,7 @@ class DispalyResaultCategory extends StatelessWidget {
                                     children: [
                                       Text(
                                         toCapitalize(
-                                          '${apartments[index].city} , ${apartments[index].town}',
+                                          "${'cities.${normalizeKey(apartments[index].town ?? "")}'.tr()} - ${'governorates.${normalizeKey(apartments[index].city ?? "")}'.tr()}",
                                         ),
                                         style: TextStyle(
                                           fontSize: rem(1.5),

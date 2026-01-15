@@ -403,6 +403,8 @@ class HttpRequest {
       'description': apartment.description,
       'features': apartment.features.toString(),
     });
+    printWhite(apartment.city);
+    printWhite(apartment.town);
     try {
       Response response = await dio.post(
         "/apartment",

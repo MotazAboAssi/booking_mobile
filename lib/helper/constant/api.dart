@@ -6,6 +6,6 @@
 final String ip4 = '10.42.0.1';
 
 final String port = "8000";
-final String baseURL = 'http://$ip4:$port';
+final String baseURL = 'http://localhost:$port';
 
-final String api = "$baseURL/api";
+final String api = "http://localhost:8000/api";

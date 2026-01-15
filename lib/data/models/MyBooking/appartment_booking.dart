@@ -9,6 +9,7 @@ import 'package:booking/helper/methods/rem.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_states.dart';
 import 'package:booking/presentation/cubit/my_booking_view/my_booking_view_cubit.dart';
+import 'package:booking/presentation/views/tenant/filter_view.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
@@ -36,7 +37,7 @@ class Appartmentbooking extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(color: context.appTheme.primarye),
-          borderRadius: BorderRadiusGeometry.circular(rem(1))
+          borderRadius: BorderRadiusGeometry.circular(rem(1)),
         ),
         color: context.appTheme.thirdly,
         elevation: 0,
@@ -117,7 +118,8 @@ class Appartmentbooking extends StatelessWidget {
                                 color: context.appTheme.secondary,
                               ),
                               Text(
-                                "${apartment?.apartment.city} - ${apartment?.apartment.town}",
+                                "${'cities.${normalizeKey(apartment?.apartment.town ?? "")}'.tr()} - ${'governorates.${normalizeKey(apartment?.apartment.city ?? "")}'.tr()}",
+
                                 style: TextStyle(
                                   fontSize: rem(1),
                                   color: context.appTheme.secondary,
@@ -293,8 +295,6 @@ class PendingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-
     return Row(
       spacing: rem(0.5),
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -312,7 +312,6 @@ class PendingButton extends StatelessWidget {
 
                 final cubit = context.read<MyBookingViewCubit>();
                 cubit.getAllApartmentsBooking();
-                
               } else if (state is BookingApartmentFaild) {
                 customSnakBar(
                   margin: EdgeInsets.only(bottom: rem(4)),

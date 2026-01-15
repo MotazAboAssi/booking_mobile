@@ -417,14 +417,14 @@ class RequestModel extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'total cost : ${book?.totalCost} \$.',
+                    '${LandlordKeys.dashboardRequestsTotalCost.tr()} : ${book?.totalCost} \$.',
                     style: TextStyle(
                       fontSize: rem(1),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'id apartment : ${book?.apartmentID}',
+                    '${LandlordKeys.dashboardRequestsApartmentId.tr()} : ${book?.apartmentID}',
                     style: TextStyle(
                       fontSize: rem(1),
                       fontWeight: FontWeight.bold,
@@ -435,7 +435,7 @@ class RequestModel extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'status : ',
+                    '${LandlordKeys.dashboardRequestsStatus.tr()} ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(

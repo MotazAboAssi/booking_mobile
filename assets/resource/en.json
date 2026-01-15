@@ -141,8 +141,8 @@
       "owner": "Owner",
       "description": "Description",
       "amenities": "Amenities",
-      "review" : "Review",
-      "review_on" : "Review on",
+      "review": "Review",
+      "review_on": "Review on",
       "location": {
         "title": "Location",
         "not_available": "Not Available Location"
@@ -182,9 +182,10 @@
       "requests": {
         "title": "New Requests",
         "total_cost": "Total Cost",
-        "status": "Status : "
+        "status": "Status : ",
+        "idApartment": "Apartment ID"
       },
-      "noApartments":"No Request Booking 🏠 Apartments yet"
+      "noApartments": "No Request Booking 🏠 Apartments yet"
     },
     "bottom_nav": {
       "dashboard": "Dashboard",
@@ -226,7 +227,6 @@
       }
     }
   },
-
   "amenities": {
     "tv": "TV",
     "wifi": "Wi-Fi",
@@ -243,6 +243,52 @@
     "garden": "Garden",
     "balcony": "Balcony & Terrace",
     "wheelchair": "Wheelchair Friendly"
-}
-
+  },
+  "governorates": {
+    "as_suwayda": "As Suwayda",
+    "damascus": "Damascus",
+    "aleppo": "Aleppo",
+    "homs": "Homs",
+    "latakia": "Latakia"
+  },
+  "cities": {
+    "as_suwayda_al_balad": "As Suwayda Al-Balad",
+    "shahba": "Shahba",
+    "nejran": "Nejran",
+    "salkhad": "Salkhad",
+    "karrasa": "Karrasa",
+    "mezzeh": "Mezzeh",
+    "baramkeh": "Baramkeh",
+    "kafr_sousa": "Kafr Sousa",
+    "qassaa": "Qassaa",
+    "rukn_al_din": "Rukn al-Din",
+    "jamiliyah": "Jamiliyah",
+    "al_sukkari": "Al-Sukkari",
+    "seif_al_dawla": "Seif al-Dawla",
+    "hamdaniyah": "Hamdaniyah",
+    "al_shahbaa": "Al-Shahbaa",
+    "al_waer": "Al-Waer",
+    "al_zahraa": "Al-Zahraa",
+    "bab_amr": "Bab Amr",
+    "karm_al_loz": "Karm Al-Loz",
+    "al_qusour": "Al-Qusour",
+    "al_saliba": "Al-Saliba",
+    "al_raml_al_janoubi": "Al-Raml Al-Janoubi",
+    "al_raml_al_shamali": "Al-Raml Al-Shamali",
+    "bsnada": "Bsnada",
+    "agriculture_project": "Agriculture Project"
+  },
+  "rate": {
+    "share_more_details": "Share more details",
+    "share_details_hint": "How was the check-in process? Was the apartment as described? What did you love or think could be improved?",
+    "overall_experience": "Overall Experience",
+      "features": {
+      "cleanliness": "Cleanliness",
+      "location": "Location",
+      "communication": "Communication",
+      "value": "Value for money"
+    },
+     "submit_review": "Submit Review"
+    
+  }
 }

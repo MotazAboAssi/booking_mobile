@@ -9,7 +9,6 @@ import 'package:easy_localization/easy_localization.dart';
 
 AppBar addApartmentAppBar(BuildContext context) {
   return AppBar(
-    leading: ButtonLocalization(),
     title: Text(
       LandlordKeys.addApartmentTitle.tr(),
       style: TextStyle(fontSize: rem(1)),

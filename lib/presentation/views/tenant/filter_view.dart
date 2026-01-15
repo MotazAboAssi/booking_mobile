@@ -27,3 +27,10 @@ class FilterView extends StatelessWidget {
     );
   }
 }
+
+String normalizeKey(String value) {
+  return value
+      .toLowerCase()
+      .replaceAll('&', 'and')
+      .replaceAll(RegExp(r'[\s\-]+'), '_');
+}

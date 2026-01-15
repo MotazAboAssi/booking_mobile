@@ -9,6 +9,7 @@ import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
 import 'package:booking/types/booking_apartment_type.dart';
 import 'package:booking/types/rate_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,7 +53,7 @@ class SectionSubmitReviewAndSkip extends StatelessWidget {
             );
           }
           return Text(
-            "Submit Review",
+            'rate.submit_review'.tr(),
             style: TextStyle(
               color: context.appTheme.thirdly,
               fontWeight: FontWeight.bold,

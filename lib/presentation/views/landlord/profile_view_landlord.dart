@@ -42,7 +42,6 @@ class _ProfileViewLandlordState extends State<ProfileViewLandlord> {
         leadingWidth: MediaQuery.of(context).size.width * 0.3,
         leading: Row(children: [ButtonMode(), ButtonLocalization()]),
         actions: [
-          ButtonLocalization(),
           IconButton(
             style: ElevatedButton.styleFrom(iconColor: context.appTheme.error),
             onPressed: () async {
