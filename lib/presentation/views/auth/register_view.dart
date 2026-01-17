@@ -61,6 +61,8 @@ class _RegisterViewState extends State<RegisterView> {
               builder: (BuildContext context, BoxConstraints constraints) {
                 return FormBuilder(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                    // autoScrollWhenFocusOnInvalid: false,
+
                   key: formKey,
                   child: ListView(
                     children: [

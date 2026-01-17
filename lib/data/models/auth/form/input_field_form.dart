@@ -36,12 +36,13 @@ class InputFieldForm extends StatelessWidget {
     );
 
     return FormBuilderTextField(
+      readOnly: false,
       initialValue: initialValue,
       name: name,
       obscureText: suffixIcon != null && obscureText == true,
       obscuringCharacter: "*",
-      style: TextStyle(color: context.appTheme.primarye), // text color
-      cursorColor: context.appTheme.primarye, // cursor color
+      style: TextStyle(color: context.appTheme.primarye),
+      cursorColor: context.appTheme.primarye, 
       keyboardType: textInputType ?? TextInputType.emailAddress,
       decoration: decorationInputFieldLogin(
         hintText: hintText,

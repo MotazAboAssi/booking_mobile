@@ -17,7 +17,7 @@ class RegisterCubit extends Cubit<RegisterStateCubit> {
         ),
       );
     } catch (error) {
-      emit(RegisterFailed(errorMessage: error.toString().split(":")[1]));
+      emit(RegisterFailed(errorMessage: error.toString().replaceAll('Exception: ', '')));
       throw Exception(error);
     }
   }

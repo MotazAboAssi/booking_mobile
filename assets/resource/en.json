@@ -51,11 +51,13 @@
         "input_password": "Password",
         "input_first_name": {
           "lable": "First Name",
-          "hint_text": "Motaz"
+          "hint_text": "Motaz",
+          "error_text": "not correct format"
         },
         "input_last_name": {
           "lable": "Last Name",
-          "hint_text": "Motaz"
+          "hint_text": "Abo Assi",
+          "error_text": "not correct format"
         },
         "input_dob": {
           "lable": "date of birth",
@@ -284,13 +286,12 @@
     "share_more_details": "Share more details",
     "share_details_hint": "How was the check-in process? Was the apartment as described? What did you love or think could be improved?",
     "overall_experience": "Overall Experience",
-      "features": {
+    "features": {
       "cleanliness": "Cleanliness",
       "location": "Location",
       "communication": "Communication",
       "value": "Value for money"
     },
-     "submit_review": "Submit Review"
-    
+    "submit_review": "Submit Review"
   }
 }

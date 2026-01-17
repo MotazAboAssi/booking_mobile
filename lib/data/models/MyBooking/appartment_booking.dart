@@ -375,7 +375,7 @@ class PendingButton extends StatelessWidget {
                         }
                         final cubit = context.read<BookingApartmentCubit>();
                         cubit.update(
-                          apartment!.apartmentID,
+                          apartment!.bookingID,
                           picked.start,
                           picked.end,
                         );

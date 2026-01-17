@@ -37,10 +37,12 @@ static const String pickCamera = 'auth.register_view.pick_image.camera';
   // First Name
   static const String firstNameLabel = 'auth.register_view.form_fields.input_first_name.lable';
   static const String firstNameHint = 'auth.register_view.form_fields.input_first_name.hint_text';
+  static const String firstNameError = 'auth.register_view.form_fields.input_first_name.error_text';
 
   // Last Name
   static const String lastNameLabel = 'auth.register_view.form_fields.input_last_name.lable';
   static const String lastNameHint = 'auth.register_view.form_fields.input_last_name.hint_text';
+  static const String lastNameError = 'auth.register_view.form_fields.input_last_name.error_text';
 
   // Date of Birth
   static const String dobLabel = 'auth.register_view.form_fields.input_dob.lable';

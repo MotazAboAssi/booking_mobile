@@ -61,11 +61,29 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
           name: firstNameKey,
           hintText: AuthKeys.firstNameHint.tr(),
           labelTeaxt: AuthKeys.firstNameLabel.tr(),
+          validatorsProps: [
+            (value) {
+              if (value != null &&
+                  value.replaceAll(r"^(?!.*\\d).*$", '') != value) {
+                return AuthKeys.firstNameError.tr();
+              }
+              return null;
+            },
+          ],
         ),
         InputFieldForm(
           name: lastNameKey,
           hintText: AuthKeys.lastNameHint.tr(),
           labelTeaxt: AuthKeys.lastNameLabel.tr(),
+          validatorsProps: [
+            (value) {
+              if (value != null &&
+                  value.replaceFirst(r"^(?!.*\\d).*$", '') != value) {
+                return AuthKeys.firstNameError.tr();
+              }
+              return null;
+            },
+          ],
         ),
         FormBuilderDateTimePicker(
           name: dateOfBirthKey,
@@ -84,14 +102,19 @@ class _SectionGroupOfInputFieldState extends State<SectionGroupOfInputField> {
               errorText: AuthKeys.loginErrorInputPassword.tr(),
             ),
             (value) {
-              if (value != null && compareTwoDate(value, DateTime.now()) >= 0) {
-                return;
+              if (value != null &&
+                  DateTime.parse(
+                    DateTime.now().toIso8601String().split("T")[0],
+                  ).isAtSameMomentAs(
+                    DateTime.parse(value.toIso8601String().split("T")[0]),
+                  )) {
+                return AuthKeys.dobError.tr();
               }
               return null;
             },
           ]),
           firstDate: DateTime(1990, 1, 1),
-          lastDate: DateTime.now(), // also fix this 😉
+          lastDate: DateTime.now(),
         ),
       ],
     );

@@ -53,6 +53,10 @@ class HttpRequest {
       printRed("formData.fields.last");
       Response response = await dio.post('/register', data: formData);
       printGrey("Done Form HttpRequist");
+      printWhite(response.data.toString());
+      if (response.data['message'] != 'User Registered Successfully, We will contact you soon' ) {
+        throw Exception(response.data['message']);
+      }
       return {"success": true, "data": response.data};
     } on PathNotFoundException catch (_) {
       if (user.profileImage.path == "") {
@@ -111,6 +115,7 @@ class HttpRequest {
       if ((e.response?.statusCode ?? false) == 401) {
         throw Exception("phone or password wrong !!");
       }
+
       if ((e.response?.statusCode ?? false) == 404) {
         final message = (e.response?.data as Map<String, dynamic>)["message"]
             .toString();

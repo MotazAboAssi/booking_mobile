@@ -6,7 +6,6 @@ import 'package:booking/data/sections/appartement_details_view/section_location.
 import 'package:booking/data/sections/appartement_details_view/section_title_and_position.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_group_of_input_field.dart';
 import 'package:booking/data/sections/display_profile_user_view/section_image_picker_profile.dart';
-import 'package:booking/helper/constant/form_keys/registers_keys.dart';
 import 'package:booking/helper/constant/images.dart';
 import 'package:booking/helper/constant/routes.dart';
 import 'package:booking/helper/constant/app_theme.dart';
@@ -353,14 +352,14 @@ class SectionAcceptAndRejectedRequest extends StatelessWidget {
               return customSnakBar(
                 margin: EdgeInsets.only(bottom: rem(4)),
                 context: context,
-                color: context.appTheme.error,
+                color: context.appTheme.success,
                 message: '${state.message}',
               );
             } else if (state is ConfirmBookSuccessful) {
               return customSnakBar(
                 margin: EdgeInsets.only(bottom: rem(4)),
                 context: context,
-                color: context.appTheme.error,
+                color: context.appTheme.success,
                 message: '${state.message}',
               );
             }

@@ -95,7 +95,7 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.pushNamed(context, roleSelectionView);
                 },
                 child: Text(
-                  AuthKeys.loginButtonSubmit.tr(),
+                  AuthKeys.loginFooterActionLink.tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: rem(1),

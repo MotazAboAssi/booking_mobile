@@ -13,6 +13,7 @@ import 'package:booking/helper/test/print.dart';
 import 'package:booking/presentation/cubit/booking_apartment/booking_apartment_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_cubit.dart';
 import 'package:booking/presentation/cubit/get_all_rate_your_stay/get_all_rate_your_stay_states.dart';
+import 'package:booking/presentation/views/tenant/appartement_details_view_for_tenant.dart';
 import 'package:booking/presentation/widgets/swiper_images.dart';
 import 'package:booking/services/http_request.dart';
 import 'package:booking/types/apartment_type.dart';
@@ -93,123 +94,7 @@ class _AppartementDetailsViewForLandlordState
   }
 }
 
-class Reviews extends StatelessWidget {
-  const Reviews({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<GetAllRateYourStayCubit, GetAllRateYourStayStates>(
-      builder: (context, state) {
-        if (state is GetAllRateYourStaySuccessful) {
-          return state.rates.isEmpty
-              ? Container()
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Reviews",
-                      style: TextStyle(
-                        fontSize: rem(1.5),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: ListView.builder(
-                        itemCount: state.rates.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: rem(1)),
-                            padding: EdgeInsets.all(rem(1)),
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Reviewed on ${state.rates[index].createdAt.toIso8601String().split("T")[0]}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: rem(1.1),
-                                  ),
-                                ),
-                                state.rates[index].rate == null
-                                    ? Container()
-                                    : ModelRatingBar(
-                                        itemSize: rem(1.5),
-                                        initialRating: double.parse(
-                                          state.rates[index].rate.toString(),
-                                        ),
-                                        ignoreGestures: true,
-                                      ),
-                                state.rates[index].comment == null
-                                    ? Container()
-                                    : Text(
-                                        state.rates[index].comment!,
-                                        style: TextStyle(fontSize: rem(1)),
-                                      ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
-        } else {
-          printGreen((state is GetAllRateYourStayFaild).toString());
-          return Skeletonizer(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(
-                    "Reviews",
-                    style: TextStyle(
-                      fontSize: rem(1.5),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(rem(1)),
-                  decoration: BoxDecoration(
-                    color: context.appTheme.secondary,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Reviewed on 12-12-12",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: rem(1.1),
-                        ),
-                      ),
-                      ModelRatingBar(
-                        itemSize: rem(1.5),
-                        initialRating: 4,
-                        ignoreGestures: true,
-                      ),
-                      Text(
-                        'sldkfj;ksldjf;skdfj;sskdf;lskfj;dkljf;skjdf;sdkjf;skdfj;sdklf;s',
-                        style: TextStyle(fontSize: rem(1)),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-      },
-    );
-  }
-}
 
 class SectionHeaderAndAppartementImages extends StatelessWidget {
   final ApartmentType? apartment;

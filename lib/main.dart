@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     log(ThemeMode.values.toString());
     return BlocBuilder<ToggleColorCubit, ToggleColorStates>(
-      builder: (context, state) {
+        builder: (context, state) {
         return MaterialApp(
           navigatorKey: navigatorKey,
           // local

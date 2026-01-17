@@ -40,8 +40,7 @@ class ButtonSignUp extends StatelessWidget {
         } else {
           return () async {
             if (form != null) {
-              form.save();
-              if (form.validate()) {
+              if (form.saveAndValidate()) {
                 final Map<String, dynamic> input = form.value;
                 final cubit = BlocProvider.of<RegisterCubit>(context);
                 final UserRegisterType user = UserRegisterType(
@@ -118,7 +117,7 @@ class ButtonSignUp extends StatelessWidget {
             customSnakBar(
               context: c,
               color: context.appTheme.success,
-              message: "✅ DONE ,Requist to Join",
+              message:  "✅ DONE ,Requist to Join",
             );
             await Future.delayed(Duration(seconds: 3));
             navigateTo(context, loginView);

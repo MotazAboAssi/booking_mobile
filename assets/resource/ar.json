@@ -51,11 +51,13 @@
         "input_password": "كلمة المرور",
         "input_first_name": {
           "lable": "الاسم الأول",
-          "hint_text": "معتز"
+          "hint_text": "معتز",
+          "error_text": "الإسم غير صحيح لغويا"
         },
         "input_last_name": {
           "lable": "الكنية",
-          "hint_text": "معتز"
+          "hint_text": "أبو عاصي",
+          "error_text": "الإسم غير صحيح لغويا"
         },
         "input_dob": {
           "lable": "تاريخ الميلاد",
@@ -225,7 +227,7 @@
       "actions": {
         "discard": "تجاهل",
         "publish": "نشر",
-        "update" : "تحديث"
+        "update": "تحديث"
       }
     }
   },
@@ -289,8 +291,7 @@
       "location": "الموقع",
       "communication": "التواصل",
       "value": "القيمة مقابل السعر"
-},
-  "submit_review": "إرسال التقييم"
-
+    },
+    "submit_review": "إرسال التقييم"
   }
 }
